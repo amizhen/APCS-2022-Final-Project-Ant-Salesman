@@ -1,1 +1,18 @@
-# APCS-2022-Final-Project-Ant-Salesman
+# **The Traveling Ant Salesmen**
+
+Created by Aiden Mizhen and Jeffrey Jiang
+
+[**Complete Proposal**](https://docs.google.com/document/d/1Vkc-bQuLZKICPwXoo_w7NjEORyUwMkhjVnNt5RsR-es/edit?usp=sharing)
+
+## **Project Description**
+
+Our plan for the project is to implement a heuristic algorithm to the famous **traveling salesman problem** which models ant colony behavior. Because the brute force solution of the problem has a time complexity of `O(n!)`, many algorithms have been sought out to reduce it. This algorithm, called the **Ant Colony Optimization (ACO)** attempts to emulate how ants emergently find the shortest path between points through their use of pheromones. This project will also expand through adding constraints to the traveling salesman problem and modifying the algorithm with other variations. This all will be visualized through Processing.
+
+## **Compile/Run Instructions**
+
+***TODO***
+
+## **Development Logs**
+
+| Name | Date | Summary |
+| ---- | ---- | ------- |
