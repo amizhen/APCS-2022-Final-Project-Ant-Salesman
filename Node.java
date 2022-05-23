@@ -1,5 +1,3 @@
-import java.util.Map;
-
 public class Node {
 
     private double x;
@@ -10,8 +8,12 @@ public class Node {
         this.y = y;
     }
 
-    public void updatePheromones(Node adj) {
+    private double distance(Node adj) {
+        return Math.sqrt((x - adj.x) * (x - adj.x) + (y - adj.y) * (y-adj.y));
+    }
 
+    public void updatePheromones(Node adj) {
+        
     }
 
     public void decayPheromone() {
@@ -20,6 +22,11 @@ public class Node {
 
     private double calcDecay(Node adj) {
         return 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Node(x=%f, y=%f)", x, y);
     }
 
 }
