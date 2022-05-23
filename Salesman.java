@@ -12,7 +12,3 @@ public class Salesman {
         pheromones = new HashMap();
     }
 }
-
-
-// Started work on ant class but realised it would make more sense to have the constants in the main written first.
-
