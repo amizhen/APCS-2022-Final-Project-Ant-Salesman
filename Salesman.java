@@ -6,8 +6,8 @@ import java.util.Set;
 
 public class Salesman {
     
-    public final List<Node> nodes = new ArrayList<>();
-    public final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
+    public static final List<Node> nodes = new ArrayList<>();
+    public static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
     public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.05;
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.05;
