@@ -1,3 +1,5 @@
+import java.util.Set;
+
 public class Node {
 
     private double x;
@@ -14,14 +16,6 @@ public class Node {
 
     public void updatePheromones(Node adj) {
         
-    }
-
-    public void decayPheromone() {
-
-    }
-
-    private double calcDecay(Node adj) {
-        return 0.0;
     }
 
     @Override
