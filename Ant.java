@@ -8,6 +8,7 @@ public class Ant {
     public Ant() {
         distanceTraveled = 0;
         nodesVisited = new ArrayList<Node>();
+        toBeVisited = new ArrayList<>();
     }
 
     private double calcPheromones() {
@@ -22,7 +23,6 @@ public class Ant {
     }
 
     public void run() {
-        toBeVisited = new ArrayList<>();
         toBeVisited.addAll(Salsemen.nodes);
 
     }

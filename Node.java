@@ -8,6 +8,10 @@ public class Node {
         this.y = y;
     }
 
+    public double[] getCords(){
+        return [x, y];
+    }
+
     private double distance(Node adj) {
         return Math.sqrt((x - adj.x) * (x - adj.x) + (y - adj.y) * (y-adj.y));
     }
