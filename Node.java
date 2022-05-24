@@ -1,21 +1,20 @@
-import java.util.Set;
-
+/**
+ * A class representing a location in which the Ant needs to arrive at per the travling salesman problem
+ */
 public class Node {
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
+    /**
+     * Constructor
+     * 
+     * @param x The x coordinate of the Node
+     * @param y the y coordinate of the Node
+     */
     public Node(double x, double y) {
         this.x = x;
         this.y = y;
-    }
-
-    private double distance(Node adj) {
-        return Math.sqrt((x - adj.x) * (x - adj.x) + (y - adj.y) * (y-adj.y));
-    }
-
-    public void updatePheromones(Node adj) {
-        
     }
 
     @Override
