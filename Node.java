@@ -16,6 +16,10 @@ public class Node {
         
     }
 
+    public double[] get_loc(){
+        return new double[] {x, y};
+    }
+
     public void decayPheromone() {
 
     }
