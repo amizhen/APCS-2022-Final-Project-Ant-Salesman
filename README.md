@@ -14,5 +14,7 @@ Our plan for the project is to implement a heuristic algorithm to the famous **t
 
 ## **Development Logs**
 
-| Name | Date | Summary |
-| ---- | ---- | ------- |
+| Name    | Date     | Summary                                                                                                          |
+| ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+| Aiden   | 05/23/22 | Started work on Ant class but realised it would make more sense to have the constants in the main written first. |
+| Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                       |
