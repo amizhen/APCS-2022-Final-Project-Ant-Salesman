@@ -3,6 +3,7 @@ import java.util.*
 public class Ant {
     private double distanceTraveled;
     public ArrayList<Node> nodesVisited;
+    private ArrayList<Node> toBeVisited;
 
     public Ant() {
         distanceTraveled = 0;
@@ -17,6 +18,8 @@ public class Ant {
     }
 
     public void run() {
+        toBeVisited = new ArrayList<>();
+        toBeVisited.addAll(Salsemen.nodes);
 
     }
 
