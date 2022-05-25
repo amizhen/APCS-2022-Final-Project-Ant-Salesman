@@ -1,35 +1,34 @@
+/**
+ * A class representing a location in which the Ant needs to arrive at per the travling salesman problem
+ */
 public class Node {
 
-    private double x;
-    private double y;
+    private final double x;
+    private final double y;
 
+    /**
+     * Constructor
+     *
+     * @param x The x coordinate of the Node
+     * @param y the y coordinate of the Node
+     */
     public Node(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public double getX(){
+
+    public double getX() {
         return x;
     }
 
-    public double getY(){
+    public double getY() {
         return y;
     }
 
     public double distance(Node adj) {
         return Math.sqrt(Math.pow(getX() - adj.getX(), 2) + Math.pow(getY() - adj.getY(), 2));
-    }
 
-    public void updatePheromones(Node adj) {
-
-    }
-
-    public void decayPheromone() {
-
-    }
-
-    private double calcDecay(Node adj) {
-        return 0.0;
     }
 
     @Override
