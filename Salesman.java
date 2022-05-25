@@ -15,6 +15,7 @@ public class Salesman {
     public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.05;
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.05;
     public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.90;
+    public static double PHEROMON_DEPOSIT_COEFFICIENT = 1;
 
     public static final int ANTS = 10;
 
