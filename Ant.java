@@ -19,7 +19,7 @@ public class Ant {
         return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2));
     }
 
-    private void pickNextNode() {
+    private void pickNextNode(){
     }
 
     public void run() {
