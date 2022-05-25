@@ -9,7 +9,7 @@ public class Node {
     }
 
     public double[] getCords(){
-        return [x, y];
+        return new double[] {x, y};
     }
 
     private double distance(Node adj) {

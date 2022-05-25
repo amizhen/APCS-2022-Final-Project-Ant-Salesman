@@ -12,18 +12,22 @@ public class Ant {
     }
 
     private double calcPheromones() {
-        return Salesman.PHEROMONE_EVAPORATION_COEFFICIENT / getDistance;
+        return Salesman.PHEROMONE_EVAPORATION_COEFFICIENT / getDistance();
     }
 
     private double calc_dist(double x1, double y1, double x2, double y2){
-        return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2));
+        return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2));
     }
 
     private void pickNextNode(){
     }
 
     public void run() {
-        toBeVisited.addAll(Salsemen.nodes);
+        toBeVisited.addAll(Salesman.nodes);
+
+    }
+
+    private void tick(){
 
     }
 
