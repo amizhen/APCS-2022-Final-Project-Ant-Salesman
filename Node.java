@@ -8,20 +8,20 @@ public class Node {
         this.y = y;
     }
 
-    public double[] getCords(){
-        return new double[] {x, y};
+    public double getX(){
+        return x;
     }
 
-    private double distance(Node adj) {
-        return Math.sqrt((x - adj.x) * (x - adj.x) + (y - adj.y) * (y-adj.y));
+    public double getY(){
+        return y;
+    }
+
+    public double distance(Node adj) {
+        return Math.sqrt(Math.pow(getX() - adj.getX(), 2) + Math.pow(getY() - adj.getY(), 2));
     }
 
     public void updatePheromones(Node adj) {
-        
-    }
 
-    public double[] get_loc(){
-        return new double[] {x, y};
     }
 
     public void decayPheromone() {
