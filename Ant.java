@@ -11,24 +11,28 @@ public class Ant {
         toBeVisited = new ArrayList<>();
     }
 
-    private double calcPheromones(Node node1, Node node2) {
+    private double calcPheromones() {
         return Salesman.PHEROMONE_EVAPORATION_COEFFICIENT / getDistance();
     }
 
-    private void pickNextNode() {
+    private double calc_dist(double x1, double y1, double x2, double y2){
+        return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2));
+    }
+
+    private void pickNextNode(){
     }
 
     public void run() {
-        toBeVisited.addAll(Salsemen.nodes);
+        toBeVisited.addAll(Salesman.nodes);
+
+    }
+
+    private void tick(){
 
     }
 
     public void depositPheromones() {
 
-    }
-
-    private double calcDistance(double x1, double y1, double x2, double y2){
-        return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2));
     }
 
     public double getDistance() {

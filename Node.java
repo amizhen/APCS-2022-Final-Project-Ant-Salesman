@@ -9,7 +9,7 @@ public class Node {
     }
 
     public double[] getCords(){
-        return [x, y];
+        return new double[] {x, y};
     }
 
     private double distance(Node adj) {
@@ -18,6 +18,10 @@ public class Node {
 
     public void updatePheromones(Node adj) {
         
+    }
+
+    public double[] get_loc(){
+        return new double[] {x, y};
     }
 
     public void decayPheromone() {
