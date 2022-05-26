@@ -10,25 +10,26 @@ public class Ant {
         distanceTraveled = 0;
         visitedNodes = new ArrayList<Node>();
         toBeVisited = new ArrayList<>();
+        //default current to the start node, add to relevant lists
     }
 
     private double calcPheromones() {
-        return Salesman.PHEROMONE_EVAPORATION_COEFFICIENT / getDistance();
+        return Salesman.PHEROMON_DEPOSIT_COEFFICIENT / getDistance();
     }
 
 
-    private void pickNextNode(){
+    private void pickNextNode() {
         double total = 0;
         double counter = 0;
         double odds = Math.random();
-        for(Node adj : toBeVisited){
-            total += Salesman.pheromoneMap.get(Set.of(adj, current))+1;
+        for (Node adj : toBeVisited) {
+            total += Salesman.pheromoneMap.get(Set.of(adj, current)) + 1;
         }
         Node adj;
-        for(int i = 0; i<toBeVisited.size(); i++){
+        for (int i = 0; i < toBeVisited.size(); i++) {
             adj = toBeVisited.get(i);
-            counter += Salesman.pheromoneMap.get(Set.of(adj, current))+1;
-            if(counter/total > odds){
+            counter += Salesman.pheromoneMap.get(Set.of(adj, current)) + 1;
+            if (counter / total > odds) {
                 toBeVisited.remove(i);
                 visitedNodes.add(adj);
                 return;
@@ -41,7 +42,7 @@ public class Ant {
 
     }
 
-    private void tick(){
+    private void tick() {
 
     }
 
