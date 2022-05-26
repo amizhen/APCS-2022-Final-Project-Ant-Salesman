@@ -28,12 +28,12 @@ public class Ant {
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
-        
+
         for (Node node : toBeVisited) {
             rand += calculateWeight(node);
             if (choice < rand) {
                 visitedNodes.add(node);
-                System.out.println(visitedNodes);
+                // System.out.println(visitedNodes);
                 toBeVisited.remove(node);
                 return;  
             } 
