@@ -53,6 +53,7 @@ public class Ant implements Comparable<Ant>{
 
     public void run() {
         toBeVisited.addAll(Salesman.nodes);
+        toBeVisited.remove(current);
         visitedNodes.add(current);
         while(toBeVisited.size() > 0){
             tick();
@@ -64,10 +65,12 @@ public class Ant implements Comparable<Ant>{
     }
 
     public void depositPheromones() {
-        Set<Node> key;
+        Node n1, n2;
+
         for(int i = 0; i < visitedNodes.size()-1; i++){
-            key = Set.of(visitedNodes.get(i), visitedNodes.get(i+1));
-            Salesman.pheromoneMap.replace(key, Salesman.pheromoneMap.get(key) + calcPheromones());
+            n1 = visitedNodes.get(i);
+            n2 = visitedNodes.get(i+1);
+            Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
         }
     }
 

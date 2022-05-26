@@ -10,7 +10,7 @@ import java.util.Set;
 public class Salesman {
     
     public static final List<Node> nodes = new ArrayList<>();
-    public static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
+    private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
     public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.05;
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.05;
@@ -55,6 +55,11 @@ public class Salesman {
 
     public static double getPheromone(Node n1, Node n2) {
         return pheromoneMap.get(Set.of(n1, n2));
+    }
+
+    public static void setPheromone(Node n1, Node n2, double newVal){
+        Set<Node> key = Set.of(n1, n2);
+        pheromoneMap.replace(key, newVal);
     }
 
     /**
