@@ -5,8 +5,8 @@ import java.util.Set;
 public class Ant {
     private double distanceTraveled;
     private Node current;
-    public final ArrayList<Node> visitedNodes;
-    public final ArrayList<Node> toBeVisited; // TODO: make private 
+    private final ArrayList<Node> visitedNodes;
+    private final ArrayList<Node> toBeVisited; // TODO: make private
 
 
     public Ant(Node start) {
@@ -31,7 +31,7 @@ public class Ant {
     }
 
 
-    public void pickNextNode(){ // TODO: make private
+    private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
@@ -40,6 +40,7 @@ public class Ant {
             node = toBeVisited.get(i);
             rand += calculateWeight(node);
             if (choice < rand) {
+                distanceTraveled += current.distance(node);
                 visitedNodes.add(node);
                 // System.out.println(visitedNodes);
                 current = node;
