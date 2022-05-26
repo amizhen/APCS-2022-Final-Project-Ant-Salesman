@@ -1,10 +1,10 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class Ant {
     private double distanceTraveled;
-    public ArrayList<Node> visitedNodes;
-    private ArrayList<Node> toBeVisited;
     private Node current;
+    public final ArrayList<Node> visitedNodes;
+    public final ArrayList<Node> toBeVisited; // TODO: make private 
 
     public Ant() {
         distanceTraveled = 0;
@@ -17,24 +17,31 @@ public class Ant {
         return Salesman.PHEROMON_DEPOSIT_COEFFICIENT / getDistance();
     }
 
+    private Node getCurrentNode() {
+        return visitedNodes.get(visitedNodes.size() - 1);
+    }
 
-    private void pickNextNode() {
-        double total = 0;
-        double counter = 0;
-        double odds = Math.random();
-        for (Node adj : toBeVisited) {
-            total += Salesman.pheromoneMap.get(Set.of(adj, current)) + 1;
+    private int calculateWeight(Node node) {
+        Node current = getCurrentNode();
+        return (int) (Math.pow(Salesman.getPheromone(node, current), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
+    }
+
+
+    public void pickNextNode(){ // TODO: make private
+        int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
+        int choice = (int) (Math.random() * sum);
+        int rand = 0;
+
+        for (Node node : toBeVisited) {
+            rand += calculateWeight(node);
+            if (choice < rand) {
+                visitedNodes.add(node);
+                // System.out.println(visitedNodes);
+                toBeVisited.remove(node);
+                return;  
+            } 
         }
-        Node adj;
-        for (int i = 0; i < toBeVisited.size(); i++) {
-            adj = toBeVisited.get(i);
-            counter += Salesman.pheromoneMap.get(Set.of(adj, current)) + 1;
-            if (counter / total > odds) {
-                toBeVisited.remove(i);
-                visitedNodes.add(adj);
-                return;
-            }
-        }
+        // should add fall back if everything fails
     }
 
     public void run() {
