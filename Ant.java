@@ -6,7 +6,7 @@ public class Ant {
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
-    private final ArrayList<Node> toBeVisited; // TODO: make private
+    private final ArrayList<Node> toBeVisited;
 
 
     public Ant(Node start) {

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +17,8 @@ public class Salesman {
     public static double PHEROMONE_EVAPORATION_COEFFICIENT = 1;
     public static double PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
-    public static final int ANTS_PER_ITERATION = 100;
+    public static final int ANTS_PER_ITERATION = 5;
+    public static final int ITERATION = 50;
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -67,7 +67,7 @@ public class Salesman {
         
         int minIndex = 0;
 
-        for (int j = 0; j < 100; j++) {
+        for (int j = 0; j < ITERATION; j++) {
             minIndex = 0;
             for (int i = 0; i < ANTS_PER_ITERATION; i++) {
                 ants[i] = new Ant(start);
@@ -88,7 +88,16 @@ public class Salesman {
 
     public static void main(String[] args) {
         // test setup code
-        addNodes(new Node(1, 1), new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25));
+        addNodes(
+            new Node(1, 1), 
+            new Node(2, 2), 
+            new Node(0, 0), 
+            new Node(9, 9), 
+            new Node(32, 25),
+            new Node(10, 5),
+            new Node(-20, 40),
+            new Node(12, -12)
+        );
         Ant a = findShortestPath();
         System.out.println(a.getPathAsString());
         System.out.println(a.getDistance());
