@@ -65,8 +65,10 @@ public class Salesman {
     }
 
     public static void main(String[] args) {
+        // test setup code
+
         Node start = new Node(1, 1);
-        addNodes(new Node(2, 2), new Node(5, 7), new Node(9, 9), new Node(32, 25), start);
+        addNodes(new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25), start);
         Ant a = new Ant();
         a.visitedNodes.add(start);
         for (Node n : nodes) {
@@ -75,6 +77,10 @@ public class Salesman {
             }
         }
 
+        a.pickNextNode();
+        a.pickNextNode();
+        a.pickNextNode();
+        a.pickNextNode();
         a.pickNextNode();
     }
 

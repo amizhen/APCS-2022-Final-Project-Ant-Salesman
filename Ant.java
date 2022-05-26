@@ -1,11 +1,9 @@
-import java.util.*;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
 
 public class Ant {
     private double distanceTraveled;
     public final ArrayList<Node> visitedNodes;
-    public final ArrayList<Node> toBeVisited; // make private 
+    public final ArrayList<Node> toBeVisited; // TODO: make private 
 
     public Ant() {
         distanceTraveled = 0;
@@ -26,16 +24,16 @@ public class Ant {
         return (int) (Math.pow(Salesman.getPheromone(node, current), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
     }
 
-    public void pickNextNode(){ // make private
-        Node current = getCurrentNode();
-        int sum = toBeVisited.stream().mapToInt(i -> calculateWeight(i)).sum();
-
+    public void pickNextNode(){ // TODO: make private
+        int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
+        
         for (Node node : toBeVisited) {
-            rand += (int) (Math.pow(Salesman.getPheromone(node, current), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
+            rand += calculateWeight(node);
             if (choice < rand) {
                 visitedNodes.add(node);
+                System.out.println(visitedNodes);
                 toBeVisited.remove(node);
                 return;  
             } 

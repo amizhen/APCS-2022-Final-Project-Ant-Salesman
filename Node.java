@@ -7,7 +7,7 @@ public class Node {
     private final double y;
 
     /**
-     * Constructor
+     * Constructor to create a Node at location (x,y)
      *
      * @param x The x coordinate of the Node
      * @param y the y coordinate of the Node
@@ -17,11 +17,20 @@ public class Node {
         this.y = y;
     }
 
-
+    /**
+     * Acessor for x coordinate
+     * 
+     * @return x coordinate
+     */
     public double getX() {
         return x;
     }
 
+    /**
+     * Acessor for y coordinate
+     * 
+     * @return y coordinate
+     */
     public double getY() {
         return y;
     }
