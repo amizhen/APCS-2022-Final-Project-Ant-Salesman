@@ -17,7 +17,7 @@ public class Salesman {
     public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.90;
     public static double PHEROMON_DEPOSIT_COEFFICIENT = 1;
 
-    public static final int ANTS = 10;
+    public static final int ANTS_PER_ITERATION = 10;
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -61,16 +61,27 @@ public class Salesman {
      * Main executing methods to perform the algorithm
      */
     public static Ant findShortestPath() {
-        return null;
+        Node start = nodes.get(0);
+        Ant[] ants = new Ant[ANTS_PER_ITERATION];
+        int maxIndex = 0;
+        for (int i = 0; i < ANTS_PER_ITERATION; i++) {
+            ants[i] = new Ant(start);
+            ants[i].run();
+
+            if (ants[i].getDistance() > ants[maxIndex].getDistance()) {
+                maxIndex = i;
+            }
+        }
+
+        return ants[maxIndex];
     }
 
     public static void main(String[] args) {
         // test setup code
-
-        Node start = new Node(1, 1);
-        addNodes(new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25), start);
-        Ant a = new Ant(start); //Changed Ant constructor to include start.
-
+        addNodes(new Node(1, 1), new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25));
+        Ant a = findShortestPath();
+        System.out.println(a.getPathAsString());
+        System.out.println(a.getDistance());
     }
 
 }

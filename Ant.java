@@ -22,14 +22,12 @@ public class Ant {
     }
 
     private Node getCurrentNode() {
-        return visitedNodes.get(visitedNodes.size() - 1);
+        return current;
     }
 
     private int calculateWeight(Node node) {
-        Node current = getCurrentNode();
-        return (int) (Math.pow(Salesman.getPheromone(node, current), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
+        return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
     }
-
 
     private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
@@ -53,6 +51,7 @@ public class Ant {
 
     public void run() {
         toBeVisited.addAll(Salesman.nodes);
+        toBeVisited.remove(current);
         visitedNodes.add(current);
         while(toBeVisited.size() > 0){
             tick();
@@ -73,5 +72,13 @@ public class Ant {
 
     public double getDistance() {
         return distanceTraveled;
+    }
+
+    public String getPathAsString() {
+        String path = visitedNodes.get(0) + " ";
+        for (int i = 1; i < visitedNodes.size(); i++) {
+            path += "-> " + visitedNodes.get(i) + " ";
+        }
+        return path;
     }
 }
