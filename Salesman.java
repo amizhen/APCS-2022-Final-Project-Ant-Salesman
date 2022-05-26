@@ -25,10 +25,12 @@ public class Salesman {
      * @param n The node to add
      */
     public static void addNode(Node n) {
-        for (Node node : nodes) {
-            pheromoneMap.put(Set.of(n, node), 0.0);
+        if (!nodes.contains(n)) {
+            for (Node node : nodes) {
+                pheromoneMap.put(Set.of(n, node), 0.0);
+            }
+            nodes.add(n);
         }
-        nodes.add(n);
     }
 
     /**
