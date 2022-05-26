@@ -36,4 +36,8 @@ public class Node {
         return String.format("Node(x=%f, y=%f)", x, y);
     }
 
+    public boolean equals(Node n) {
+        return n.getX() == getX() && n.getY() == getY();
+    }
+
 }
