@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +13,12 @@ public class Salesman {
     public static final List<Node> nodes = new ArrayList<>();
     public static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
-    public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.05;
-    public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.05;
-    public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.90;
-    public static double PHEROMON_DEPOSIT_COEFFICIENT = 1;
+    public static double PHEROMONE_INFLUENCE_COEFFICIENT = 0.8;
+    public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.2;
+    public static double PHEROMONE_EVAPORATION_COEFFICIENT = 1;
+    public static double PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
-    public static final int ANTS_PER_ITERATION = 10;
+    public static final int ANTS_PER_ITERATION = 100;
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -47,7 +48,7 @@ public class Salesman {
     /**
      * A method to decay all the edges in the pheromone map. The decay is based on the PHEROMONE_EVAPORATION_COEFFICIENT
      */
-    public static void decayPheromone() {
+    public static void decayPheromones() {
         for (Set<Node> key : pheromoneMap.keySet()) {
             pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
         }
@@ -63,17 +64,26 @@ public class Salesman {
     public static Ant findShortestPath() {
         Node start = nodes.get(0);
         Ant[] ants = new Ant[ANTS_PER_ITERATION];
-        int maxIndex = 0;
-        for (int i = 0; i < ANTS_PER_ITERATION; i++) {
-            ants[i] = new Ant(start);
-            ants[i].run();
+        
+        int minIndex = 0;
 
-            if (ants[i].getDistance() > ants[maxIndex].getDistance()) {
-                maxIndex = i;
+        for (int j = 0; j < 100; j++) {
+            minIndex = 0;
+            for (int i = 0; i < ANTS_PER_ITERATION; i++) {
+                ants[i] = new Ant(start);
+                ants[i].run();
+                if (ants[i].getDistance() < ants[minIndex].getDistance()) {
+                    minIndex = i;
+                }
             }
+            // Arrays.sort(ants);
+            
+            decayPheromones();
+            ants[minIndex].depositPheromones();
+            System.out.println("Distance for iteration " + (j + 1) + " - " + ants[minIndex].getDistance());
         }
 
-        return ants[maxIndex];
+        return ants[minIndex];
     }
 
     public static void main(String[] args) {

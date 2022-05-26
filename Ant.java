@@ -18,15 +18,15 @@ public class Ant {
     }
 
     private double calcPheromones() {
-        return Salesman.PHEROMON_DEPOSIT_COEFFICIENT / getDistance();
+        return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
     }
 
     private Node getCurrentNode() {
         return current;
     }
 
-    private int calculateWeight(Node node) {
-        return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
+    private int calculateWeight(Node node) { // NOTE: If the program starts to run forever, change the constant at the end
+        return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 10000);
     }
 
     private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
@@ -40,9 +40,8 @@ public class Ant {
             if (choice < rand) {
                 distanceTraveled += current.distance(node);
                 visitedNodes.add(node);
-                // System.out.println(visitedNodes);
                 current = node;
-                toBeVisited.remove(i);
+                toBeVisited.remove(node);
                 return;
             } 
         }
