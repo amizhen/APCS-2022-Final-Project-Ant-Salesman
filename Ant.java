@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Set;
+
 
 public class Ant {
     private double distanceTraveled;
@@ -54,7 +56,11 @@ public class Ant {
     }
 
     public void depositPheromones() {
-
+        Set<Node> key;
+        for(int i = 0; i < visitedNodes.size()-1; i++){
+            key = Set.of(visitedNodes.get(i), visitedNodes.get(i+1));
+            Salesman.pheromoneMap.replace(key, Salesman.pheromoneMap.get(key) + calcPheromones());
+        }
     }
 
     public double getDistance() {
