@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-import java.util.Set;
 
+public class Ant implements Comparable<Ant> {
 
-public class Ant {
+    public static int WEIGHT_CONSTANT = 10000;
+
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
@@ -26,25 +27,21 @@ public class Ant {
     }
 
     private int calculateWeight(Node node) { // NOTE: If the program starts to run forever, change the constant at the end
-        return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 10000);
+        return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
     }
 
-    private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
+
+    private Node pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
-        Node node;
-        for (int i = 0; i<toBeVisited.size(); i++) {
-            node = toBeVisited.get(i);
+        for (Node node : toBeVisited) {
             rand += calculateWeight(node);
             if (choice < rand) {
-                distanceTraveled += current.distance(node);
-                visitedNodes.add(node);
-                current = node;
-                toBeVisited.remove(node);
-                return;
-            } 
+                return node;
+            }
         }
+        return current;
         // should add fall back if everything fails
     }
 
@@ -58,14 +55,22 @@ public class Ant {
     }
 
     private void tick() {
-        pickNextNode();
+        Node next = pickNextNode();
+        distanceTraveled += current.distance(next);
+        toBeVisited.remove(next);
+        visitedNodes.add(next);
+        current = next;
+
+
     }
 
     public void depositPheromones() {
-        Set<Node> key;
+        Node n1, n2;
+
         for(int i = 0; i < visitedNodes.size()-1; i++){
-            key = Set.of(visitedNodes.get(i), visitedNodes.get(i+1));
-            Salesman.pheromoneMap.replace(key, Salesman.pheromoneMap.get(key) + calcPheromones());
+            n1 = visitedNodes.get(i);
+            n2 = visitedNodes.get(i+1);
+            Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
         }
     }
 
@@ -79,5 +84,11 @@ public class Ant {
             path += "->" + visitedNodes.get(i) + " ";
         }
         return path;
+    }
+
+    //Comparable
+    @Override
+    public int compareTo(Ant other){ //MAY CHANGE
+        return (int) (getDistance() - other.getDistance());
     }
 }

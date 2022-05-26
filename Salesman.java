@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,15 +11,16 @@ import java.util.Set;
 public class Salesman {
     
     public static final List<Node> nodes = new ArrayList<>();
-    public static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
+    private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
-    public static double PHEROMONE_INFLUENCE_COEFFICIENT = 0.8;
+    public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.2;
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.2;
-    public static double PHEROMONE_EVAPORATION_COEFFICIENT = 1;
+    public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
     public static double PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
     public static final int ANTS_PER_ITERATION = 5;
-    public static final int ITERATION = 50;
+    public static final int ITERATION = 16;
+    public static final int TOP_ANT_SELECT_NUMBER = 2;
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -50,12 +52,19 @@ public class Salesman {
      */
     public static void decayPheromones() {
         for (Set<Node> key : pheromoneMap.keySet()) {
-            pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
+            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT)  {
+                pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
+            }
         }
     }
 
     public static double getPheromone(Node n1, Node n2) {
         return pheromoneMap.get(Set.of(n1, n2));
+    }
+
+    public static void setPheromone(Node n1, Node n2, double newVal){
+        Set<Node> key = Set.of(n1, n2);
+        pheromoneMap.replace(key, newVal);
     }
 
     /**
@@ -76,10 +85,14 @@ public class Salesman {
                     minIndex = i;
                 }
             }
-            // Arrays.sort(ants);
+            
+            Arrays.sort(ants);
             
             decayPheromones();
-            ants[minIndex].depositPheromones();
+            for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) {
+                ants[i].depositPheromones();
+            }
+
             System.out.println("Distance for iteration " + (j + 1) + " - " + ants[minIndex].getDistance());
         }
 
