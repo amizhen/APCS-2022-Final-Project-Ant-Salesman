@@ -20,3 +20,4 @@ Our plan for the project is to implement a heuristic algorithm to the famous **t
 | Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                       |
 | Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.           |
 | Aiden   | 05/24/22 | Resolved merge conflicts, added several utility functions to the ant class.                                      |
+| Aiden   | 05/25/22 |                                                                                                                  |

@@ -8,7 +8,7 @@ public class Node {
 
     /**
      * Constructor
-     * 
+     *
      * @param x The x coordinate of the Node
      * @param y the y coordinate of the Node
      */
@@ -17,8 +17,18 @@ public class Node {
         this.y = y;
     }
 
-    private double distance(Node adj) {
-        return Math.sqrt((x - adj.x) * (x - adj.x) + (y - adj.y) * (y-adj.y));
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double distance(Node adj) {
+        return Math.sqrt(Math.pow(getX() - adj.getX(), 2) + Math.pow(getY() - adj.getY(), 2));
+
     }
 
     @Override
