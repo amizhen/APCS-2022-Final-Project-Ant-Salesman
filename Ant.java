@@ -1,25 +1,44 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class Ant {
     private double distanceTraveled;
-    public ArrayList<Node> nodesVisited;
-    private ArrayList<Node> toBeVisited;
+    public final ArrayList<Node> visitedNodes;
+    public final ArrayList<Node> toBeVisited; // TODO: make private 
 
     public Ant() {
         distanceTraveled = 0;
-        nodesVisited = new ArrayList<Node>();
+        visitedNodes = new ArrayList<Node>();
         toBeVisited = new ArrayList<>();
     }
 
     private double calcPheromones() {
-        return Salesman.PHEROMONE_EVAPORATION_COEFFICIENT / getDistance();
+        return Salesman.PHEROMON_DEPOSIT_COEFFICIENT / getDistance();
     }
 
-    private double calc_dist(double x1, double y1, double x2, double y2){
-        return Math.sqrt(Math.pow(x1-x2, 2)+Math.pow(y1-y2, 2));
+    private Node getCurrentNode() {
+        return visitedNodes.get(visitedNodes.size() - 1);
     }
 
-    private void pickNextNode(){
+    private int calculateWeight(Node node) {
+        Node current = getCurrentNode();
+        return (int) (Math.pow(Salesman.getPheromone(node, current), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * 100);
+    }
+
+    public void pickNextNode(){ // TODO: make private
+        int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
+        int choice = (int) (Math.random() * sum);
+        int rand = 0;
+
+        for (Node node : toBeVisited) {
+            rand += calculateWeight(node);
+            if (choice < rand) {
+                visitedNodes.add(node);
+                // System.out.println(visitedNodes);
+                toBeVisited.remove(node);
+                return;  
+            } 
+        }
+        // should add fall back if everything fails
     }
 
     public void run() {

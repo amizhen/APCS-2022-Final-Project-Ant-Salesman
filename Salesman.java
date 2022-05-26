@@ -25,10 +25,12 @@ public class Salesman {
      * @param n The node to add
      */
     public static void addNode(Node n) {
-        for (Node node : nodes) {
-            pheromoneMap.put(Set.of(n, node), 0.0);
+        if (!nodes.contains(n)) {
+            for (Node node : nodes) {
+                pheromoneMap.put(Set.of(n, node), 1.0); // set to 0 or 1; decide later
+            }
+            nodes.add(n);
         }
-        nodes.add(n);
     }
 
     /**
@@ -51,6 +53,10 @@ public class Salesman {
         }
     }
 
+    public static double getPheromone(Node n1, Node n2) {
+        return pheromoneMap.get(Set.of(n1, n2));
+    }
+
     /**
      * Main executing methods to perform the algorithm
      */
@@ -59,7 +65,23 @@ public class Salesman {
     }
 
     public static void main(String[] args) {
-        
+        // test setup code
+
+        Node start = new Node(1, 1);
+        addNodes(new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25), start);
+        Ant a = new Ant();
+        a.visitedNodes.add(start);
+        for (Node n : nodes) {
+            if (!n.equals(start)) {
+                a.toBeVisited.add(n);
+            }
+        }
+
+        a.pickNextNode();
+        a.pickNextNode();
+        a.pickNextNode();
+        a.pickNextNode();
+        a.pickNextNode();
     }
 
 }
