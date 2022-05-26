@@ -76,7 +76,7 @@ public class Ant {
     public String getPathAsString() {
         String path = visitedNodes.get(0) + " ";
         for (int i = 1; i < visitedNodes.size(); i++) {
-            path += "-> " + visitedNodes.get(i) + " ";
+            path += "->" + visitedNodes.get(i) + " ";
         }
         return path;
     }
