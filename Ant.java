@@ -8,10 +8,12 @@ public class Ant {
     public final ArrayList<Node> visitedNodes;
     public final ArrayList<Node> toBeVisited; // TODO: make private 
 
-    public Ant() {
+
+    public Ant(Node start) {
         distanceTraveled = 0;
         visitedNodes = new ArrayList<Node>();
         toBeVisited = new ArrayList<>();
+        current = start;
         //default current to the start node, add to relevant lists
     }
 
@@ -33,14 +35,16 @@ public class Ant {
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
-
-        for (Node node : toBeVisited) {
+        Node node;
+        for (int i = 0; i<toBeVisited.size(); i++) {
+            node = toBeVisited.get(i);
             rand += calculateWeight(node);
             if (choice < rand) {
                 visitedNodes.add(node);
                 // System.out.println(visitedNodes);
-                toBeVisited.remove(node);
-                return;  
+                current = node;
+                toBeVisited.remove(i);
+                return;
             } 
         }
         // should add fall back if everything fails

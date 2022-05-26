@@ -69,8 +69,7 @@ public class Salesman {
 
         Node start = new Node(1, 1);
         addNodes(new Node(2, 2), new Node(0, 0), new Node(9, 9), new Node(32, 25), start);
-        Ant a = new Ant();
-        a.visitedNodes.add(start);
+        Ant a = new Ant(start); //Changed Ant constructor to include start.
         for (Node n : nodes) {
             if (!n.equals(start)) {
                 a.toBeVisited.add(n);
