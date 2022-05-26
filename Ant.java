@@ -52,11 +52,14 @@ public class Ant {
 
     public void run() {
         toBeVisited.addAll(Salesman.nodes);
-
+        visitedNodes.add(current);
+        while(toBeVisited.size() > 0){
+            tick();
+        }
     }
 
     private void tick() {
-
+        pickNextNode();
     }
 
     public void depositPheromones() {
