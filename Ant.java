@@ -2,11 +2,11 @@ import java.util.ArrayList;
 import java.util.Set;
 
 
-public class Ant {
+public class Ant implements Comparable<Ant>{
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
-    private final ArrayList<Node> toBeVisited; // TODO: make private
+    private final ArrayList<Node> toBeVisited;
 
 
     public Ant(Node start) {
@@ -31,28 +31,23 @@ public class Ant {
     }
 
 
-    private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
+    private Node pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
-        Node node;
-        for (int i = 0; i<toBeVisited.size(); i++) {
-            node = toBeVisited.get(i);
+        for (Node node : toBeVisited) {
             rand += calculateWeight(node);
             if (choice < rand) {
-                distanceTraveled += current.distance(node);
-                visitedNodes.add(node);
-                // System.out.println(visitedNodes);
-                current = node;
-                toBeVisited.remove(i);
-                return;
-            } 
+                return node;
+            }
         }
+        return current;
         // should add fall back if everything fails
     }
 
     public void run() {
         toBeVisited.addAll(Salesman.nodes);
+        toBeVisited.remove(current);
         visitedNodes.add(current);
         while(toBeVisited.size() > 0){
             tick();
@@ -60,18 +55,31 @@ public class Ant {
     }
 
     private void tick() {
-        pickNextNode();
+        Node next = pickNextNode();
+        distanceTraveled += current.distance(next);
+        toBeVisited.remove(next);
+        visitedNodes.add(next);
+        current = next;
+
+
     }
 
     public void depositPheromones() {
-        Set<Node> key;
+        Node n1, n2;
+
         for(int i = 0; i < visitedNodes.size()-1; i++){
-            key = Set.of(visitedNodes.get(i), visitedNodes.get(i+1));
-            Salesman.pheromoneMap.replace(key, Salesman.pheromoneMap.get(key) + calcPheromones());
+            n1 = visitedNodes.get(i);
+            n2 = visitedNodes.get(i+1);
+            Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
         }
     }
 
     public double getDistance() {
         return distanceTraveled;
+    }
+
+    //Comparable
+    public int compareTo(Ant other){ //MAY CHANGE
+        return (int)(getDistance() - other.getDistance());
     }
 }
