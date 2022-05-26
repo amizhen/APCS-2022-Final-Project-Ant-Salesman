@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 
-public class Ant {
+public class Ant implements Comparable<Ant>{
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
@@ -46,7 +46,7 @@ public class Ant {
                 current = node;
                 toBeVisited.remove(i);
                 return;
-            } 
+            }
         }
         // should add fall back if everything fails
     }
@@ -73,5 +73,10 @@ public class Ant {
 
     public double getDistance() {
         return distanceTraveled;
+    }
+
+    //Comparable
+    public int compareTo(Ant other){ //MAY CHANGE
+        return (int)(getDistance() - other.getDistance());
     }
 }
