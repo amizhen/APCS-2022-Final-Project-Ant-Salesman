@@ -6,7 +6,7 @@ public class Ant implements Comparable<Ant>{
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
-    private final ArrayList<Node> toBeVisited; // TODO: make private
+    private final ArrayList<Node> toBeVisited;
 
 
     public Ant(Node start) {
@@ -31,23 +31,17 @@ public class Ant implements Comparable<Ant>{
     }
 
 
-    private void pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
+    private Node pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
-        Node node;
-        for (int i = 0; i<toBeVisited.size(); i++) {
-            node = toBeVisited.get(i);
+        for (Node node : toBeVisited) {
             rand += calculateWeight(node);
             if (choice < rand) {
-                distanceTraveled += current.distance(node);
-                visitedNodes.add(node);
-                // System.out.println(visitedNodes);
-                current = node;
-                toBeVisited.remove(i);
-                return;
+                return node;
             }
         }
+        return current;
         // should add fall back if everything fails
     }
 
@@ -61,7 +55,13 @@ public class Ant implements Comparable<Ant>{
     }
 
     private void tick() {
-        pickNextNode();
+        Node next = pickNextNode();
+        distanceTraveled += current.distance(next);
+        toBeVisited.remove(next);
+        visitedNodes.add(next);
+        current = next;
+
+
     }
 
     public void depositPheromones() {
