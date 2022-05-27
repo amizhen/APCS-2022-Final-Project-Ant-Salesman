@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * The Ant class that traverse through the map of Nodes
+ */
 public class Ant implements Comparable<Ant> {
 
+    /** Determines the weight of an edge being a chosen path */
     public static int WEIGHT_CONSTANT = 10000;
 
     private double distanceTraveled;
@@ -9,7 +13,11 @@ public class Ant implements Comparable<Ant> {
     private final ArrayList<Node> visitedNodes;
     private final ArrayList<Node> toBeVisited;
 
-
+    /**
+     * Constructor for the Ant object.
+     * 
+     * @param start The Node the Ant starts on
+     */
     public Ant(Node start) {
         distanceTraveled = 0;
         visitedNodes = new ArrayList<Node>();
@@ -18,6 +26,12 @@ public class Ant implements Comparable<Ant> {
         //default current to the start node, add to relevant lists
     }
 
+    /**
+     * Calculates the pheromones to be dropped. Should be only called when the ant does not have any 
+     * nodes to travel to.
+     * 
+     * @return The amount of pheromones dropped at an edges along the path
+     */
     private double calcPheromones() {
         return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
     }
@@ -26,12 +40,28 @@ public class Ant implements Comparable<Ant> {
         return current;
     }
 
+    /*
+    Note: The reason why the random uses integer values is because floating point values can cause 
+    floating point arithmetic errors leading to infinite loops.
+    */
+
+    /**
+     * Calculates the weight of a edge to be chosen to be traversed.
+     * 
+     * @param node The node that forms the edge with the current node
+     * @return The weight of the edge to be chosen
+     */
     private int calculateWeight(Node node) { // NOTE: If the program starts to run forever, change the constant at the end
         return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(current), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
     }
 
 
-    private Node pickNextNode(){ // TODO: Make this function only do one thing, break off other things into tick
+    /**
+     * Selects the next node to be chosen based on the pheromone map and its distance
+     * 
+     * @return The Node that was chosen to be traversed towards
+     */
+    private Node pickNextNode(){
         int sum = toBeVisited.stream().mapToInt(this::calculateWeight).sum();
         int choice = (int) (Math.random() * sum);
         int rand = 0;
@@ -42,9 +72,11 @@ public class Ant implements Comparable<Ant> {
             }
         }
         return current;
-        // should add fall back if everything fails
     }
 
+    /**
+     * Executes the Ant to traverse through the whole map. 
+     */
     public void run() {
         toBeVisited.addAll(Salesman.nodes);
         toBeVisited.remove(current);
@@ -54,6 +86,9 @@ public class Ant implements Comparable<Ant> {
         }
     }
 
+    /**
+     * Represents the Ant moving to the next node.
+     */
     private void tick() {
         Node next = pickNextNode();
         distanceTraveled += current.distance(next);
@@ -64,6 +99,9 @@ public class Ant implements Comparable<Ant> {
 
     }
 
+    /**
+     * Method that has the ant deposit pheromones on the edges the Ant travels
+     */
     public void depositPheromones() {
         Node n1, n2;
 
@@ -74,14 +112,25 @@ public class Ant implements Comparable<Ant> {
         }
     }
 
+    /**
+     * A method that returns the distance the ant has traveled.
+     * 
+     * @return The distance the ant has traveled
+     */
     public double getDistance() {
         return distanceTraveled;
     }
 
+    /**
+     * A method that returns a visual representation of the path the ant has taken
+     * 
+     * @return A string displaying the path the ant as taken
+     */
     public String getPathAsString() {
-        String path = visitedNodes.get(0) + " ";
-        for (int i = 1; i < visitedNodes.size(); i++) {
-            path += "->" + visitedNodes.get(i) + " ";
+
+        String path = "PATH TAKEN [Start -> End]\n";
+        for (int i = 0; i < visitedNodes.size(); i++) {
+            path += visitedNodes.get(i) + "\n";
         }
         return path;
     }
