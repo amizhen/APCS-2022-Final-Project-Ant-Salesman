@@ -22,7 +22,7 @@ will be visualized through Processing.
 
 
 | Name    | Date     | Summary                                                                                                          |
-| ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
+|---------|----------|------------------------------------------------------------------------------------------------------------------|
 | Aiden   | 05/23/22 | Started work on Ant class but realised it would make more sense to have the constants in the main written first. |
 | Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                       |
 | Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.           |
@@ -30,3 +30,4 @@ will be visualized through Processing.
 | Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                                      |
 | Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                |
 | Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                |
+| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                        |
