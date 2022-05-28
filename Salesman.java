@@ -9,7 +9,8 @@ import java.util.Set;
  * The class that performs the Ant Colony Optimization algorithms from a given set of nodes and coefficients.
  */
 public class Salesman {
-    
+
+    public static final Node start = new Node(0, 0);
     public static final List<Node> nodes = new ArrayList<>();
     private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
@@ -38,6 +39,7 @@ public class Salesman {
             for (Node node : nodes) {
                 pheromoneMap.put(Set.of(n, node), 1.0); 
             }
+            pheromoneMap.put(Set.of(n, start), 1.0);
             nodes.add(n);
         }
     }
@@ -84,7 +86,6 @@ public class Salesman {
      * Main executing methods to perform the algorithm
      */
     public static Ant findShortestPath() {
-        Node start = nodes.get(0); // probably is subject to change and start node will be its member away from the list
         Ant[] ants = new Ant[ANTS_PER_GENERATION];
 
         for (int j = 0; j < GENERATIONS; j++) {
