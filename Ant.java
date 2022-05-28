@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Ant implements Comparable<Ant> {
 
     /** Determines the weight of an edge being a chosen path */
-    public static int WEIGHT_CONSTANT = 10000;
+    public static final int WEIGHT_CONSTANT = 10000;
 
     private double distanceTraveled;
     private Node current;
@@ -51,7 +51,7 @@ public class Ant implements Comparable<Ant> {
      * @param node The node that forms the edge with the current node
      * @return The weight of the edge to be chosen
      */
-    private int calculateWeight(Node node) { // NOTE: If the program starts to run forever, change the constant at the end
+    private int calculateWeight(Node node) { 
         return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
     }
 

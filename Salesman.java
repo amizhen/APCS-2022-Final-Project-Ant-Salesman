@@ -77,13 +77,22 @@ public class Salesman {
         return pheromoneMap.get(Set.of(n1, n2));
     }
 
+    /**
+     * A method that sets the pheromone level found between two nodes to a new pheromone level
+     * 
+     * @param n1 One of the two nodes forming the edge
+     * @param n2 One of the two nodes forming the edge
+     * @param newVal The set pheromone level at edge n1 to n2
+     */
     public static void setPheromone(Node n1, Node n2, double newVal){
         Set<Node> key = Set.of(n1, n2);
         pheromoneMap.replace(key, newVal);
     }
 
     /**
-     * Main executing methods to perform the algorithm
+     * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
+     * 
+     * @return The ant with the shortest path found in the final iteration
      */
     public static Ant findShortestPath() {
         Ant[] ants = new Ant[ANTS_PER_GENERATION];
