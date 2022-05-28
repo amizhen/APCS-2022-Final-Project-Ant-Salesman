@@ -30,3 +30,7 @@ will be visualized through Processing.
 | Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                                      |
 | Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                |
 | Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                |
+| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                        |
+| Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                                           |
+| Aiden   | 05/27/22 |                                                                                                                  |
+| Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                            |
