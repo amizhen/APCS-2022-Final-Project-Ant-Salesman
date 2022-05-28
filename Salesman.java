@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Scanner;
+
 
 /**
  * The class that performs the Ant Colony Optimization algorithms from a given set of nodes and coefficients.
@@ -89,6 +91,20 @@ public class Salesman {
         pheromoneMap.replace(key, newVal);
     }
 
+
+    public static void input(){
+        Scanner scan = new Scanner(System.in);
+        double x, y;
+        String line;
+        while(scan.hasNextLine()){
+            line = scan.nextLine();
+            //Expects coordinates as x,y
+            x = Double.parseDouble(line.split(",")[0]);
+            y = Double.parseDouble(line.split(",")[1]);
+            nodes.add(new Node(x, y));
+        }
+    }
+
     /**
      * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
      * 
@@ -117,19 +133,21 @@ public class Salesman {
 
     public static void main(String[] args) {
         // test setup code
-        addNodes(
-            new Node(1, 1), 
-            new Node(2, 2), 
-            new Node(0, 0), 
-            new Node(9, 9), 
-            new Node(32, 25),
-            new Node(10, 5),
-            new Node(-20, 40),
-            new Node(12, -12)
-        );
-        Ant a = findShortestPath();
-        System.out.println(a.getPathAsString());
-        System.out.println(a.getDistance());
+//        addNodes(
+//            new Node(1, 1),
+//            new Node(2, 2),
+//            new Node(0, 0),
+//            new Node(9, 9),
+//            new Node(32, 25),
+//            new Node(10, 5),
+//            new Node(-20, 40),
+//            new Node(12, -12)
+//        );
+//        Ant a = findShortestPath();
+//        System.out.println(a.getPathAsString());
+//        System.out.println(a.getDistance());
+        input();
+        System.out.println(nodes);
     }
 
 }

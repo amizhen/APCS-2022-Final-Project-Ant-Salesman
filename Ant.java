@@ -56,6 +56,7 @@ public class Ant implements Comparable<Ant> {
     }
 
 
+
     /**
      * Selects the next node to be chosen based on the pheromone map and its distance
      * 
@@ -94,8 +95,6 @@ public class Ant implements Comparable<Ant> {
         toBeVisited.remove(next);
         visitedNodes.add(next);
         current = next;
-
-
     }
 
     /**
