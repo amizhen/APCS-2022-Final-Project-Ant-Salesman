@@ -94,6 +94,7 @@ public class Salesman {
             y = Double.parseDouble(line.split(",")[1]);
             nodes.add(new Node(x, y));
         }
+        scan.close();
     }
 
     /**

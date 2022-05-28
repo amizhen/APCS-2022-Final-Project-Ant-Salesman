@@ -31,3 +31,4 @@ will be visualized through Processing.
 | Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                |
 | Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                |
 | Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                        |
+| Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed                           |
