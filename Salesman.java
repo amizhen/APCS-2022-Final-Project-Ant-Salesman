@@ -15,14 +15,20 @@ public class Salesman {
     public static final List<Node> nodes = new ArrayList<>();
     private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
+    /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
     public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.2;
+    /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.2;
+    /** Percentage of pheromones that remain after evaporation */
     public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
+    /** Determines the amount of pheromones to be dropped by an Ant */
     public static double PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
-    public static final int ANTS_PER_ITERATION = 5;
-    public static final int ITERATION = 16;
-    public static final int TOP_ANT_SELECT_NUMBER = 2;
+
+    // Perhaps this can be dynamically determined. 
+    public static final int ANTS_PER_GENERATION = 1;
+    public static final int GENERATIONS = 16;
+    public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS_PER_GENERATION
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -32,7 +38,7 @@ public class Salesman {
     public static void addNode(Node n) {
         if (!nodes.contains(n)) {
             for (Node node : nodes) {
-                pheromoneMap.put(Set.of(n, node), 1.0); // set to 0 or 1; decide later
+                pheromoneMap.put(Set.of(n, node), 1.0); 
             }
             nodes.add(n);
         }
@@ -60,6 +66,13 @@ public class Salesman {
         }
     }
 
+    /**
+     * A method to returns the pheromone level found between two nodes.
+     * 
+     * @param n1 One of the two nodes forming the edge
+     * @param n2 One of the two nodes forming the edge
+     * @return The pheromone level at edge n1 to n2
+     */
     public static double getPheromone(Node n1, Node n2) {
         return pheromoneMap.get(Set.of(n1, n2));
     }
@@ -68,10 +81,6 @@ public class Salesman {
         Set<Node> key = Set.of(n1, n2);
         pheromoneMap.replace(key, newVal);
     }
-
-    /**
-     * Main executing methods to perform the algorithm
-     */
 
 
     public static void input(){
@@ -87,34 +96,29 @@ public class Salesman {
         }
     }
 
+    /**
+     * Main executing methods to perform the algorithm
+     */
+    public static Ant findShortestPath() {
+        Node start = nodes.get(0); // probably is subject to change and start node will be its member away from the list
+        Ant[] ants = new Ant[ANTS_PER_GENERATION];
 
-    public static Ant findShortestPath() { //TODO: Make nested for loop seperate function
-        Node start = nodes.get(0);
-        Ant[] ants = new Ant[ANTS_PER_ITERATION];
-        
-        int minIndex = 0;
-
-        for (int j = 0; j < ITERATION; j++) {
-            minIndex = 0;
-            for (int i = 0; i < ANTS_PER_ITERATION; i++) {
+        for (int j = 0; j < GENERATIONS; j++) {
+            for (int i = 0; i < ANTS_PER_GENERATION; i++) {
                 ants[i] = new Ant(start);
-                ants[i].run();
-                if (ants[i].getDistance() < ants[minIndex].getDistance()) {
-                    minIndex = i;
-                }
+                ants[i].run(); // have ants traverse through the map of nodes
             }
-            
-            Arrays.sort(ants);
+            Arrays.sort(ants); // sort Ants on distance travelled
             
             decayPheromones();
-            for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) {
+            for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
                 ants[i].depositPheromones();
             }
 
-            System.out.println("Distance for iteration " + (j + 1) + " - " + ants[minIndex].getDistance());
+            System.out.println("Distance for iteration " + (j + 1) + " - " + ants[0].getDistance());
         }
 
-        return ants[minIndex];
+        return ants[0];
     }
 
     public static void main(String[] args) {
