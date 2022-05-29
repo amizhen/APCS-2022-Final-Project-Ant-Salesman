@@ -11,7 +11,8 @@ import java.util.Scanner;
  * The class that performs the Ant Colony Optimization algorithms from a given set of nodes and coefficients.
  */
 public class Salesman {
-    
+
+    public static final Node start = new Node(0, 0);
     public static final List<Node> nodes = new ArrayList<>();
     private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
@@ -40,6 +41,7 @@ public class Salesman {
             for (Node node : nodes) {
                 pheromoneMap.put(Set.of(n, node), 1.0); 
             }
+            pheromoneMap.put(Set.of(n, start), 1.0);
             nodes.add(n);
         }
     }
@@ -77,6 +79,13 @@ public class Salesman {
         return pheromoneMap.get(Set.of(n1, n2));
     }
 
+    /**
+     * A method that sets the pheromone level found between two nodes to a new pheromone level
+     * 
+     * @param n1 One of the two nodes forming the edge
+     * @param n2 One of the two nodes forming the edge
+     * @param newVal The set pheromone level at edge n1 to n2
+     */
     public static void setPheromone(Node n1, Node n2, double newVal){
         Set<Node> key = Set.of(n1, n2);
         pheromoneMap.replace(key, newVal);
@@ -98,10 +107,11 @@ public class Salesman {
     }
 
     /**
-     * Main executing methods to perform the algorithm
+     * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
+     * 
+     * @return The ant with the shortest path found in the final iteration
      */
     public static Ant findShortestPath() {
-        Node start = nodes.get(0); // probably is subject to change and start node will be its member away from the list
         Ant[] ants = new Ant[ANTS_PER_GENERATION];
 
         for (int j = 0; j < GENERATIONS; j++) {
