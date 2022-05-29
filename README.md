@@ -34,4 +34,3 @@ will be visualized through Processing.
 | Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed                           |
 | Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                                           | |
 | Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                            |
->>>>>>> def4249dec0ac5c0f7b00cd7ef67f38f10161ce5
