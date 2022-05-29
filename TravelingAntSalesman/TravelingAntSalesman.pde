@@ -128,6 +128,13 @@ void setup() {
   addNodes(new TravelNode(45, 80));
 }
 
+void mouseClicked() {
+  DrawableNode n = new TravelNode(mouseX, mouseY);
+  if (!nodes.contains(n)) {
+    nodes.add(n);
+  }
+}
+
 void draw() {
   background(255);
   start.display();
