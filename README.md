@@ -16,18 +16,36 @@ will be visualized through Processing.
 
 ## **Compile/Run Instructions**
 
-***TODO***
+### *Non-Visual Algorithm With Standard Input*
+
+* Compile Salesman.java.
+* Run without arguments.
+* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the
+  start node.
+* Result will be printed to terminal.
+
+### *Non-Visual Algorithm With File Input*
+
+* Compile Salesman.java.
+* Run with the filename of the input file as the argument.
+* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per
+  line.
+
+### *Processing Visualization*
 
 ## **Development Logs**
 
-
-| Name    | Date     | Summary                                                                                                          |
-|---------|----------|------------------------------------------------------------------------------------------------------------------|
+| Name    | Date     | Summary                                                                                           |
+|---------|----------|---------------------------------------------------------------------------------------------------|
 | Aiden   | 05/23/22 | Started work on Ant class but realised it would make more sense to have the constants in the main written first. |
-| Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                       |
-| Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.           |
-| Aiden   | 05/24/22 | Resolved merge conflicts, added several utility functions to the ant class.                                      |
-| Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                                      |
-| Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                |
-| Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                |
-| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                        |
+| Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                        |
+| Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class. |
+| Aiden   | 05/24/22 | Resolved merge conflicts, added several utility functions to the ant class.                       |
+| Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                       |
+| Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                 |
+| Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                 |
+| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                         |
+| Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed            |
+| Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                            |
+| Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                             |
+| Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file. |
