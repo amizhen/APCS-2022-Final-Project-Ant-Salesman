@@ -19,7 +19,7 @@ public class Node {
 
     /**
      * Acessor for x coordinate
-     * 
+     *
      * @return x coordinate
      */
     public double getX() {
@@ -28,7 +28,7 @@ public class Node {
 
     /**
      * Acessor for y coordinate
-     * 
+     *
      * @return y coordinate
      */
     public double getY() {
@@ -37,7 +37,7 @@ public class Node {
 
     /**
      * A method that determines the distance between the current node and an adjacent node
-     * 
+     *
      * @param adj Adjacent node
      * @return The distance between this node and the adjacent node
      */
@@ -53,7 +53,7 @@ public class Node {
 
     /**
      * Determines if two nodes are equal by their coordinates.
-     * 
+     *
      * @param n Node to compare to
      * @return If the node are equal
      */
