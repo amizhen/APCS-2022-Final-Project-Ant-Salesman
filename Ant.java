@@ -7,7 +7,6 @@ public class Ant implements Comparable<Ant> {
 
     /** Determines the weight of an edge being a chosen path */
     public static int WEIGHT_CONSTANT = 10000;
-
     private double distanceTraveled;
     private Node current;
     private final ArrayList<Node> visitedNodes;
@@ -107,7 +106,7 @@ public class Ant implements Comparable<Ant> {
         for(int i = 0; i < visitedNodes.size()-1; i++){
             n1 = visitedNodes.get(i);
             n2 = visitedNodes.get(i+1);
-            Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
+            Salesman.setPheromone(n1, n2, (Salesman.getPheromone(n1, n2) + calcPheromones()));
         }
     }
 
@@ -128,8 +127,8 @@ public class Ant implements Comparable<Ant> {
     public String getPathAsString() {
 
         String path = "PATH TAKEN [Start -> End]\n";
-        for (int i = 0; i < visitedNodes.size(); i++) {
-            path += visitedNodes.get(i) + "\n";
+        for (Node node : visitedNodes) {
+            path += node + "\n";
         }
         return path;
     }

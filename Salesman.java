@@ -60,7 +60,7 @@ public class Salesman {
      */
     public static void decayPheromones() {
         for (Set<Node> key : pheromoneMap.keySet()) {
-            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT)  {
+            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1.0 / Ant.WEIGHT_CONSTANT)  {
                 pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
             }
         }
@@ -92,7 +92,7 @@ public class Salesman {
             //Expects coordinates as x,y
             x = Double.parseDouble(line.split(",")[0]);
             y = Double.parseDouble(line.split(",")[1]);
-            nodes.add(new Node(x, y));
+            addNode(new Node(x, y));
         }
         scan.close();
     }
