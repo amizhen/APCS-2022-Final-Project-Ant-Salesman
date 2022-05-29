@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public static Node start;
-public static List<Node> nodes;
-private static Map<Set<Node>, Float> pheromoneMap;
+public static DrawableNode start;
+public static List<DrawableNode> nodes;
+private static Map<Set<DrawableNode>, Float> pheromoneMap;
 
 /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
 public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.2;
@@ -29,9 +29,9 @@ public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS
  * 
  * @param n The node to add
  */
-public static void addNode(Node n) {
+public static void addNode(DrawableNode n) {
   if (!nodes.contains(n)) {
-    for (Node node : nodes) {
+    for (DrawableNode node : nodes) {
       pheromoneMap.put(setOf(n, node), 1.0);
     }
     pheromoneMap.put(setOf(n, start), 1.0);
@@ -44,8 +44,8 @@ public static void addNode(Node n) {
  * 
  * @param nodes The nodes to add
  */
-public static void addNodes(Node... nodes) {
-  for (Node node : nodes) {
+public static void addNodes(DrawableNode... nodes) {
+  for (DrawableNode node : nodes) {
     addNode(node);
   }
 }
@@ -54,7 +54,7 @@ public static void addNodes(Node... nodes) {
  * A method to decay all the edges in the pheromone map. The decay is based on the PHEROMONE_EVAPORATION_COEFFICIENT
  */
 public static void decayPheromones() {
-  for (Set<Node> key : pheromoneMap.keySet()) {
+  for (Set<DrawableNode> key : pheromoneMap.keySet()) {
     if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT) {
       pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
     }
@@ -86,8 +86,8 @@ public static float getPheromone(Node n1, Node n2) {
  * @param n2 One of the two nodes forming the edge
  * @param newVal The set pheromone level at edge n1 to n2
  */
-public static void setPheromone(Node n1, Node n2, float newVal) {
-  Set<Node> key = setOf(n1, n2);
+public static void setPheromone(DrawableNode n1, DrawableNode n2, float newVal) {
+  Set<DrawableNode> key = setOf(n1, n2);
   pheromoneMap.replace(key, newVal);
 }
 
@@ -118,11 +118,20 @@ public static Ant findShortestPath() {
 }
 
 void setup() {
-  size(500, 500);
-  start = new Node(width / 2, height / 2);
-  nodes = new ArrayList<Node>();
-  pheromoneMap = new HashMap<Set<Node>, Float>();
+  size(1000, 1000);
+  start = new StartNode(width / 2, height / 2);
+  nodes = new ArrayList<DrawableNode>();
+  pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
+  noStroke();
+  
+  // test code
+  addNodes(new TravelNode(45, 80));
 }
 
 void draw() {
+  background(255);
+  start.display();
+  for (DrawableNode n : nodes) {
+    n.display();
+  }
 }
