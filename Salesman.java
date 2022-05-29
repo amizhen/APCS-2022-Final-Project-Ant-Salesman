@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -106,6 +108,27 @@ public class Salesman {
         scan.close();
     }
 
+    public static void fileInput(String fileName){
+        try {
+            File file = new File(fileName);
+            Scanner scan = new Scanner(file);
+            double x, y;
+            String line;
+            while(scan.hasNext("[0-9]+,[0-9]+") ){
+                line = scan.nextLine();
+                //Expects coordinates as x,y
+                x = Double.parseDouble(line.split(",")[0]);
+                y = Double.parseDouble(line.split(",")[1]);
+                addNode(new Node(x, y));
+            }
+            scan.close();
+        }
+        catch(FileNotFoundException e){
+            System.out.println("No Such File for fileInput");
+            e.printStackTrace();
+        }
+    }
+
     /**
      * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
      * 
@@ -147,7 +170,7 @@ public class Salesman {
 //        Ant a = findShortestPath();
 //        System.out.println(a.getPathAsString());
 //        System.out.println(a.getDistance());
-        input();
+        fileInput("input");
         System.out.println(nodes);
     }
 
