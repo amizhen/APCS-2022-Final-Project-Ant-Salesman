@@ -42,7 +42,7 @@ public class Node {
    * @return The distance between this node and the adjacent node
    */
   public float distance(Node adj) {
-    return (float) Math.sqrt(Math.pow(getX() - adj.getX(), 2) + Math.pow(getY() - adj.getY(), 2));
+    return dist(getX(), getY(), adj.getX(), adj.getY());
   }
   
   public void setX(float x) {

@@ -3,25 +3,25 @@ import java.util.ArrayList;
 /**
  * The Ant class that traverse through the map of Nodes
  */
-public class Ant implements Comparable<Ant> {
+public static class Ant implements Comparable<Ant> {
 
   /** Determines the weight of an edge being a chosen path */
   public static final int WEIGHT_CONSTANT = 10000;
 
   private float distanceTraveled;
-  private Node current;
-  private final ArrayList<Node> visitedNodes;
-  private final ArrayList<Node> toBeVisited;
+  private DrawableNode current;
+  private final ArrayList<DrawableNode> visitedNodes;
+  private final ArrayList<DrawableNode> toBeVisited;
 
   /**
    * Constructor for the Ant object.
    * 
    * @param start The Node the Ant starts on
    */
-  public Ant(Node start) {
+  public Ant(DrawableNode start) {
     distanceTraveled = 0;
-    visitedNodes = new ArrayList<Node>();
-    toBeVisited = new ArrayList<>();
+    visitedNodes = new ArrayList<DrawableNode>();
+    toBeVisited = new ArrayList<DrawableNode>();
     current = start;
     //default current to the start node, add to relevant lists
   }
@@ -62,13 +62,13 @@ public class Ant implements Comparable<Ant> {
    * 
    * @return The Node that was chosen to be traversed towards
    */
-  private Node pickNextNode() {
+  private DrawableNode pickNextNode() {
     int sum = 0;
-    for (Node n : toBeVisited) sum += calculateWeight(n);
+    for (DrawableNode n : toBeVisited) sum += calculateWeight(n);
 
     int choice = (int) (Math.random() * sum);
     int rand = 0;
-    for (Node node : toBeVisited) {
+    for (DrawableNode node : toBeVisited) {
       rand += calculateWeight(node);
       if (choice < rand) {
         return node;
@@ -82,6 +82,7 @@ public class Ant implements Comparable<Ant> {
    */
   public void run() {
     toBeVisited.addAll(Salesman.nodes);
+    System.out.println(toBeVisited.size());
     visitedNodes.add(current);
     while (toBeVisited.size() > 0) {
       tick();
@@ -92,7 +93,7 @@ public class Ant implements Comparable<Ant> {
    * Represents the Ant moving to the next node.
    */
   private void tick() {
-    Node next = pickNextNode();
+    DrawableNode next = pickNextNode();
     distanceTraveled += current.distance(next);
     toBeVisited.remove(next);
     visitedNodes.add(next);
@@ -103,7 +104,7 @@ public class Ant implements Comparable<Ant> {
    * Method that has the ant deposit pheromones on the edges the Ant travels
    */
   public void depositPheromones() {
-    Node n1, n2;
+    DrawableNode n1, n2;
 
     for (int i = 0; i < visitedNodes.size()-1; i++) {
       n1 = visitedNodes.get(i);

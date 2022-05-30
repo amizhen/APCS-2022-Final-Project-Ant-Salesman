@@ -1,26 +1,14 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-/**
- * The class that performs the Ant Colony Optimization algorithms from a given set of nodes and coefficients.
- */
-public class Salesman {
-
-  public static final Node start = new Node(0, 0);
-  public static final List<Node> nodes = new ArrayList<>();
-  private static final Map<Set<Node>, Float> pheromoneMap = new HashMap<>();
+public static class Salesman {
+  public static DrawableNode start;
+  public static List<DrawableNode> nodes;
+  private static Map<Set<DrawableNode>, Float> pheromoneMap;
 
   /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
-  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.2f;
+  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.2;
   /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
-  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.2f;
+  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.2;
   /** Percentage of pheromones that remain after evaporation */
-  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95f;
+  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
   public static float PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
@@ -35,12 +23,12 @@ public class Salesman {
    * 
    * @param n The node to add
    */
-  public static void addNode(Node n) {
+  public static void addNode(DrawableNode n) {
     if (!nodes.contains(n)) {
-      for (Node node : nodes) {
-        pheromoneMap.put(setOf(n, node), 1.0f);
+      for (DrawableNode node : nodes) {
+        pheromoneMap.put(setOf(n, node), 1.0);
       }
-      pheromoneMap.put(setOf(n, start), 1.0f);
+      pheromoneMap.put(setOf(n, start), 1.0);
       nodes.add(n);
     }
   }
@@ -50,8 +38,8 @@ public class Salesman {
    * 
    * @param nodes The nodes to add
    */
-  public static void addNodes(Node... nodes) {
-    for (Node node : nodes) {
+  public static void addNodes(DrawableNode... nodes) {
+    for (DrawableNode node : nodes) {
       addNode(node);
     }
   }
@@ -60,7 +48,7 @@ public class Salesman {
    * A method to decay all the edges in the pheromone map. The decay is based on the PHEROMONE_EVAPORATION_COEFFICIENT
    */
   public static void decayPheromones() {
-    for (Set<Node> key : pheromoneMap.keySet()) {
+    for (Set<DrawableNode> key : pheromoneMap.keySet()) {
       if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT) {
         pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
       }
@@ -68,7 +56,7 @@ public class Salesman {
   }
 
   public static <T> Set<T> setOf(T t1, T t2) {
-    Set<T> map = new HashSet<>(2);
+    Set<T> map = new HashSet<T>(2);
     map.add(t1);
     map.add(t2);
     return map;
@@ -92,8 +80,8 @@ public class Salesman {
    * @param n2 One of the two nodes forming the edge
    * @param newVal The set pheromone level at edge n1 to n2
    */
-  public static void setPheromone(Node n1, Node n2, float newVal) {
-    Set<Node> key = setOf(n1, n2);
+  public static void setPheromone(DrawableNode n1, DrawableNode n2, float newVal) {
+    Set<DrawableNode> key = setOf(n1, n2);
     pheromoneMap.replace(key, newVal);
   }
 
