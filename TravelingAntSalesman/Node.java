@@ -3,8 +3,8 @@
  */
 public class Node {
 
-  private final float x;
-  private final float y;
+  private float x;
+  private float y;
 
   /**
    * Constructor to create a Node at location (x,y)
@@ -43,6 +43,14 @@ public class Node {
    */
   public float distance(Node adj) {
     return (float) Math.sqrt(Math.pow(getX() - adj.getX(), 2) + Math.pow(getY() - adj.getY(), 2));
+  }
+  
+  public void setX(float x) {
+    this.x = x;
+  }
+  
+  public void setY(float y) {
+    this.y = y;
   }
 
   @Override

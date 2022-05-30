@@ -9,10 +9,19 @@ public class DrawableNode extends Node {
     this.diameter = diameter;
     colour = c;
   }
+  
+  public void move(float x, float y) {
+    setX(x);
+    setY(y);
+  }
 
   public void display() {
     fill(colour);
     ellipse(getX(), getY(), diameter, diameter);
+  }
+  
+  public float getDiameter() {
+    return diameter;
   }
 }
 

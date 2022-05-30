@@ -135,6 +135,24 @@ void mouseClicked() {
   }
 }
 
+void mouseDragged() {
+  DrawableNode selected = null;
+  for (DrawableNode node : nodes) {
+    if (dist(mouseX, mouseY, node.getX(), node.getY()) < node.getDiameter() / 2) {
+      selected = node;
+      break;
+    }
+  }
+  
+  if (selected == null && dist(mouseX, mouseY, start.getX(), start.getY()) < start.getDiameter() / 2) {
+     selected = start;
+  }
+  
+  if (selected != null) {
+    selected.move(mouseX, mouseY);
+  }
+}
+
 void draw() {
   background(255);
   start.display();
