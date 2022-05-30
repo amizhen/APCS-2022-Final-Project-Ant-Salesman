@@ -14,6 +14,7 @@ void setup() {
   Salesman.nodes = new ArrayList<DrawableNode>();
   Salesman.pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
   noStroke();
+  textSize(40);
 
   // test code
   // Salesman.addNodes(new TravelNode(45, 80));
@@ -58,8 +59,9 @@ void mouseDragged() {
 void keyPressed() {
   if (keyCode == 10) { // solve
     pathAnt = Salesman.findShortestPath();
-    // print(pathAnt.getPathAsString());
-    // print(pathAnt);
+  } else if (keyCode == 8) {
+    Salesman.nodes.clear();
+    pathAnt = null;
   }
 }
 
@@ -74,10 +76,6 @@ void displayAntPath(Ant ant) {
 
 void draw() {
   background(255);
-  Salesman.start.display();
-  for (DrawableNode n : Salesman.nodes) {
-    n.display();
-  }
   
   if (pathAnt != null) {
     stroke(0);
@@ -85,4 +83,13 @@ void draw() {
     noStroke();
   }
   
+  Salesman.start.display();
+  for (DrawableNode n : Salesman.nodes) {
+    n.display();
+  }
+  
+  if (pathAnt != null) {
+    fill(0);
+    text("Distance - " + pathAnt.getDistance(), 40, 40);
+  }
 }

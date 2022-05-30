@@ -15,7 +15,7 @@ public static class Salesman {
 
   // Perhaps this can be dynamically determined. Look into this later
   public static final int ANTS_PER_GENERATION = 5;
-  public static final int GENERATIONS = 20;
+  public static final int GENERATIONS = 40;
   public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS_PER_GENERATION
 
   /**
