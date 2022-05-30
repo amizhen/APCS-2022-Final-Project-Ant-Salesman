@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The Ant class that traverse through the map of Nodes
@@ -82,7 +83,6 @@ public static class Ant implements Comparable<Ant> {
    */
   public void run() {
     toBeVisited.addAll(Salesman.nodes);
-    System.out.println(toBeVisited.size());
     visitedNodes.add(current);
     while (toBeVisited.size() > 0) {
       tick();
@@ -138,7 +138,13 @@ public static class Ant implements Comparable<Ant> {
 
   //Comparable
   @Override
-    public int compareTo(Ant other) { //MAY CHANGE
+  public int compareTo(Ant other) { //MAY CHANGE
     return (int) (getDistance() - other.getDistance());
+  }
+
+  // processing code
+
+  public List<DrawableNode> getVisitedList() {
+    return Collections.unmodifiableList(visitedNodes);
   }
 }

@@ -13,9 +13,9 @@ public static class Salesman {
   public static float PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
 
-  // Perhaps this can be dynamically determined. 
-  public static final int ANTS_PER_GENERATION = 1;
-  public static final int GENERATIONS = 16;
+  // Perhaps this can be dynamically determined. Look into this later
+  public static final int ANTS_PER_GENERATION = 5;
+  public static final int GENERATIONS = 20;
   public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS_PER_GENERATION
 
   /**
@@ -49,7 +49,7 @@ public static class Salesman {
    */
   public static void decayPheromones() {
     for (Set<DrawableNode> key : pheromoneMap.keySet()) {
-      if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT) {
+      if (pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT > 1) {
         pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
       }
     }
@@ -104,8 +104,6 @@ public static class Salesman {
       for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
         ants[i].depositPheromones();
       }
-
-      System.out.println("Distance for iteration " + (j + 1) + " - " + ants[0].getDistance());
     }
 
     return ants[0];

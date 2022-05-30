@@ -23,6 +23,7 @@ void mouseClicked() {
   DrawableNode n = new TravelNode(mouseX, mouseY);
   if (!Salesman.nodes.contains(n)) {
     Salesman.addNode(n);
+    pathAnt = null;
   }
 }
 
@@ -49,14 +50,25 @@ void mouseDragged() {
   }
 
   if (selected != null) {
+    pathAnt = null;
     selected.move(mouseX, mouseY);
   }
 }
 
 void keyPressed() {
-  if (keyCode == 10) {
+  if (keyCode == 10) { // solve
     pathAnt = Salesman.findShortestPath();
-    print(pathAnt.getPathAsString());
+    // print(pathAnt.getPathAsString());
+    // print(pathAnt);
+  }
+}
+
+void displayAntPath(Ant ant) {
+  List<DrawableNode> path = ant.getVisitedList();
+  for (int i = 0; i < path.size() - 1; i++) {
+    DrawableNode start = path.get(i);
+    DrawableNode end = path.get(i + 1);
+    line(start.getX(), start.getY(), end.getX(), end.getY());
   }
 }
 
@@ -66,4 +78,11 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
+  
+  if (pathAnt != null) {
+    stroke(0);
+    displayAntPath(pathAnt);
+    noStroke();
+  }
+  
 }
