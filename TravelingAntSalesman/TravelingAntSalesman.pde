@@ -24,6 +24,8 @@ public static final int ANTS_PER_GENERATION = 1;
 public static final int GENERATIONS = 16;
 public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS_PER_GENERATION
 
+public static DrawableNode previousSelect = null;
+
 /**
  * A method to add an individual Node to the system. Updates nodes and the pheromone map.
  * 
@@ -123,7 +125,7 @@ void setup() {
   nodes = new ArrayList<DrawableNode>();
   pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
   noStroke();
-  
+
   // test code
   addNodes(new TravelNode(45, 80));
 }
@@ -135,22 +137,35 @@ void mouseClicked() {
   }
 }
 
+void mouseReleased() {
+  previousSelect = null;
+}
+
 void mouseDragged() {
-  DrawableNode selected = null;
-  for (DrawableNode node : nodes) {
-    if (dist(mouseX, mouseY, node.getX(), node.getY()) < node.getDiameter() / 2) {
-      selected = node;
-      break;
+  DrawableNode selected = previousSelect;
+
+  if (selected == null) {
+    for (DrawableNode node : nodes) {
+      if (dist(mouseX, mouseY, node.getX(), node.getY()) < node.getDiameter() / 2) {
+        previousSelect = node;
+        selected = node;
+        break;
+      }
+    }
+
+    if (selected == null && dist(mouseX, mouseY, start.getX(), start.getY()) < start.getDiameter() / 2) {
+      previousSelect = start;
+      selected = start;
     }
   }
-  
-  if (selected == null && dist(mouseX, mouseY, start.getX(), start.getY()) < start.getDiameter() / 2) {
-     selected = start;
-  }
-  
+
   if (selected != null) {
     selected.move(mouseX, mouseY);
   }
+}
+
+void keyPressed() {
+  print(keyCode);
 }
 
 void draw() {
