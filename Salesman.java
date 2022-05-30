@@ -72,7 +72,7 @@ public class Salesman {
      */
     public static void decayPheromones() {
         for (Set<Node> key : pheromoneMap.keySet()) {
-            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1.0 / Ant.WEIGHT_CONSTANT) {
+            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT >= 1.0) {
                 pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
             }
         }
