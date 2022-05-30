@@ -33,11 +33,17 @@ will be visualized through Processing.
 
 ### *Processing Visualization*
 
-* Run the processing file TravellingAntSalesman.
+*Prerequisites*: Processing version <= 4 
+
+* Open the *TravelingAntSalesman.pde* file in Processing in TravelingAntSalesman directory
+* Run TravelingAntSalesman.pde
+
+**Features**:
+
 * Click to place nodes.
-* Click and drag existing nodes to move them.
-* Delete key wipes existing nodes.
-* Enter key runs the algorithm and draws lines to show the "optimal" path. 
+* Click and drag existing nodes to move them. This includes the start node in blue.
+* Use the Delete key to clear all existing green nodes.
+* Use the Enter key to run the algorithm and draws lines to show the "optimal" path. 
 
 ## **Development Logs**
 
@@ -56,3 +62,4 @@ will be visualized through Processing.
 | Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                            |
 | Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                |
 | Jeffrey | 05/29/22 | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO       |
+| Jeffrey | 05/30/22 | Fixed bug with program + modified constants to produce consistent solutions                                      |
