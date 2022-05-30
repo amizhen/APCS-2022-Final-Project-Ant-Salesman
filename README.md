@@ -16,10 +16,24 @@ will be visualized through Processing.
 
 ## **Compile/Run Instructions**
 
-***TODO***
+### *Non-Visual Algorithm With Standard Input*
+
+* Compile Salesman.java.
+* Run without arguments.
+* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the
+  start node.
+* Result will be printed to terminal.
+
+### *Non-Visual Algorithm With File Input*
+
+* Compile Salesman.java.
+* Run with the filename of the input file as the argument.
+* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per
+  line.
+
+### *Processing Visualization*
 
 ## **Development Logs**
-
 
 | Name    | Date     | Summary                                                                                                          |
 | ------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -31,6 +45,8 @@ will be visualized through Processing.
 | Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                |
 | Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                |
 | Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                        |
+| Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed                           |
 | Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                                           |
-| Aiden   | 05/27/22 |                                                                                                                  |
 | Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                            |
+| Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                |
+| Jeffrey | 05/29/22 | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO       |
