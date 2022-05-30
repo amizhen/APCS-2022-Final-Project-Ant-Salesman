@@ -33,6 +33,12 @@ will be visualized through Processing.
 
 ### *Processing Visualization*
 
+* Run the processing file TravellingAntSalesman.
+* Click to place nodes.
+* Click and drag existing nodes to move them.
+* Delete key wipes existing nodes.
+* Enter key runs the algorithm and draws lines to show the "optimal" path. 
+
 ## **Development Logs**
 
 | Name    | Date     | Summary                                                                                                          |
