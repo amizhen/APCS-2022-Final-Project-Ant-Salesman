@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 
 /**
@@ -16,13 +18,21 @@ public class Salesman {
     public static final List<Node> nodes = new ArrayList<>();
     private static final Map<Set<Node>, Double> pheromoneMap = new HashMap<>();
 
-    /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
+    /**
+     * Determines the effect of pheromones in the chance of the Node to be selected by the Ant
+     */
     public static double PHEROMONE_INFLUENCE_COEFFICIENT = 1.2;
-    /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
+    /**
+     * Determines the effect of the distance in the chance of the Node to be selected by the Ant
+     */
     public static double DISTANCE_INFLUENCE_COEFFICIENT = 1.2;
-    /** Percentage of pheromones that remain after evaporation */
+    /**
+     * Percentage of pheromones that remain after evaporation
+     */
     public static double PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
-    /** Determines the amount of pheromones to be dropped by an Ant */
+    /**
+     * Determines the amount of pheromones to be dropped by an Ant
+     */
     public static double PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
 
@@ -33,13 +43,13 @@ public class Salesman {
 
     /**
      * A method to add an individual Node to the system. Updates nodes and the pheromone map.
-     * 
+     *
      * @param n The node to add
      */
     public static void addNode(Node n) {
         if (!nodes.contains(n)) {
             for (Node node : nodes) {
-                pheromoneMap.put(Set.of(n, node), 1.0); 
+                pheromoneMap.put(Set.of(n, node), 1.0);
             }
             pheromoneMap.put(Set.of(n, start), 1.0);
             nodes.add(n);
@@ -48,7 +58,7 @@ public class Salesman {
 
     /**
      * A method to add multiple Nodes to the system. Updates nodes and the pheromone map.
-     * 
+     *
      * @param nodes The nodes to add
      */
     public static void addNodes(Node... nodes) {
@@ -62,7 +72,7 @@ public class Salesman {
      */
     public static void decayPheromones() {
         for (Set<Node> key : pheromoneMap.keySet()) {
-            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1 / Ant.WEIGHT_CONSTANT)  {
+            if (pheromoneMap.get(key) * PHEROMONE_DEPOSIT_COEFFICIENT > 1.0 / Ant.WEIGHT_CONSTANT) {
                 pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
             }
         }
@@ -70,7 +80,7 @@ public class Salesman {
 
     /**
      * A method to returns the pheromone level found between two nodes.
-     * 
+     *
      * @param n1 One of the two nodes forming the edge
      * @param n2 One of the two nodes forming the edge
      * @return The pheromone level at edge n1 to n2
@@ -81,33 +91,54 @@ public class Salesman {
 
     /**
      * A method that sets the pheromone level found between two nodes to a new pheromone level
-     * 
-     * @param n1 One of the two nodes forming the edge
-     * @param n2 One of the two nodes forming the edge
+     *
+     * @param n1     One of the two nodes forming the edge
+     * @param n2     One of the two nodes forming the edge
      * @param newVal The set pheromone level at edge n1 to n2
      */
-    public static void setPheromone(Node n1, Node n2, double newVal){
+    public static void setPheromone(Node n1, Node n2, double newVal) {
         Set<Node> key = Set.of(n1, n2);
         pheromoneMap.replace(key, newVal);
     }
 
 
-    public static void input(){
+    public static void input() {
         Scanner scan = new Scanner(System.in);
         double x, y;
         String line;
-        while(scan.hasNextLine()){
+        while (scan.hasNextLine()) {
             line = scan.nextLine();
             //Expects coordinates as x,y
             x = Double.parseDouble(line.split(",")[0]);
             y = Double.parseDouble(line.split(",")[1]);
-            nodes.add(new Node(x, y));
+            addNode(new Node(x, y));
+        }
+        scan.close();
+    }
+
+    public static void fileInput(String fileName) {
+        try {
+            File file = new File(fileName);
+            Scanner scan = new Scanner(file);
+            double x, y;
+            String line;
+            while (scan.hasNext("[0-9]+,[0-9]+")) {
+                line = scan.nextLine();
+                //Expects coordinates as x,y
+                x = Double.parseDouble(line.split(",")[0]);
+                y = Double.parseDouble(line.split(",")[1]);
+                addNode(new Node(x, y));
+            }
+            scan.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("No Such File for fileInput");
+            e.printStackTrace();
         }
     }
 
     /**
      * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
-     * 
+     *
      * @return The ant with the shortest path found in the final iteration
      */
     public static Ant findShortestPath() {
@@ -119,7 +150,7 @@ public class Salesman {
                 ants[i].run(); // have ants traverse through the map of nodes
             }
             Arrays.sort(ants); // sort Ants on distance travelled
-            
+
             decayPheromones();
             for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
                 ants[i].depositPheromones();
@@ -132,6 +163,13 @@ public class Salesman {
     }
 
     public static void main(String[] args) {
+        if (args.length > 0) {
+            fileInput(args[0]);
+        } else {
+            input();
+        }
+        System.out.println(nodes);
+
         // test setup code
 //        addNodes(
 //            new Node(1, 1),
@@ -146,8 +184,6 @@ public class Salesman {
 //        Ant a = findShortestPath();
 //        System.out.println(a.getPathAsString());
 //        System.out.println(a.getDistance());
-        input();
-        System.out.println(nodes);
     }
 
 }
