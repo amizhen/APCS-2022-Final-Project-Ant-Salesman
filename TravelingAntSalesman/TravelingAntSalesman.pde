@@ -8,6 +8,11 @@ import java.util.Set;
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 
+public static final int SOLUTION = 0;
+public static final int PHEROMONE = 1;
+
+public int MODE = SOLUTION;
+
 void setup() {
   size(1000, 1000);
   Salesman.start = new StartNode(width / 2, height / 2);
@@ -58,6 +63,7 @@ void mouseDragged() {
 
 void keyPressed() {
   if (keyCode == 10) { // solve
+    Salesman.resetPheromoneMap();
     pathAnt = Salesman.findShortestPath();
   } else if (keyCode == 8) {
     Salesman.nodes.clear();

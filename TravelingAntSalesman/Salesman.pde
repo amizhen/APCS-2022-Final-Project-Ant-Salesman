@@ -32,6 +32,16 @@ public static class Salesman {
       nodes.add(n);
     }
   }
+  
+  public static void resetPheromoneMap() {
+    for (DrawableNode n : nodes) {
+      for (DrawableNode m : nodes) {
+        if (n != m) {
+          pheromoneMap.put(setOf(n, m), 1.0);
+        }
+      }
+    }
+  }
 
   /**
    * A method to add multiple Nodes to the system. Updates nodes and the pheromone map.
