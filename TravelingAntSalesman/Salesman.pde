@@ -4,19 +4,19 @@ public static class Salesman {
   public static Map<Set<DrawableNode>, Float> pheromoneMap;
 
   /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
-  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.6;
+  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.25;
   /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
-  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.05;
+  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.4;
   /** Percentage of pheromones that remain after evaporation */
-  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.90;
+  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
-  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 100;
+  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
 
 
   // Perhaps this can be dynamically determined. Look into this later
-  public static final int ANTS_PER_GENERATION = 10;
-  public static final int GENERATIONS = 100;
-  public static final int TOP_ANT_SELECT_NUMBER = 1; // invariant - less than ANTS_PER_GENERATION
+  public static final int ANTS_PER_GENERATION = 20;
+  public static final int GENERATIONS = 50;
+  public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
 
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.

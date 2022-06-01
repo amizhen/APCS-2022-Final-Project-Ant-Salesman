@@ -7,7 +7,7 @@ import java.util.Collections;
 public static class Ant implements Comparable<Ant> {
 
   /** Determines the weight of an edge being a chosen path */
-  public static final int WEIGHT_CONSTANT = 10000;
+  public static final int WEIGHT_CONSTANT = 100000;
 
   private float distanceTraveled;
   private DrawableNode current;

@@ -69,6 +69,18 @@ void keyPressed() {
     Salesman.nodes.clear();
     pathAnt = null;
   }
+  
+  switch (keyCode) {
+    case 10:
+      Salesman.resetPheromoneMap();
+      pathAnt = Salesman.findShortestPath();
+      break;
+    case 8:
+      Salesman.nodes.clear();
+      pathAnt = null;
+    case 32:
+      MODE = (MODE + 1) % 2; 
+  }
 }
 
 void displayAntPath(Ant ant) {
@@ -78,10 +90,6 @@ void displayAntPath(Ant ant) {
     DrawableNode end = path.get(i + 1);
     line(start.getX(), start.getY(), end.getX(), end.getY());
   }
-}
-
-float getPheromoneDisplayWeight(float max) {
-  return 0.0;
 }
 
 void displayPheromoneMap() {
@@ -94,7 +102,9 @@ void displayPheromoneMap() {
   for (Set<DrawableNode> key : Salesman.pheromoneMap.keySet()) {
     // opacity of the edge is determined by comparing it to the largest edge pheromone level
     // use squares as it will lead to lower pheromone levels being displayed less
-    stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150)); // 11
+    // stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150));
+    
+    stroke(255, 0, 255, Salesman.pheromoneMap.get(key) / max * 150);
     DrawableNode[] nodes = key.toArray(new DrawableNode[2]);
     line(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());
   }
