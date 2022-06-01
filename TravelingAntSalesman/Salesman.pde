@@ -17,6 +17,9 @@ public static class Salesman {
   public static final int ANTS_PER_GENERATION = 20;
   public static final int GENERATIONS = 50;
   public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
+  
+  public static int antCounter = 0;
+  public static int generationCounter = 0;
 
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -101,12 +104,12 @@ public static class Salesman {
   public static Ant findShortestPath() {
     Ant[] ants = new Ant[ANTS_PER_GENERATION];
 
-    for (int j = 0; j < GENERATIONS; j++) {
-      for (int i = 0; i < ANTS_PER_GENERATION; i++) {
-        ants[i] = new Ant(start);
-        ants[i].run(); // have ants traverse through the map of nodes
+    for (; generationCounter < GENERATIONS; generationCounter++) {
+      for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
+        ants[antCounter] = new Ant(start);
+        ants[antCounter].run(); // have ants traverse through the map of nodes
       }
-      Arrays.sort(ants); // sort Ants on distance travelled
+      Arrays.sort(ants); // sort Ants on distance traveled
 
       decayPheromones();
       for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
@@ -116,4 +119,6 @@ public static class Salesman {
 
     return ants[0];
   }
+  
+  
 }

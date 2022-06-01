@@ -11,7 +11,7 @@ public static Ant pathAnt = null;
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
 
-public int MODE = PHEROMONE;
+public int MODE = SOLUTION;
 
 void setup() {
   size(1000, 1000);
@@ -84,6 +84,7 @@ void keyPressed() {
 }
 
 void displayAntPath(Ant ant) {
+  strokeWeight(4);
   List<DrawableNode> path = ant.getVisitedList();
   for (int i = 0; i < path.size() - 1; i++) {
     DrawableNode start = path.get(i);
