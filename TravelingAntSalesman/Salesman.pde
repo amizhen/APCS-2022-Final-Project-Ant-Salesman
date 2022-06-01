@@ -1,7 +1,7 @@
 public static class Salesman {
   public static DrawableNode start;
   public static List<DrawableNode> nodes;
-  private static Map<Set<DrawableNode>, Float> pheromoneMap;
+  public static Map<Set<DrawableNode>, Float> pheromoneMap;
 
   /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
   public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.6;
@@ -10,7 +10,7 @@ public static class Salesman {
   /** Percentage of pheromones that remain after evaporation */
   public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.90;
   /** Determines the amount of pheromones to be dropped by an Ant */
-  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
+  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 100;
 
 
   // Perhaps this can be dynamically determined. Look into this later

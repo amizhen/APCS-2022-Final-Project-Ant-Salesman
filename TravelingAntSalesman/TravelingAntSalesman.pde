@@ -11,7 +11,7 @@ public static Ant pathAnt = null;
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
 
-public int MODE = SOLUTION;
+public int MODE = PHEROMONE;
 
 void setup() {
   size(1000, 1000);
@@ -80,20 +80,45 @@ void displayAntPath(Ant ant) {
   }
 }
 
+float getPheromoneDisplayWeight(float max) {
+  return 0.0;
+}
+
+void displayPheromoneMap() {
+  strokeWeight(16);
+  float max = 0;
+  for (Set<DrawableNode> key : Salesman.pheromoneMap.keySet()) {
+    max = Math.max(Salesman.pheromoneMap.get(key), max);
+  }
+
+  for (Set<DrawableNode> key : Salesman.pheromoneMap.keySet()) {
+    // opacity of the edge is determined by comparing it to the largest edge pheromone level
+    // use squares as it will lead to lower pheromone levels being displayed less
+    stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150)); // 11
+    DrawableNode[] nodes = key.toArray(new DrawableNode[2]);
+    line(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());
+  }
+  strokeWeight(4);
+}
+
 void draw() {
   background(255);
-  
+
   if (pathAnt != null) {
-    stroke(0);
-    displayAntPath(pathAnt);
+    if (MODE == SOLUTION) {
+      stroke(0);
+      displayAntPath(pathAnt);
+    } else if (MODE == PHEROMONE) {
+      displayPheromoneMap();
+    }
     noStroke();
   }
-  
+
   Salesman.start.display();
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
-  
+
   if (pathAnt != null) {
     fill(0);
     text("Distance - " + pathAnt.getDistance(), 40, 40);
