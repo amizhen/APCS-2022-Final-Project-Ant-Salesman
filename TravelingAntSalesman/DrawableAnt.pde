@@ -4,14 +4,9 @@ public class DrawableAnt extends Ant{
   }
   
   public void display(){
-    
-  }
-  
-  private void tick(){
-    
-  }
-  
-  public void run(){
-    
+    Node current = super.getCurrentNode();
+    Node prev = super.getPrevNode();
+    fill(0);
+    ellipse((current.getX()+prev.getX())/2, (current.getY()+prev.getY())/2, 10, 10);
   }
 }
