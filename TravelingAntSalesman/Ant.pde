@@ -37,8 +37,12 @@ public static class Ant implements Comparable<Ant> {
     return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
   }
 
-  private Node getCurrentNode() {
+  public Node getCurrentNode() {
     return current;
+  }
+  
+  public Node getPrevNode() {
+    return visitedNodes.get(visitedNodes.size()-2);
   }
 
   /*
