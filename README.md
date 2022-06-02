@@ -63,3 +63,4 @@ will be visualized through Processing.
 | Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                |
 | Jeffrey | 05/29/22 | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO       |
 | Jeffrey | 05/30/22 | Fixed bug with program + modified constants to produce consistent solutions                                      |
+| Jeffrey | 05/31/22 | Completed pheromone map display                                                                                  |
