@@ -7,7 +7,7 @@ import java.util.Collections;
 public static class Ant implements Comparable<Ant> {
 
   /** Determines the weight of an edge being a chosen path */
-  public static final int WEIGHT_CONSTANT = 10000;
+  public static final int WEIGHT_CONSTANT = 100000;
 
   private float distanceTraveled;
   private DrawableNode current;
@@ -37,8 +37,12 @@ public static class Ant implements Comparable<Ant> {
     return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
   }
 
-  private Node getCurrentNode() {
+  public Node getCurrentNode() {
     return current;
+  }
+  
+  public Node getPrevNode() {
+    return visitedNodes.get(visitedNodes.size()-2);
   }
 
   /*
@@ -53,7 +57,8 @@ public static class Ant implements Comparable<Ant> {
    * @return The weight of the edge to be chosen
    */
   private int calculateWeight(Node node) { 
-    return (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
+    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
+    return Math.max(1, weight);
   }
 
 
