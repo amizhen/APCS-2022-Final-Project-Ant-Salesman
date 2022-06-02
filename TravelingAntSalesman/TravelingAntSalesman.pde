@@ -87,6 +87,8 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
+  //Loop for ant display
+  
   
   if (pathAnt != null) {
     fill(0);
