@@ -7,6 +7,7 @@ import java.util.Set;
 
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
+public static boolean drawing = false;
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
@@ -62,24 +63,19 @@ void mouseDragged() {
 }
 
 void keyPressed() {
-  if (keyCode == 10) { // solve
-    Salesman.resetPheromoneMap();
-    pathAnt = Salesman.findShortestPath();
-  } else if (keyCode == 8) {
-    Salesman.nodes.clear();
-    pathAnt = null;
-  }
-  
-  switch (keyCode) {
-    case 10:
+    switch (keyCode) {
+    case 10: //Enter
       Salesman.resetPheromoneMap();
       pathAnt = Salesman.findShortestPath();
+      drawing = true;
       break;
-    case 8:
+    case 8: //Delete
       Salesman.nodes.clear();
       pathAnt = null;
-    case 32:
+      break;
+    case 32: //Space
       MODE = (MODE + 1) % 2; 
+      break;
   }
 }
 
@@ -112,6 +108,16 @@ void displayPheromoneMap() {
   strokeWeight(4);
 }
 
+
+void animate(){
+  
+}
+
+void genAnimate(){
+  
+}
+
+
 void draw() {
   background(255);
 
@@ -129,13 +135,7 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
-<<<<<<< HEAD
   //Loop for ant display
-  
-  
-=======
-
->>>>>>> 4f5fbd4ebe00d4c58d3b39517e76f5df077bbff9
   if (pathAnt != null) {
     fill(0);
     text("Distance - " + pathAnt.getDistance(), 40, 40);
