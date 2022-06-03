@@ -29,8 +29,7 @@ void mouseClicked() {
   DrawableNode n = new TravelNode(mouseX, mouseY);
   if (!Salesman.nodes.contains(n)) {
     Salesman.addNode(n);
-    Salesman.resetPheromoneMap();
-    pathAnt = null;
+    Salesman.resetAlgorithm();
   }
 }
 
@@ -57,7 +56,7 @@ void mouseDragged() {
   }
 
   if (selected != null) {
-    pathAnt = null;
+    Salesman.resetAlgorithm();
     selected.move(mouseX, mouseY);
   }
 }
@@ -65,20 +64,25 @@ void mouseDragged() {
 void keyPressed() {
   switch (keyCode) {
     case 10: // ENTER
-      Salesman.resetPheromoneMap();
+      Salesman.resetAlgorithm();
       pathAnt = Salesman.findShortestPath();
+      Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
       break;
     case 8: // DELETE
       Salesman.nodes.clear();
-      Salesman.clearPheromoneMap();
-      pathAnt = null;
+      Salesman.pheromoneMap.clear();
+      Salesman.resetAlgorithm();
       break;
     case 32: // SPACE
       MODE = (MODE + 1) % 2; 
       break;
     case 39:
-      try {
-      pathAnt = Salesman.executeGeneration(); } catch (NullPointerException e) {e.printStackTrace();}
+      pathAnt = Salesman.executeGeneration();
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.generationCounter = 0;
+        Salesman.resetPheromoneMap();
+        Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
+      }
       break;
   }
   

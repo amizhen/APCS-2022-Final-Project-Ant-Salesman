@@ -41,6 +41,7 @@ public static class Salesman {
     for (Set<DrawableNode> key : pheromoneMap.keySet()) {
       pheromoneMap.put(key, 1.0); // back to default
     }
+    // println(pheromoneMap);
   }
   
   public static void clearPheromoneMap() {
@@ -96,6 +97,13 @@ public static class Salesman {
     Set<DrawableNode> key = setOf(n1, n2);
     pheromoneMap.replace(key, newVal);
   }
+  
+  public static void resetAlgorithm() {
+    resetPheromoneMap();
+    pathAnt = null;
+    antCounter = 0;
+    generationCounter = 0;
+  }
 
   /**
    * A method that finds attempts to find the shortest path using the Ant Colony Optimization Algorithm
@@ -117,37 +125,22 @@ public static class Salesman {
       }
     }
     generationCounter = 0;
-    Ant bestAnt = ants[0];
-    ants = new Ant[ANTS_PER_GENERATION];
-    Salesman.resetPheromoneMap();
-    return bestAnt;
+    return ants[0];
   }
-
-  // need to add if you are add the end
 
   public static Ant executeGeneration() {
     for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-      if (ants[antCounter] == null) {
-        ants[antCounter] = new Ant(start);
-      }
+      ants[antCounter] = new Ant(start);
       ants[antCounter].run();
     }
     antCounter = 0;
     generationCounter++;
     
-    if (generationCounter > GENERATIONS) {
-      generationCounter = 0;
-      Salesman.resetPheromoneMap();
-    }
-    
-    println(generationCounter);
     Arrays.sort(ants);
     decayPheromones();
     for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
       ants[i].depositPheromones();
     }
-    Ant bestAnt = ants[0];
-    ants = new Ant[ANTS_PER_GENERATION];
-    return bestAnt;
+    return ants[0];
   }
 }
