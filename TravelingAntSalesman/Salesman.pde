@@ -17,9 +17,10 @@ public static class Salesman {
   public static final int ANTS_PER_GENERATION = 20;
   public static final int GENERATIONS = 50;
   public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
-  
+
   public static int antCounter = 0;
   public static int generationCounter = 0;
+  public static Ant[] ants = new Ant[ANTS_PER_GENERATION];
 
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -35,7 +36,7 @@ public static class Salesman {
       nodes.add(n);
     }
   }
-  
+
   public static void resetPheromoneMap() {
     for (DrawableNode n : nodes) {
       for (DrawableNode m : nodes) {
@@ -44,6 +45,10 @@ public static class Salesman {
         }
       }
     }
+  }
+  
+  public static void clearPheromoneMap() {
+    pheromoneMap.clear();
   }
 
   /**
@@ -102,13 +107,12 @@ public static class Salesman {
    * @return The ant with the shortest path found in the final iteration
    */
   public static Ant findShortestPath() {
-    Ant[] ants = new Ant[ANTS_PER_GENERATION];
-
     for (; generationCounter < GENERATIONS; generationCounter++) {
       for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
         ants[antCounter] = new Ant(start);
         ants[antCounter].run(); // have ants traverse through the map of nodes
       }
+      antCounter = 0;
       Arrays.sort(ants); // sort Ants on distance traveled
 
       decayPheromones();
@@ -116,9 +120,38 @@ public static class Salesman {
         ants[i].depositPheromones();
       }
     }
-
-    return ants[0];
+    generationCounter = 0;
+    Ant bestAnt = ants[0];
+    ants = new Ant[ANTS_PER_GENERATION];
+    Salesman.resetPheromoneMap();
+    return bestAnt;
   }
-  
-  
+
+  // need to add if you are add the end
+
+  public static Ant executeGeneration() {
+    for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
+      if (ants[antCounter] == null) {
+        ants[antCounter] = new Ant(start);
+      }
+      ants[antCounter].run();
+    }
+    antCounter = 0;
+    generationCounter++;
+    
+    if (generationCounter > GENERATIONS) {
+      generationCounter = 0;
+      Salesman.resetPheromoneMap();
+    }
+    
+    println(generationCounter);
+    Arrays.sort(ants);
+    decayPheromones();
+    for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
+      ants[i].depositPheromones();
+    }
+    Ant bestAnt = ants[0];
+    ants = new Ant[ANTS_PER_GENERATION];
+    return bestAnt;
+  }
 }

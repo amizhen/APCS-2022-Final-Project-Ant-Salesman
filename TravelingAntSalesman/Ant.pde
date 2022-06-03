@@ -53,7 +53,7 @@ public static class Ant implements Comparable<Ant> {
    * @return The weight of the edge to be chosen
    */
   private int calculateWeight(Node node) { 
-    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
+    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT); //<>//
     return Math.max(1, weight);
   }
 
@@ -66,7 +66,7 @@ public static class Ant implements Comparable<Ant> {
    */
   private DrawableNode pickNextNode() {
     int sum = 0;
-    for (DrawableNode n : toBeVisited) sum += calculateWeight(n);
+    for (DrawableNode n : toBeVisited) sum += calculateWeight(n); //<>//
 
     int choice = (int) (Math.random() * sum);
     int rand = 0;

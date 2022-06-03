@@ -29,6 +29,7 @@ void mouseClicked() {
   DrawableNode n = new TravelNode(mouseX, mouseY);
   if (!Salesman.nodes.contains(n)) {
     Salesman.addNode(n);
+    Salesman.resetPheromoneMap();
     pathAnt = null;
   }
 }
@@ -62,25 +63,26 @@ void mouseDragged() {
 }
 
 void keyPressed() {
-  if (keyCode == 10) { // solve
-    Salesman.resetPheromoneMap();
-    pathAnt = Salesman.findShortestPath();
-  } else if (keyCode == 8) {
-    Salesman.nodes.clear();
-    pathAnt = null;
-  }
-  
   switch (keyCode) {
-    case 10:
+    case 10: // ENTER
       Salesman.resetPheromoneMap();
       pathAnt = Salesman.findShortestPath();
       break;
-    case 8:
+    case 8: // DELETE
       Salesman.nodes.clear();
+      Salesman.clearPheromoneMap();
       pathAnt = null;
-    case 32:
+      break;
+    case 32: // SPACE
       MODE = (MODE + 1) % 2; 
+      break;
+    case 39:
+      try {
+      pathAnt = Salesman.executeGeneration(); } catch (NullPointerException e) {e.printStackTrace();}
+      break;
   }
+  
+  // print(keyCode);
 }
 
 void displayAntPath(Ant ant) {
