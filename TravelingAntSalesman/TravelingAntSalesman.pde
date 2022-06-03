@@ -64,9 +64,10 @@ void mouseDragged() {
 void keyPressed() {
   switch (keyCode) {
   case 10: // ENTER
-    Salesman.resetAlgorithm();
+    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+      Salesman.resetAlgorithm();
+    }
     pathAnt = Salesman.findShortestPath();
-    Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
@@ -76,17 +77,15 @@ void keyPressed() {
   case 32: // SPACE
     MODE = (MODE + 1) % 2; 
     break;
-  case 39:
+  case 39: // RIGHT ARROW KEY
     if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-      Salesman.generationCounter = 0;
-      Salesman.resetPheromoneMap();
-      Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
+      Salesman.resetAlgorithm();
     }
     pathAnt = Salesman.executeGeneration();
     break;
+  case 16: // SHIFT KEY
+    break;
   }
-
-  // print(keyCode);
 }
 
 void displayAntPath(Ant ant) {

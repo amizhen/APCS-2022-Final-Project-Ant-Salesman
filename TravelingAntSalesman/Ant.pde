@@ -117,6 +117,10 @@ public static class Ant implements Comparable<Ant> {
       Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
     }
   }
+  
+  public boolean isActive() {
+    return !toBeVisited.isEmpty();
+  }
 
   /**
    * A method that returns the distance the ant has traveled.
