@@ -37,8 +37,12 @@ public static class Ant implements Comparable<Ant> {
     return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
   }
 
-  private Node getCurrentNode() {
+  public Node getCurrentNode() {
     return current;
+  }
+  
+  public Node getPrevNode() {
+    return visitedNodes.get(visitedNodes.size()-2);
   }
 
   /*
@@ -53,7 +57,7 @@ public static class Ant implements Comparable<Ant> {
    * @return The weight of the edge to be chosen
    */
   private int calculateWeight(Node node) { 
-    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
+    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT); //<>//
     return Math.max(1, weight);
   }
 
@@ -66,7 +70,7 @@ public static class Ant implements Comparable<Ant> {
    */
   private DrawableNode pickNextNode() {
     int sum = 0;
-    for (DrawableNode n : toBeVisited) sum += calculateWeight(n);
+    for (DrawableNode n : toBeVisited) sum += calculateWeight(n); //<>//
 
     int choice = (int) (Math.random() * sum);
     int rand = 0;
@@ -112,6 +116,10 @@ public static class Ant implements Comparable<Ant> {
       n2 = visitedNodes.get(i+1);
       Salesman.setPheromone(n1, n2, Salesman.getPheromone(n1, n2) + calcPheromones());
     }
+  }
+  
+  public boolean isActive() {
+    return !toBeVisited.isEmpty();
   }
 
   /**
