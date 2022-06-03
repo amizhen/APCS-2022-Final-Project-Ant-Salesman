@@ -7,6 +7,7 @@ import java.util.Set;
 
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
+public static boolean drawing = false;
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
@@ -122,6 +123,16 @@ void displayGenerationData() {
   text(String.format("Generation %d / %d", Salesman.generationCounter, Salesman.GENERATIONS), 20, height - 20);
 }
 
+
+void animate(){
+  
+}
+
+void genAnimate(){
+  
+}
+
+
 void draw() {
   background(255);
 
@@ -140,8 +151,6 @@ void draw() {
     n.display();
   }
   //Loop for ant display
-
-
 
   if (pathAnt != null) {
     fill(0);

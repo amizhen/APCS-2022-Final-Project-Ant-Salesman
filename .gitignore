@@ -25,3 +25,9 @@ hs_err_pid*
 #IDEA files
 .idea
 /out
+
+#Processing
+.autosave
+
+
+.DS_Store

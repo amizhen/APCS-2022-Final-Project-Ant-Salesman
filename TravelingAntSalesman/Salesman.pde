@@ -144,25 +144,4 @@ public static class Salesman {
     return ants[0];
   }
   
-  // TODO
-  public static Ant[] generateTick() {
-    for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-      ants[antCounter].tick();
-    }
-    antCounter = 0;
-    
-    Ant[] antPaths = ants.clone();
-    
-    if (!ants[antCounter].isActive()) { // might move this code outside the stuff
-      decayPheromones();
-      for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
-        ants[i].depositPheromones();
-      }
-      
-      for (int i = 0; i < ANTS_PER_GENERATION; i++) {
-        ants[i] = new Ant(start);
-      }
-    }
-    return antPaths;
-  }
 }
