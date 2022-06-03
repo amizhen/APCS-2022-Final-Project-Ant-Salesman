@@ -63,29 +63,29 @@ void mouseDragged() {
 
 void keyPressed() {
   switch (keyCode) {
-    case 10: // ENTER
-      Salesman.resetAlgorithm();
-      pathAnt = Salesman.findShortestPath();
+  case 10: // ENTER
+    Salesman.resetAlgorithm();
+    pathAnt = Salesman.findShortestPath();
+    Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
+    break;
+  case 8: // DELETE
+    Salesman.nodes.clear();
+    Salesman.pheromoneMap.clear();
+    Salesman.resetAlgorithm();
+    break;
+  case 32: // SPACE
+    MODE = (MODE + 1) % 2; 
+    break;
+  case 39:
+    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+      Salesman.generationCounter = 0;
+      Salesman.resetPheromoneMap();
       Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
-      break;
-    case 8: // DELETE
-      Salesman.nodes.clear();
-      Salesman.pheromoneMap.clear();
-      Salesman.resetAlgorithm();
-      break;
-    case 32: // SPACE
-      MODE = (MODE + 1) % 2; 
-      break;
-    case 39:
-      pathAnt = Salesman.executeGeneration();
-      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-        Salesman.generationCounter = 0;
-        Salesman.resetPheromoneMap();
-        Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
-      }
-      break;
+    }
+    pathAnt = Salesman.executeGeneration();
+    break;
   }
-  
+
   // print(keyCode);
 }
 
@@ -110,12 +110,17 @@ void displayPheromoneMap() {
     // opacity of the edge is determined by comparing it to the largest edge pheromone level
     // use squares as it will lead to lower pheromone levels being displayed less
     // stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150));
-    
+
     stroke(255, 0, 255, Salesman.pheromoneMap.get(key) / max * 150);
     DrawableNode[] nodes = key.toArray(new DrawableNode[2]);
     line(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());
   }
   strokeWeight(4);
+}
+
+void displayGenerationData() {
+  fill(0);
+  text(String.format("Generation %d / %d", Salesman.generationCounter, Salesman.GENERATIONS), 20, height - 20);
 }
 
 void draw() {
@@ -135,15 +140,13 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
-<<<<<<< HEAD
   //Loop for ant display
-  
-  
-=======
 
->>>>>>> 4f5fbd4ebe00d4c58d3b39517e76f5df077bbff9
+
+
   if (pathAnt != null) {
     fill(0);
     text("Distance - " + pathAnt.getDistance(), 40, 40);
+    displayGenerationData();
   }
 }
