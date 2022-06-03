@@ -135,7 +135,13 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
+<<<<<<< HEAD
+  //Loop for ant display
+  
+  
+=======
 
+>>>>>>> 4f5fbd4ebe00d4c58d3b39517e76f5df077bbff9
   if (pathAnt != null) {
     fill(0);
     text("Distance - " + pathAnt.getDistance(), 40, 40);
