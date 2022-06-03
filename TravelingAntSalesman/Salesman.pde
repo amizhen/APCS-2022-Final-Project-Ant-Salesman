@@ -38,12 +38,8 @@ public static class Salesman {
   }
 
   public static void resetPheromoneMap() {
-    for (DrawableNode n : nodes) {
-      for (DrawableNode m : nodes) {
-        if (n != m) {
-          pheromoneMap.put(setOf(n, m), 1.0);
-        }
-      }
+    for (Set<DrawableNode> key : pheromoneMap.keySet()) {
+      pheromoneMap.put(key, 1.0); // back to default
     }
   }
   
