@@ -8,14 +8,16 @@ import java.util.Set;
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 public static boolean drawing = false;
+public static int pos = 0;
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
 
+
 public int MODE = SOLUTION;
 
 void setup() {
-  size(1000, 1000);
+  size(1000, 800);
   Salesman.start = new StartNode(width / 2, height / 2);
   Salesman.nodes = new ArrayList<DrawableNode>();
   Salesman.pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
@@ -81,6 +83,7 @@ void keyPressed() {
   case 39: // RIGHT ARROW KEY
     if (Salesman.generationCounter >= Salesman.GENERATIONS) {
       Salesman.resetAlgorithm();
+      drawing = true;
     }
     pathAnt = Salesman.executeGeneration();
     break;
@@ -88,6 +91,8 @@ void keyPressed() {
     break;
   }
 }
+
+
 
 void displayAntPath(Ant ant) {
   strokeWeight(4);
@@ -133,6 +138,16 @@ void genAnimate(){
 }
 
 
+
+void animateAntTick(Ant a){
+  Node current = a.getCurrentNode();
+  Node prev = a.getPrevNode();
+  fill(100, 0, 0);
+  ellipse((current.getX()+prev.getX())/60*pos, (current.getY()+prev.getY())/60*pos, 10, 10);
+  pos++;
+}
+
+
 void draw() {
   background(255);
 
@@ -151,6 +166,16 @@ void draw() {
     n.display();
   }
   //Loop for ant display
+  if(drawing){
+    println("AAAA");
+    for(Ant a : Salesman.ants){
+      animateAntTick(a);
+    }
+  }
+  if(pos == 60){
+    drawing = false;
+    pos = 0;
+  }
 
   if (pathAnt != null) {
     fill(0);
