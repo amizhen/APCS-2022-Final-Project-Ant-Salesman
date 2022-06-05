@@ -30,9 +30,21 @@ void setup() {
 }
 
 void mouseClicked() {
-  DrawableNode n = new TravelNode(mouseX, mouseY);
-  if (!Salesman.nodes.contains(n)) {
-    Salesman.addNode(n);
+  //DrawableNode n = new TravelNode(mouseX, mouseY);
+  //if (!Salesman.nodes.contains(n)) {
+  //  Salesman.addNode(n);
+  //  Salesman.resetAlgorithm();
+  //}
+  DrawableNode newNode = new TravelNode(mouseX, mouseY);
+  boolean valid = true;
+  for(DrawableNode n : Salesman.nodes){
+    if(n.distance(newNode) < newNode.getDiameter()){
+      valid = false;
+      break;
+    }
+  }
+  if(valid){
+    Salesman.addNode(newNode);
     Salesman.resetAlgorithm();
   }
 }
@@ -66,30 +78,33 @@ void mouseDragged() {
 }
 
 void keyPressed() {
-  switch (keyCode) {
-  case 10: // ENTER
-    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+  if(!drawing){
+    switch (keyCode) {
+    case 10: // ENTER
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.resetAlgorithm();
+      }
+      pathAnt = Salesman.findShortestPath();
+      break;
+    case 8: // DELETE
+      Salesman.nodes.clear();
+      Salesman.pheromoneMap.clear();
       Salesman.resetAlgorithm();
+      break;
+    case 32: // SPACE
+      MODE = (MODE + 1) % 2; 
+      break;
+    case 39: // RIGHT ARROW KEY
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.resetAlgorithm();
+      } else {
+        //drawing = true;
+        pathAnt = Salesman.executeGeneration();
+      }
+      break;
+    case 16: // SHIFT KEY
+      break;
     }
-    pathAnt = Salesman.findShortestPath();
-    break;
-  case 8: // DELETE
-    Salesman.nodes.clear();
-    Salesman.pheromoneMap.clear();
-    Salesman.resetAlgorithm();
-    break;
-  case 32: // SPACE
-    MODE = (MODE + 1) % 2; 
-    break;
-  case 39: // RIGHT ARROW KEY
-    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-      Salesman.resetAlgorithm();
-    }
-    drawing = true;
-    pathAnt = Salesman.executeGeneration();
-    break;
-  case 16: // SHIFT KEY
-    break;
   }
 }
 
