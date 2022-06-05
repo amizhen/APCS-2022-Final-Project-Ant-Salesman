@@ -14,6 +14,7 @@ public static class DrawableAnt extends Ant{
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*pos+prev.getY());
     
     //ellipse(x, y, 10, 10);
+    //
     pos++;
     pos %= ANTIMATE;
   }
