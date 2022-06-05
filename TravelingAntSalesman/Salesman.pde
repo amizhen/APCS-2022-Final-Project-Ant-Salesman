@@ -20,7 +20,7 @@ public static class Salesman {
 
   public static int antCounter = 0;
   public static int generationCounter = 0;
-  public static Ant[] ants = new Ant[ANTS_PER_GENERATION];
+  public static DrawableAnt[] ants = new DrawableAnt[ANTS_PER_GENERATION];
 
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.
@@ -103,7 +103,7 @@ public static class Salesman {
     pathAnt = null;
     antCounter = 0;
     generationCounter = 0;
-    Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
+    Salesman.ants = new DrawableAnt[Salesman.ANTS_PER_GENERATION];
   }
 
   /**
@@ -114,7 +114,7 @@ public static class Salesman {
   public static Ant findShortestPath() {
     for (; generationCounter < GENERATIONS; generationCounter++) {
       for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-        ants[antCounter] = new Ant(start);
+        ants[antCounter] = new DrawableAnt(start);
         ants[antCounter].run(); // have ants traverse through the map of nodes
       }
       antCounter = 0;
@@ -130,7 +130,7 @@ public static class Salesman {
 
   public static Ant executeGeneration() {
     for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-      ants[antCounter] = new Ant(start);
+      ants[antCounter] = new DrawableAnt(start);
       ants[antCounter].run();
     }
     antCounter = 0;
