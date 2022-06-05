@@ -1,25 +1,20 @@
 public class DrawableAnt extends Ant{  
-  private int pos = 1;
-  private Node prev, current;
+  private int pos = 0;
   
   public DrawableAnt(){
     super(Salesman.start);
   }
   
-  public void startAnimate(){
-    current = super.getCurrentNode();
-    prev = super.getPrevNode();
-  }
   
-  
-  public void tick() {
+  void animateAntTick(int i){
+    Node current = super.getNodeAt(i);
+    Node prev = super.getNodeAt(i-1);
+    fill(255, 0, 0);
+    int x = (int)((current.getX()-prev.getX())/ANTIMATE*pos+prev.getX());
+    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*pos+prev.getY());
     
-  }
-  
-  
-  public void displayTick(){
-    fill(0);
-    ellipse((current.getX()+prev.getX())/24*pos, (current.getY()+prev.getY())/24*pos, 10, 10);
+    ellipse(x, y, 10, 10);
     pos++;
+    pos %= ANTIMATE;
   }
 }
