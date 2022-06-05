@@ -47,22 +47,25 @@ will be visualized through Processing.
 
 ## **Development Logs**
 
-| Name    | Date     | Summary                                                                                                              |
-| ------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
-| Aiden   | 05/23/22 | Started work on Ant class but realised it would make more sense to have the constants in the main written first.     |
-| Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                           |
-| Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.               |
-| Aiden   | 05/24/22 | Resolved merge conflicts, added several utility functions to the ant class.                                          |
-| Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                                          |
-| Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                    |
-| Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                    |
-| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                            |
-| Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed                               |
-| Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                                               |
-| Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                                |
-| Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                    |
-| Jeffrey | 05/29/22 | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO           |
-| Jeffrey | 05/30/22 | Fixed bug with program + modified constants to produce consistent solutions                                          |
-| Jeffrey | 05/31/22 | Completed pheromone map display                                                                                      |
-| Jeffrey | 06/01/22 | Began working on the step by step display of the ACO algorithm                                                       |
-| Jeffrey | 06/02/22 | Completed per generation display of the ACO algorithm, fixed some bugs, and moved code around for better readability |
+| Name    | Date        | Summary                                                                                                                       |
+|---------|-------------|-------------------------------------------------------------------------------------------------------------------------------|
+| Aiden   | 05/23/22    | Started work on Ant class but realised it would make more sense to have the constants in the main written first.              |
+| Jeffrey | 05/23/22    | Started work on Salesman and Node class with instance variables + methods.                                                    |
+| Jeffrey | 05/24/22    | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.                        |
+| Aiden   | 05/24/22    | Resolved merge conflicts, added several utility functions to the ant class.                                                   |
+| Aiden   | 05/25/22    | Resolved merge conflicts, added several utility functions to the ant class.                                                   |
+| Jeffrey | 05/25/22    | Finished Ant::pickNextNode method                                                                                             |
+| Jeffrey | 05/26/22    | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                             |
+| Aiden   | 05/26/22    | Wrote Run, tick, reformatted pickNextNode                                                                                     |
+| Aiden   | 05/27/22    | Added input function for Salesman, uses Standard input to create nodes to be traversed                                        |
+| Jeffrey | 05/27/22    | Created Processing project and tested the completed ACO algorithm more                                                        |
+| Jeffrey | 05/28/22    | Begun working on the Processing aspect of the project                                                                         |
+| Aiden   | 05/29/22    | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                             |
+| Jeffrey | 05/29/22    | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO                    |
+| Jeffrey | 05/30/22    | Fixed bug with program + modified constants to produce consistent solutions                                                   |
+| Jeffrey | 05/31/22    | Completed pheromone map display                                                                                               |
+| Aiden   | 05/32/22    | Began work on Drawable Ant                                                                                                    |
+| Jeffrey | 06/01/22    | Began working on the step by step display of the ACO algorithm                                                                |
+| Jeffrey | 06/02/22    | Completed per generation display of the ACO algorithm, fixed some bugs, and moved code around for better readability          |
+| Aiden   | 06/01/22    | Wrote Display for Drawable Ant.                                                                                               |
+| Aiden   | 06/04-05/22 | Restructured display and animate functions back into Drawable ant, now need to turn all ants in processing into drawable ants |
