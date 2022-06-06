@@ -73,6 +73,7 @@ void keyPressed() {
   case 8: // DELETE
     Salesman.nodes.clear();
     Salesman.pheromoneMap.clear();
+    Salesman.GENERATIONS = Salesman.nodes.size() * 5;
     Salesman.resetAlgorithm();
     break;
   case 32: // SPACE
