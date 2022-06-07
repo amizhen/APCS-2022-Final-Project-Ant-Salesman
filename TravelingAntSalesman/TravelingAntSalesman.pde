@@ -8,7 +8,6 @@ import java.util.Set;
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 public static final int ANTIMATE = 120;
-public static int n = 0;
 public static boolean drawing = false;
 
 public static final int SOLUTION = 0;
@@ -96,10 +95,12 @@ void keyPressed() {
   case 39: // RIGHT ARROW KEY
     if (Salesman.generationCounter >= Salesman.GENERATIONS) {
       Salesman.resetAlgorithm();
-      drawing = true;
     } else {
       pathAnt = Salesman.executeGeneration();
     }
+    drawing = true;
+    DrawableAnt.n = 0;
+    DrawableAnt.pos = 0;
     break;
   case 16: // SHIFT KEY
     break;
@@ -107,23 +108,24 @@ void keyPressed() {
 }
 
 void displayAnts(){
+  noStroke();
+  if(DrawableAnt.pos == ANTIMATE){
+      DrawableAnt.pos = 0;
+      DrawableAnt.n++;
+  }
+  if(DrawableAnt.n>=Salesman.nodes.size()){
+      DrawableAnt.n = 0;
+      drawing = false;
+  }
   for(DrawableAnt a : Salesman.ants){
-    Node current = a.getNodeAt(n+1);
-    Node prev = a.getNodeAt(n);
-    int x = (int)((current.getX()-prev.getX())/ANTIMATE*a.pos+prev.getX());
-    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*a.pos+prev.getY());
+    Node current = a.getNodeAt(DrawableAnt.n+1);
+    Node prev = a.getNodeAt(DrawableAnt.n);
+    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.pos+prev.getX());
+    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.pos+prev.getY());
     fill(255, 0, 0);
     ellipse(x, y, 10, 10);
-    a.pos++;
-    if(a.pos == ANTIMATE){
-      a.pos = 0;
-      n++;
-    }
-    if(n>=Salesman.nodes.size()-1){
-      n = 0;
-      drawing = false;
-    }
   }
+  DrawableAnt.pos++;
 }
 
 
@@ -174,7 +176,7 @@ void draw() {
     } else if (MODE == PHEROMONE) {
       displayPheromoneMap();
     }
-    if(true){
+    if(drawing){
       displayAnts();
     }
     noStroke();
