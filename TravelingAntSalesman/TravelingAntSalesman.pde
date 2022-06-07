@@ -7,7 +7,6 @@ import java.util.Set;
 
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
-public static boolean drawing = false;
 public static final int ANTIMATE = 120;
 public static int n = 0;
 
@@ -78,36 +77,48 @@ void mouseDragged() {
 }
 
 void keyPressed() {
-  if(!drawing){
-    switch (keyCode) {
-    case 10: // ENTER
-      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-        Salesman.resetAlgorithm();
-      }
-      pathAnt = Salesman.findShortestPath();
-      break;
-    case 8: // DELETE
-      Salesman.nodes.clear();
-      Salesman.pheromoneMap.clear();
+  switch (keyCode) {
+  case 10: // ENTER
+    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
       Salesman.resetAlgorithm();
-      break;
-    case 32: // SPACE
-      MODE = (MODE + 1) % 2; 
-      break;
-    case 39: // RIGHT ARROW KEY
-      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-        Salesman.resetAlgorithm();
-      } else {
-        //drawing = true;
-        pathAnt = Salesman.executeGeneration();
-      }
-      break;
-    case 16: // SHIFT KEY
-      break;
     }
+    pathAnt = Salesman.findShortestPath();
+    break;
+  case 8: // DELETE
+    Salesman.nodes.clear();
+    Salesman.pheromoneMap.clear();
+    Salesman.resetAlgorithm();
+    break;
+  case 32: // SPACE
+    MODE = (MODE + 1) % 2; 
+    break;
+  case 39: // RIGHT ARROW KEY
+    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+      Salesman.resetAlgorithm();
+    } else {
+      pathAnt = Salesman.executeGeneration();
+    }
+    break;
+  case 16: // SHIFT KEY
+    break;
   }
 }
 
+void displayAnts(int i){
+  for(DrawableAnt a : Salesman.ants){
+    Node current = a.getNodeAt(i+1);
+    Node prev = a.getNodeAt(i);
+    int x = (int)((current.getX()-prev.getX())/ANTIMATE*a.pos+prev.getX());
+    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*a.pos+prev.getY());
+    fill(255, 0, 0);
+    ellipse(x, y, 10, 10);
+    a.pos++;
+    if(a.pos == ANTIMATE){
+      a.pos = 0;
+      n++;
+    }
+  }
+}
 
 
 void displayAntPath(Ant ant) {
@@ -119,6 +130,8 @@ void displayAntPath(Ant ant) {
     line(start.getX(), start.getY(), end.getX(), end.getY());
   }
 }
+
+
 
 void displayPheromoneMap() {
   strokeWeight(16);
@@ -155,6 +168,9 @@ void draw() {
     } else if (MODE == PHEROMONE) {
       displayPheromoneMap();
     }
+    if(n < Salesman.nodes.size()){
+      displayAnts(n);
+    }
     noStroke();
   }
 
@@ -163,17 +179,7 @@ void draw() {
     n.display();
   }
   //Loop for ant display
-  //if(drawing){
-  //  for(Ant a : Salesman.ants){
-  //    a.animateAntTick(n);
-  //  }
-  //  n++;
-  //  if(n==Salesman.nodes.size()){
-  //    n = 0;
-  //    drawing = false;
-  //  }
-  //} :TODO NEED TO UPDATE ALL ANTS TO DRAWABLE ANTS FIRST
-  
+
 
   if (pathAnt != null) {
     fill(0);
