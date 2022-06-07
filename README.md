@@ -66,3 +66,5 @@ will be visualized through Processing.
 | Jeffrey | 05/31/22 | Completed pheromone map display                                                                                      |
 | Jeffrey | 06/01/22 | Began working on the step by step display of the ACO algorithm                                                       |
 | Jeffrey | 06/02/22 | Completed per generation display of the ACO algorithm, fixed some bugs, and moved code around for better readability |
+| Jeffrey | 06/03/22 | Added quality of life features + started on GenerateTick method                                                      |
+| Jeffrey | 06/06/22 | Made generation number dependent on number of nodes + continued to test constants                                    |
