@@ -9,6 +9,7 @@ public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 public static final int ANTIMATE = 120;
 public static int n = 0;
+public static boolean drawing = false;
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
@@ -95,6 +96,7 @@ void keyPressed() {
   case 39: // RIGHT ARROW KEY
     if (Salesman.generationCounter >= Salesman.GENERATIONS) {
       Salesman.resetAlgorithm();
+      drawing = true;
     } else {
       pathAnt = Salesman.executeGeneration();
     }
@@ -104,10 +106,10 @@ void keyPressed() {
   }
 }
 
-void displayAnts(int i){
+void displayAnts(){
   for(DrawableAnt a : Salesman.ants){
-    Node current = a.getNodeAt(i+1);
-    Node prev = a.getNodeAt(i);
+    Node current = a.getNodeAt(n+1);
+    Node prev = a.getNodeAt(n);
     int x = (int)((current.getX()-prev.getX())/ANTIMATE*a.pos+prev.getX());
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*a.pos+prev.getY());
     fill(255, 0, 0);
@@ -116,6 +118,10 @@ void displayAnts(int i){
     if(a.pos == ANTIMATE){
       a.pos = 0;
       n++;
+    }
+    if(n>=Salesman.nodes.size()-1){
+      n = 0;
+      drawing = false;
     }
   }
 }
@@ -168,8 +174,8 @@ void draw() {
     } else if (MODE == PHEROMONE) {
       displayPheromoneMap();
     }
-    if(n < Salesman.nodes.size()){
-      displayAnts(n);
+    if(true){
+      displayAnts();
     }
     noStroke();
   }
