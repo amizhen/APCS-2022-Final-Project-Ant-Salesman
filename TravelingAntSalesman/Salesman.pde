@@ -8,7 +8,7 @@ public static class Salesman {
   /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
   public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.6;
   /** Percentage of pheromones that remain after evaporation */
-  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.97;
+  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
   public static float PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
 

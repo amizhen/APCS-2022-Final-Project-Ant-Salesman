@@ -1,4 +1,4 @@
-public class DrawableAnt extends Ant{  
+public class DrawableAnt extends Ant {  
   private int pos = 1;
   private Node prev, current;
   
