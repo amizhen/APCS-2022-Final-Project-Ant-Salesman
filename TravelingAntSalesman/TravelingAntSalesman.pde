@@ -84,8 +84,8 @@ void keyPressed() {
     }
     pathAnt = Salesman.findShortestPath();
     drawing = false;
-    DrawableAnt.n = 0;    
-    DrawableAnt.pos = 0;
+    DrawableAnt.resetStep();   
+    DrawableAnt.resetPos();
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
@@ -102,8 +102,8 @@ void keyPressed() {
       pathAnt = Salesman.executeGeneration();
     }
     drawing = true;
-    DrawableAnt.n = 0;    
-    DrawableAnt.pos = 0;
+    DrawableAnt.resetStep();    
+    DrawableAnt.resetPos();
     break;
   case 16: // SHIFT KEY
     break;
@@ -112,12 +112,12 @@ void keyPressed() {
 
 void displayAnts(){
   noStroke();
-  if(DrawableAnt.pos == ANTIMATE){
-      DrawableAnt.pos = 0;
-      DrawableAnt.n++;
+  if(DrawableAnt.getPos() == ANTIMATE){
+      DrawableAnt.resetPos();
+      DrawableAnt.incrementStep();
   }
-  if(DrawableAnt.n>=Salesman.nodes.size()){
-      DrawableAnt.n = 0;
+  if(DrawableAnt.getStep()>=Salesman.nodes.size()){
+      DrawableAnt.resetStep();
       drawing = false;
   }
   for(int i = Salesman.ants.length-1; i >=0; i--){
@@ -127,14 +127,14 @@ void displayAnts(){
       fill(255, 0, 0);
     }
     DrawableAnt a = Salesman.ants[i];
-    Node current = a.getNodeAt(DrawableAnt.n+1);
-    Node prev = a.getNodeAt(DrawableAnt.n);
-    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.pos+prev.getX());
-    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.pos+prev.getY());
+    Node current = a.getNodeAt(DrawableAnt.getStep()+1);
+    Node prev = a.getNodeAt(DrawableAnt.getStep());
+    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
+    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.getPos()+prev.getY());
     
     ellipse(x, y, 10, 10);
   }
-  DrawableAnt.pos++;
+  DrawableAnt.incrementPos();
 }
 
 
