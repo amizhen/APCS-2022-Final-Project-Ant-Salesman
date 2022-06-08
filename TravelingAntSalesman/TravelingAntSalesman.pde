@@ -99,8 +99,7 @@ void keyPressed() {
       pathAnt = Salesman.executeGeneration();
     }
     drawing = true;
-    DrawableAnt.n = 0;
-    DrawableAnt.pos = 0;
+    DrawableAnt.n = 0;    DrawableAnt.pos = 0;
     break;
   case 16: // SHIFT KEY
     break;
