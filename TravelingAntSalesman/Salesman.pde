@@ -22,6 +22,30 @@ public static class Salesman {
   public static int generationCounter = 0;
   public static DrawableAnt[] ants = new DrawableAnt[ANTS_PER_GENERATION];
 
+  public static void setPheromoneInfluenceCoefficient(float newVal) {
+    if (newVal > 0) {
+      PHEROMONE_INFLUENCE_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setDistanceInfluenceCoefficient(float newVal){
+    if (newVal > 0) {
+      DISTANCE_INFLUENCE_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setPheromoneEvaporationCoefficient(float newVal) {
+    if (newVal > 0 && newVal <= 1) {
+      PHEROMONE_EVAPORATION_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setPheromoneDepositCoefficient(int newVal) {
+    if (newVal > 0) {
+      PHEROMONE_DEPOSIT_COEFFICIENT = newVal;
+    }
+  }
+  
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.
    * 
