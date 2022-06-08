@@ -44,6 +44,10 @@ public static class Ant implements Comparable<Ant> {
   public Node getPrevNode() {
     return visitedNodes.get(visitedNodes.size()-2);
   }
+  
+  public Node getNodeAt(int i){
+    return visitedNodes.get(i);
+  }
 
   /*
     Note: The reason why the random uses integer values is because floating point values can cause 
