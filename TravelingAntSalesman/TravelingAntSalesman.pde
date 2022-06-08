@@ -83,6 +83,9 @@ void keyPressed() {
       Salesman.resetAlgorithm();
     }
     pathAnt = Salesman.findShortestPath();
+    drawing = false;
+    DrawableAnt.n = 0;    
+    DrawableAnt.pos = 0;
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
@@ -99,7 +102,8 @@ void keyPressed() {
       pathAnt = Salesman.executeGeneration();
     }
     drawing = true;
-    DrawableAnt.n = 0;    DrawableAnt.pos = 0;
+    DrawableAnt.n = 0;    
+    DrawableAnt.pos = 0;
     break;
   case 16: // SHIFT KEY
     break;
@@ -116,12 +120,18 @@ void displayAnts(){
       DrawableAnt.n = 0;
       drawing = false;
   }
-  for(DrawableAnt a : Salesman.ants){
+  for(int i = Salesman.ants.length-1; i >=0; i--){
+    if(i == 0){
+      fill(0,0,255);
+    } else {
+      fill(255, 0, 0);
+    }
+    DrawableAnt a = Salesman.ants[i];
     Node current = a.getNodeAt(DrawableAnt.n+1);
     Node prev = a.getNodeAt(DrawableAnt.n);
     int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.pos+prev.getX());
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.pos+prev.getY());
-    fill(255, 0, 0);
+    
     ellipse(x, y, 10, 10);
   }
   DrawableAnt.pos++;
@@ -172,11 +182,14 @@ void draw() {
     if (MODE == SOLUTION) {
       stroke(0);
       displayAntPath(pathAnt);
+      if(drawing){
+        displayAnts();
+      }
     } else if (MODE == PHEROMONE) {
+      if(drawing){
+        displayAnts();
+      }
       displayPheromoneMap();
-    }
-    if(drawing){
-      displayAnts();
     }
     noStroke();
   }
