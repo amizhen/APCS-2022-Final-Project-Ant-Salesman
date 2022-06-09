@@ -43,7 +43,7 @@ public static class Salesman {
     }
     // println(pheromoneMap);
   }
-  
+
   public static void clearPheromoneMap() {
     pheromoneMap.clear();
   }
@@ -97,7 +97,7 @@ public static class Salesman {
     Set<DrawableNode> key = setOf(n1, n2);
     pheromoneMap.replace(key, newVal);
   }
-  
+
   public static void resetAlgorithm() {
     resetPheromoneMap();
     pathAnt = null;
@@ -135,7 +135,7 @@ public static class Salesman {
     }
     antCounter = 0;
     generationCounter++;
-    
+
     Arrays.sort(ants);
     decayPheromones();
     for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
@@ -143,5 +143,4 @@ public static class Salesman {
     }
     return ants[0];
   }
-  
 }

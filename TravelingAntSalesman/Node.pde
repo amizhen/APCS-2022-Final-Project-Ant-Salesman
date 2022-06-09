@@ -44,11 +44,11 @@ public class Node {
   public float distance(Node adj) {
     return dist(getX(), getY(), adj.getX(), adj.getY());
   }
-  
+
   public void setX(float x) {
     this.x = x;
   }
-  
+
   public void setY(float y) {
     this.y = y;
   }

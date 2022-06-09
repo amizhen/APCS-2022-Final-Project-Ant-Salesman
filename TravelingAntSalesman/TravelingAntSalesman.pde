@@ -36,13 +36,13 @@ void mouseClicked() {
   //}
   DrawableNode newNode = new TravelNode(mouseX, mouseY);
   boolean valid = true;
-  for(DrawableNode n : Salesman.nodes){
-    if(n.distance(newNode) < newNode.getDiameter()){
+  for (DrawableNode n : Salesman.nodes) {
+    if (n.distance(newNode) < newNode.getDiameter()) {
       valid = false;
       break;
     }
   }
-  if(valid){
+  if (valid) {
     Salesman.addNode(newNode);
     Salesman.resetAlgorithm();
   }
@@ -101,7 +101,9 @@ void keyPressed() {
     } else {
       pathAnt = Salesman.executeGeneration();
     }
-    drawing = true;
+    if (Salesman.nodes.size() > 0) {
+      drawing = true;
+    }
     DrawableAnt.resetStep();    
     DrawableAnt.resetPos();
     break;
@@ -110,19 +112,19 @@ void keyPressed() {
   }
 }
 
-void displayAnts(){
+void displayAnts() {
   noStroke();
-  if(DrawableAnt.getPos() == ANTIMATE){
-      DrawableAnt.resetPos();
-      DrawableAnt.incrementStep();
+  if (DrawableAnt.getPos() == ANTIMATE) {
+    DrawableAnt.resetPos();
+    DrawableAnt.incrementStep();
   }
-  if(DrawableAnt.getStep()>=Salesman.nodes.size()){
-      DrawableAnt.resetStep();
-      drawing = false;
+  if (DrawableAnt.getStep()>=Salesman.nodes.size()) {
+    DrawableAnt.resetStep();
+    drawing = false;
   }
-  for(int i = Salesman.ants.length-1; i >=0; i--){
-    if(i == 0){
-      fill(0,0,255);
+  for (int i = Salesman.ants.length-1; i >=0; i--) {
+    if (i == 0) {
+      fill(0, 0, 255);
     } else {
       fill(255, 0, 0);
     }
@@ -131,7 +133,7 @@ void displayAnts(){
     Node prev = a.getNodeAt(DrawableAnt.getStep());
     int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.getPos()+prev.getY());
-    
+
     ellipse(x, y, 10, 10);
   }
   DrawableAnt.incrementPos();
@@ -182,11 +184,11 @@ void draw() {
     if (MODE == SOLUTION) {
       stroke(0);
       displayAntPath(pathAnt);
-      if(drawing){
+      if (drawing) {
         displayAnts();
       }
     } else if (MODE == PHEROMONE) {
-      if(drawing){
+      if (drawing) {
         displayAnts();
       }
       displayPheromoneMap();
