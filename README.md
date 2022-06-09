@@ -71,3 +71,4 @@ will be visualized through Processing.
 | Aiden   | 06/04-05/22 | Restructured display and animate functions back into Drawable ant, now need to turn all ants in processing into drawable ants       |
 | Aiden   | 06/06/22    | Got ant animation working on a basic level, still needs resetting working and has some bugs. Also need to encapsulate Drawable ant. |
 | Aiden   | 06/07/22    | Continued ant animation, it should be working reliably, I plan to change their positions and color.                                 |
+| Aiden   | 06/08/22    | Did some debugging, de-cluttering, and formatting                                                                                   |
