@@ -23,17 +23,9 @@ void setup() {
   Salesman.pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
   noStroke();
   textSize(40);
-
-  // test code
-  // Salesman.addNodes(new TravelNode(45, 80));
 }
 
 void mouseClicked() {
-  //DrawableNode n = new TravelNode(mouseX, mouseY);
-  //if (!Salesman.nodes.contains(n)) {
-  //  Salesman.addNode(n);
-  //  Salesman.resetAlgorithm();
-  //}
   DrawableNode newNode = new TravelNode(mouseX, mouseY);
   boolean valid = true;
   for(DrawableNode n : Salesman.nodes){
@@ -139,7 +131,15 @@ void displayAntPath(Ant ant) {
   }
 }
 
-
+void displayConstants() {
+  fill(0);
+  textSize(20);
+  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.PHEROMONE_INFLUENCE_COEFFICIENT), width - 400, 20);
+  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.DISTANCE_INFLUENCE_COEFFICIENT), width - 400, 40);
+  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.PHEROMONE_EVAPORATION_COEFFICIENT), width - 400, 60);
+  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.PHEROMONE_DEPOSIT_COEFFICIENT), width - 400, 80);
+  textSize(40);
+}
 
 void displayPheromoneMap() {
   strokeWeight(16);
@@ -194,4 +194,6 @@ void draw() {
     text("Distance - " + pathAnt.getDistance(), 40, 40);
     displayGenerationData();
   }
+  
+  displayConstants();
 }

@@ -10,7 +10,7 @@ public static class Salesman {
   /** Percentage of pheromones that remain after evaporation */
   public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
-  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
+  public static int PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
 
 
   // Perhaps this can be dynamically determined. Look into this later
