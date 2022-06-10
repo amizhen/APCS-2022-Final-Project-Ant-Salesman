@@ -30,23 +30,28 @@ void setup() {
 }
 
 void mouseClicked() {
-  //DrawableNode n = new TravelNode(mouseX, mouseY);
-  //if (!Salesman.nodes.contains(n)) {
-  //  Salesman.addNode(n);
-  //  Salesman.resetAlgorithm();
-  //}
-  DrawableNode newNode = new TravelNode(mouseX, mouseY);
-  boolean valid = true;
-  for (DrawableNode n : Salesman.nodes) {
-    if (n.distance(newNode) < newNode.getDiameter()) {
-      valid = false;
-      break;
+  if(MODE == ERASE){
+    for (DrawableNode n : Salesman.nodes) {
+      if (dist(n.getX(), n.getY(), mouseX, mouseY) < n.getDiameter()) {
+        Salesman.removeNode(n);
+        Salesman.resetAlgorithm();
+        break;
+      }
     }
-  }
-  if (valid) {
-    Salesman.addNode(newNode);
-    Salesman.resetAlgorithm();
-    DrawableAnt.resetDraw();
+  } else {
+    DrawableNode newNode = new TravelNode(mouseX, mouseY);
+    boolean valid = true;
+    for (DrawableNode n : Salesman.nodes) {
+      if (n.distance(newNode) < newNode.getDiameter()) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) {
+      Salesman.addNode(newNode);
+      Salesman.resetAlgorithm();
+      DrawableAnt.resetDraw();
+    }
   }
 }
 
@@ -97,16 +102,18 @@ void keyPressed() {
     MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-      Salesman.resetAlgorithm();
-    } else {
-      pathAnt = Salesman.executeGeneration();
+    if(MODE!=ERASE){
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.resetAlgorithm();
+      } else {
+        pathAnt = Salesman.executeGeneration();
+      }
+      DrawableAnt.resetDraw();
+      if (Salesman.nodes.size() > 0) {
+        DrawableAnt.startDraw();
+      }
+      break;
     }
-    DrawableAnt.resetDraw();
-    if (Salesman.nodes.size() > 0) {
-      DrawableAnt.startDraw();
-    }
-    break;
   case 16: // SHIFT KEY
     break;
   }
@@ -115,7 +122,6 @@ void keyPressed() {
 void displayAnts() {
   noStroke();
   if (DrawableAnt.getPos() == ANTIMATE) {
-    DrawableAnt.resetPos();
     DrawableAnt.incrementStep();
   }
   if (DrawableAnt.getStep()>=Salesman.nodes.size()) {
@@ -177,7 +183,7 @@ void displayGenerationData() {
 
 
 void draw() {
-  println(DrawableAnt.isDrawing());
+  //println(DrawableAnt.isDrawing());
   background(255);
 
   if (pathAnt != null) {
@@ -208,4 +214,18 @@ void draw() {
     text("Distance - " + pathAnt.getDistance(), 40, 40);
     displayGenerationData();
   }
+  String modeDisp = "Mode: ";
+  switch (MODE) {
+    case(SOLUTION):
+      modeDisp += "Solution";
+      break;
+    case(PHEROMONE):
+      modeDisp += "Pheromones";
+      break;
+    case(ERASE):
+      modeDisp += "Delete";
+      break;
+  }
+  fill(0);
+  text(modeDisp, width-400, 40);
 }

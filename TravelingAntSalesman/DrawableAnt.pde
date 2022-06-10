@@ -13,29 +13,21 @@ public static class DrawableAnt extends Ant {
   public static int getPos() {
     return pos;
   }
-  public static void resetPos() {
-    pos = 0;
-  }
   public static void incrementPos() {
     pos++;
   }
-
   public static int getStep() {
     return step;
   }
-  public static void resetStep() {
-    step = 0;
-  }
   public static void incrementStep() {
+    pos = 0;
     step++;
   }
-  
   public static void resetDraw() {
-    resetStep();
-    resetPos();
+    step = 0;
+    pos = 0;
     drawing = false;
   }
-
   public DrawableAnt(DrawableNode start) {
     super(start);
   }
