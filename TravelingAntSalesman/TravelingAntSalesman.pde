@@ -8,10 +8,11 @@ import java.util.Set;
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 public static final int ANTIMATE = 120;
-public static boolean drawing = false;
+
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
+public static final int ERASE = 2;
 
 
 public int MODE = SOLUTION;
@@ -29,22 +30,28 @@ void setup() {
 }
 
 void mouseClicked() {
-  //DrawableNode n = new TravelNode(mouseX, mouseY);
-  //if (!Salesman.nodes.contains(n)) {
-  //  Salesman.addNode(n);
-  //  Salesman.resetAlgorithm();
-  //}
-  DrawableNode newNode = new TravelNode(mouseX, mouseY);
-  boolean valid = true;
-  for (DrawableNode n : Salesman.nodes) {
-    if (n.distance(newNode) < newNode.getDiameter()) {
-      valid = false;
-      break;
+  if (MODE == ERASE) {
+    for (DrawableNode n : Salesman.nodes) {
+      if (dist(n.getX(), n.getY(), mouseX, mouseY) < n.getDiameter()) {
+        Salesman.removeNode(n);
+        Salesman.resetAlgorithm();
+        break;
+      }
     }
-  }
-  if (valid) {
-    Salesman.addNode(newNode);
-    Salesman.resetAlgorithm();
+  } else {
+    DrawableNode newNode = new TravelNode(mouseX, mouseY);
+    boolean valid = true;
+    for (DrawableNode n : Salesman.nodes) {
+      if (n.distance(newNode) < newNode.getDiameter()) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) {
+      Salesman.addNode(newNode);
+      Salesman.resetAlgorithm();
+      DrawableAnt.resetDraw();
+    }
   }
 }
 
@@ -83,30 +90,30 @@ void keyPressed() {
       Salesman.resetAlgorithm();
     }
     pathAnt = Salesman.findShortestPath();
-    drawing = false;
-    DrawableAnt.resetStep();   
-    DrawableAnt.resetPos();
+    DrawableAnt.resetDraw();
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
     Salesman.pheromoneMap.clear();
     Salesman.resetAlgorithm();
+    DrawableAnt.resetDraw();
     break;
   case 32: // SPACE
-    MODE = (MODE + 1) % 2; 
+    MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-      Salesman.resetAlgorithm();
-    } else {
-      pathAnt = Salesman.executeGeneration();
+    if (MODE!=ERASE) {
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.resetAlgorithm();
+      } else {
+        pathAnt = Salesman.executeGeneration();
+      }
+      DrawableAnt.resetDraw();
+      if (Salesman.nodes.size() > 0) {
+        DrawableAnt.startDraw();
+      }
+      break;
     }
-    if (Salesman.nodes.size() > 0) {
-      drawing = true;
-    }
-    DrawableAnt.resetStep();    
-    DrawableAnt.resetPos();
-    break;
   case 16: // SHIFT KEY
     break;
   }
@@ -115,12 +122,10 @@ void keyPressed() {
 void displayAnts() {
   noStroke();
   if (DrawableAnt.getPos() == ANTIMATE) {
-    DrawableAnt.resetPos();
     DrawableAnt.incrementStep();
   }
   if (DrawableAnt.getStep()>=Salesman.nodes.size()) {
-    DrawableAnt.resetStep();
-    drawing = false;
+    DrawableAnt.resetDraw();
   }
   for (int i = Salesman.ants.length-1; i >=0; i--) {
     if (i == 0) {
@@ -178,17 +183,18 @@ void displayGenerationData() {
 
 
 void draw() {
+  //println(DrawableAnt.isDrawing());
   background(255);
 
   if (pathAnt != null) {
     if (MODE == SOLUTION) {
       stroke(0);
       displayAntPath(pathAnt);
-      if (drawing) {
+      if (DrawableAnt.isDrawing()) {
         displayAnts();
       }
     } else if (MODE == PHEROMONE) {
-      if (drawing) {
+      if (DrawableAnt.isDrawing()) {
         displayAnts();
       }
       displayPheromoneMap();
@@ -208,4 +214,18 @@ void draw() {
     text("Distance - " + pathAnt.getDistance(), 40, 40);
     displayGenerationData();
   }
+  String modeDisp = "Mode: ";
+  switch (MODE) {
+    case(SOLUTION):
+    modeDisp += "Solution";
+    break;
+    case(PHEROMONE):
+    modeDisp += "Pheromones";
+    break;
+    case(ERASE):
+    modeDisp += "Delete";
+    break;
+  }
+  fill(0);
+  text(modeDisp, width-400, 40);
 }
