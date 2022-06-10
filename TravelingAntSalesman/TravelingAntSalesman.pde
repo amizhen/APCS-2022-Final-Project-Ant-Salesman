@@ -8,10 +8,11 @@ import java.util.Set;
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
 public static final int ANTIMATE = 120;
-public static boolean drawing = false;
+
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
+public static final int ERASE = 2;
 
 
 public int MODE = SOLUTION;
@@ -45,6 +46,7 @@ void mouseClicked() {
   if (valid) {
     Salesman.addNode(newNode);
     Salesman.resetAlgorithm();
+    DrawableAnt.resetDraw();
   }
 }
 
@@ -83,17 +85,16 @@ void keyPressed() {
       Salesman.resetAlgorithm();
     }
     pathAnt = Salesman.findShortestPath();
-    drawing = false;
-    DrawableAnt.resetStep();   
-    DrawableAnt.resetPos();
+    DrawableAnt.resetDraw();
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
     Salesman.pheromoneMap.clear();
     Salesman.resetAlgorithm();
+    DrawableAnt.resetDraw();
     break;
   case 32: // SPACE
-    MODE = (MODE + 1) % 2; 
+    MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
     if (Salesman.generationCounter >= Salesman.GENERATIONS) {
@@ -101,11 +102,10 @@ void keyPressed() {
     } else {
       pathAnt = Salesman.executeGeneration();
     }
+    DrawableAnt.resetDraw();
     if (Salesman.nodes.size() > 0) {
-      drawing = true;
+      DrawableAnt.startDraw();
     }
-    DrawableAnt.resetStep();    
-    DrawableAnt.resetPos();
     break;
   case 16: // SHIFT KEY
     break;
@@ -119,8 +119,7 @@ void displayAnts() {
     DrawableAnt.incrementStep();
   }
   if (DrawableAnt.getStep()>=Salesman.nodes.size()) {
-    DrawableAnt.resetStep();
-    drawing = false;
+    DrawableAnt.resetDraw();
   }
   for (int i = Salesman.ants.length-1; i >=0; i--) {
     if (i == 0) {
@@ -178,17 +177,18 @@ void displayGenerationData() {
 
 
 void draw() {
+  println(DrawableAnt.isDrawing());
   background(255);
 
   if (pathAnt != null) {
     if (MODE == SOLUTION) {
       stroke(0);
       displayAntPath(pathAnt);
-      if (drawing) {
+      if (DrawableAnt.isDrawing()) {
         displayAnts();
       }
     } else if (MODE == PHEROMONE) {
-      if (drawing) {
+      if (DrawableAnt.isDrawing()) {
         displayAnts();
       }
       displayPheromoneMap();
