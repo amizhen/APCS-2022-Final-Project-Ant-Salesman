@@ -2,9 +2,9 @@ public static class DrawableAnt extends Ant {
   private static int pos = 0;
   private static int step = 0;
   private static boolean drawing = false;
-  
-  
-  public static boolean isDrawing(){
+
+
+  public static boolean isDrawing() {
     return drawing;
   }
   public static void startDraw() {

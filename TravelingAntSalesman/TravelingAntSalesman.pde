@@ -30,7 +30,7 @@ void setup() {
 }
 
 void mouseClicked() {
-  if(MODE == ERASE){
+  if (MODE == ERASE) {
     for (DrawableNode n : Salesman.nodes) {
       if (dist(n.getX(), n.getY(), mouseX, mouseY) < n.getDiameter()) {
         Salesman.removeNode(n);
@@ -102,7 +102,7 @@ void keyPressed() {
     MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if(MODE!=ERASE){
+    if (MODE!=ERASE) {
       if (Salesman.generationCounter >= Salesman.GENERATIONS) {
         Salesman.resetAlgorithm();
       } else {
@@ -217,14 +217,14 @@ void draw() {
   String modeDisp = "Mode: ";
   switch (MODE) {
     case(SOLUTION):
-      modeDisp += "Solution";
-      break;
+    modeDisp += "Solution";
+    break;
     case(PHEROMONE):
-      modeDisp += "Pheromones";
-      break;
+    modeDisp += "Pheromones";
+    break;
     case(ERASE):
-      modeDisp += "Delete";
-      break;
+    modeDisp += "Delete";
+    break;
   }
   fill(0);
   text(modeDisp, width-400, 40);

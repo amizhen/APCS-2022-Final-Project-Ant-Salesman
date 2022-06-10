@@ -16,20 +16,30 @@ will be visualized through Processing.
 
 ## **Compile/Run Instructions**
 
-### *Non-Visual Algorithm With Standard Input*
+[//]: # (### *Non-Visual Algorithm With Standard Input*)
 
-* Compile Salesman.java.
-* Run without arguments.
-* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the
-  start node.
-* Result will be printed to terminal.
+[//]: # ()
+[//]: # (* Compile Salesman.java.)
 
-### *Non-Visual Algorithm With File Input*
+[//]: # (* Run without arguments.)
 
-* Compile Salesman.java.
-* Run with the filename of the input file as the argument.
-* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per
-  line.
+[//]: # (* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the)
+
+[//]: # (  start node.)
+
+[//]: # (* Result will be printed to terminal.)
+
+[//]: # ()
+[//]: # (### *Non-Visual Algorithm With File Input*)
+
+[//]: # ()
+[//]: # (* Compile Salesman.java.)
+
+[//]: # (* Run with the filename of the input file as the argument.)
+
+[//]: # (* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per)
+
+[//]: # (  line.)
 
 ### *Processing Visualization*
 
@@ -72,3 +82,4 @@ will be visualized through Processing.
 | Aiden   | 06/06/22    | Got ant animation working on a basic level, still needs resetting working and has some bugs. Also need to encapsulate Drawable ant. |
 | Aiden   | 06/07/22    | Continued ant animation, it should be working reliably, I plan to change their positions and color.                                 |
 | Aiden   | 06/08/22    | Did some debugging, de-cluttering, and formatting                                                                                   |
+| Aiden   | 06/10/22    | Added delete functionality to be able to remove individual nodes.                                                                   |

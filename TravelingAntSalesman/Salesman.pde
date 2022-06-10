@@ -43,10 +43,10 @@ public static class Salesman {
     }
     // println(pheromoneMap);
   }
-  
-  public static void removeNode(Node n){
+
+  public static void removeNode(Node n) {
     nodes.remove(n);
-    for(Node k : nodes){
+    for (Node k : nodes) {
       pheromoneMap.remove(setOf(n, k));
     }
   }
