@@ -18,7 +18,6 @@ public static class Salesman {
   public static int GENERATIONS = 50;
   public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
 
-  public static int antCounter = 0;
   public static int generationCounter = 0;
   public static DrawableAnt[] ants = new DrawableAnt[ANTS_PER_GENERATION];
 
@@ -150,7 +149,6 @@ public static class Salesman {
   public static void resetAlgorithm() {
     resetPheromoneMap();
     pathAnt = null;
-    antCounter = 0;
     generationCounter = 0;
     Salesman.ants = new DrawableAnt[Salesman.ANTS_PER_GENERATION];
   }
@@ -162,11 +160,10 @@ public static class Salesman {
    */
   public static Ant findShortestPath() {
     for (; generationCounter < GENERATIONS; generationCounter++) {
-      for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-        ants[antCounter] = new DrawableAnt(start);
-        ants[antCounter].run(); // have ants traverse through the map of nodes
+      for (int i = 0; i < ANTS_PER_GENERATION; i++) {
+        ants[i] = new DrawableAnt(start);
+        ants[i].run(); // have ants traverse through the map of nodes
       }
-      antCounter = 0;
       Arrays.sort(ants); // sort Ants on distance traveled
 
       decayPheromones();
@@ -178,11 +175,10 @@ public static class Salesman {
   }
 
   public static Ant executeGeneration() {
-    for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-      ants[antCounter] = new DrawableAnt(start);
-      ants[antCounter].run();
+    for (int i = 0; i < ANTS_PER_GENERATION; i++) {
+      ants[i] = new DrawableAnt(start);
+      ants[i].run();
     }
-    antCounter = 0;
     generationCounter++;
 
     Arrays.sort(ants);
