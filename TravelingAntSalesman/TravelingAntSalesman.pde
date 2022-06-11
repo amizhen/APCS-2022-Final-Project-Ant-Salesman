@@ -22,6 +22,8 @@ public static final int P_EVAPORATION_COEFF = 2;
 public static final int P_DEPOSIT_COEFF = 3;
 public static int CONSTANT_SELECTED = P_INFLUENCE_COEFF;
 
+public static boolean isHelpMenuOpen = false;
+
 void setup() {
   size(1000, 800);
   Salesman.start = new StartNode(width / 2, height / 2);
@@ -129,6 +131,9 @@ void keyPressed() {
   case 65: // A key
     modifyConstant(-1);
     break;
+  case 72: // H key
+    isHelpMenuOpen = !isHelpMenuOpen;
+    break;
   }
 }
 
@@ -216,6 +221,26 @@ void displayGenerationData() {
   text(String.format("Generation %d / %d", Salesman.generationCounter, Salesman.GENERATIONS), 20, height - 20);
 }
 
+void displayHelpMenu() {
+  fill(#d3d3d3);
+  int yBase = 100;
+  rect(50, yBase, width - 100, yBase+360);
+  fill(0);
+  textSize(24);
+  text("Press space to alternate between modes Solution, Pheromones, and Delete.", 55, yBase + 36); // + 36
+  text("Click on screen in 'Pheromones' or 'Solution' mode to add nodes.", 55, yBase + 72);
+  text("Click and drag a node in 'Pheromones' or 'Solution' to move it.", 55, yBase + 108);
+  text("Click on a node in 'Delete' mode to remove it.", 55, yBase + 144);
+  text("Click the 'Enter' key to run the algorithm.", 55, yBase + 180);
+  text("Click the right arrow key to step through each generation of ants.", 55, yBase + 216);
+  text("Change the coefficients of the algorithms with the keys below.", 55, yBase + 252);
+  text("The coefficient selected to be change is shown by the green box.", 55, yBase + 288);
+  text("Use the W and S key to cycle through the coefficient to change.", 55, yBase + 324);
+  text("Use the D key to increase the coefficient selected.", 55, yBase + 360);
+  text("Use the A key to decrease the coefficient selected.", 55, yBase + 396);
+  text("Press the H key to toggle the help menu.", 55, yBase + 432);
+}
+
 void draw() {
   background(255);
 
@@ -239,19 +264,21 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
-  //Loop for ant display
-
-
+  
+  // text display start
+  
+  textSize(40);
   if (pathAnt != null) {
     fill(0);
-    text("Distance - " + pathAnt.getDistance(), 40, 40);
+    text("Distance - " + pathAnt.getDistance(), 40, 80);
     displayGenerationData();
   }
   
   displayConstants();
   
   String modeDisp = "Mode: " + (MODE == SOLUTION ? "Solution" : MODE == ERASE ? "Delete" : "Pheromones");
-
   fill(0);
-  text(modeDisp, 40, 80);
+  text(modeDisp, 40, 40);
+  
+  if (isHelpMenuOpen) displayHelpMenu();
 }
