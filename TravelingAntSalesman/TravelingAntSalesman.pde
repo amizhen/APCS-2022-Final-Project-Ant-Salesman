@@ -135,16 +135,16 @@ void keyPressed() {
 void modifyConstant(int modifier) {
   switch (CONSTANT_SELECTED) {
     case P_INFLUENCE_COEFF:
-      Salesman.setPheromoneInfluenceCoefficient(Salesman.PHEROMONE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      Salesman.setPheromoneInfluenceCoefficient(Salesman.getPheromoneInfluenceCoefficient() + 0.05 * modifier);
       break;
     case D_INFLUENCE_COEFF:
-      Salesman.setDistanceInfluenceCoefficient(Salesman.DISTANCE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      Salesman.setDistanceInfluenceCoefficient(Salesman.getDistanceInfluenceCoefficient() + 0.05 * modifier);
       break;
     case P_EVAPORATION_COEFF:
-      Salesman.setPheromoneEvaporationCoefficient(Salesman.PHEROMONE_EVAPORATION_COEFFICIENT + 0.01 * modifier);
+      Salesman.setPheromoneEvaporationCoefficient(Salesman.getPheromoneEvaporationCoefficient() + 0.01 * modifier);
       break;
     case P_DEPOSIT_COEFF:
-      Salesman.setPheromoneDepositCoefficient(Salesman.PHEROMONE_DEPOSIT_COEFFICIENT + 100 * modifier);
+      Salesman.setPheromoneDepositCoefficient(Salesman.getPheromoneDepositCoefficient() + 100 * modifier);
       break;
   }
 }
@@ -166,14 +166,13 @@ void displayAnts() {
     DrawableAnt a = Salesman.ants[i];
     Node current = a.getNodeAt(DrawableAnt.getStep()+1);
     Node prev = a.getNodeAt(DrawableAnt.getStep());
-    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
+    int x = (int) ((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.getPos()+prev.getY());
 
     ellipse(x, y, 10, 10);
   }
   DrawableAnt.incrementPos();
 }
-
 
 void displayAntPath(Ant ant) {
   strokeWeight(4);
@@ -188,10 +187,10 @@ void displayAntPath(Ant ant) {
 void displayConstants() {
   fill(0);
   textSize(20);
-  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.PHEROMONE_INFLUENCE_COEFFICIENT), width - 400, 20);
-  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.DISTANCE_INFLUENCE_COEFFICIENT), width - 400, 40);
-  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.PHEROMONE_EVAPORATION_COEFFICIENT), width - 400, 60);
-  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.PHEROMONE_DEPOSIT_COEFFICIENT), width - 400, 80);
+  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.getPheromoneInfluenceCoefficient()), width - 400, 20);
+  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.getDistanceInfluenceCoefficient()), width - 400, 40);
+  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.getPheromoneEvaporationCoefficient()), width - 400, 60);
+  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.getPheromoneDepositCoefficient()), width - 400, 80);
   fill(#00FF00);
   rect(width - 407, CONSTANT_SELECTED * 20, 5, 23);
   textSize(40);
@@ -205,10 +204,6 @@ void displayPheromoneMap() {
   }
 
   for (Set<DrawableNode> key : Salesman.pheromoneMap.keySet()) {
-    // opacity of the edge is determined by comparing it to the largest edge pheromone level
-    // use squares as it will lead to lower pheromone levels being displayed less
-    // stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150));
-
     stroke(255, 0, 255, Salesman.pheromoneMap.get(key) / max * 150);
     DrawableNode[] nodes = key.toArray(new DrawableNode[2]);
     line(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());

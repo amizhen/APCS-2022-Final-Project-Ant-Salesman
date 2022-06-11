@@ -54,7 +54,7 @@ public class Node {
   }
 
   @Override
-    public String toString() {
+  public String toString() {
     return String.format("Node(x=%f, y=%f)", x, y);
   }
 

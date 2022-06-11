@@ -3,17 +3,17 @@ public static class Salesman {
   public static List<DrawableNode> nodes;
   public static Map<Set<DrawableNode>, Float> pheromoneMap;
 
+  // These coefficients are encapsulated to establish invariants
+  
   /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
-  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.4;
+  private static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.4;
   /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
-  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.6;
+  private static float DISTANCE_INFLUENCE_COEFFICIENT = 1.6;
   /** Percentage of pheromones that remain after evaporation */
-  public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
+  private static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
-  public static int PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
+  private static int PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
 
-
-  // Perhaps this can be dynamically determined. Look into this later
   public static final int ANTS_PER_GENERATION = 20;
   public static int GENERATIONS = 50;
   public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
@@ -21,6 +21,22 @@ public static class Salesman {
   public static int antCounter = 0;
   public static int generationCounter = 0;
   public static DrawableAnt[] ants = new DrawableAnt[ANTS_PER_GENERATION];
+
+  public static float getPheromoneInfluenceCoefficient() {
+    return PHEROMONE_INFLUENCE_COEFFICIENT;
+  }
+  
+  public static float getDistanceInfluenceCoefficient() {
+    return DISTANCE_INFLUENCE_COEFFICIENT;
+  }
+  
+  public static float getPheromoneEvaporationCoefficient() {
+    return PHEROMONE_EVAPORATION_COEFFICIENT;
+  }
+  
+  public static int getPheromoneDepositCoefficient() {
+     return PHEROMONE_DEPOSIT_COEFFICIENT; 
+  }
 
   public static void setPheromoneInfluenceCoefficient(float newVal) {
     if (newVal > 0) {
@@ -97,7 +113,7 @@ public static class Salesman {
    */
   public static void decayPheromones() {
     for (Set<DrawableNode> key : pheromoneMap.keySet()) {
-      pheromoneMap.replace(key, pheromoneMap.get(key) * PHEROMONE_EVAPORATION_COEFFICIENT);
+      pheromoneMap.replace(key, pheromoneMap.get(key) * getPheromoneEvaporationCoefficient());
     }
   }
 

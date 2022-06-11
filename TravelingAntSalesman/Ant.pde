@@ -34,7 +34,7 @@ public static class Ant implements Comparable<Ant> {
    * @return The amount of pheromones dropped at an edges along the path
    */
   private float calcPheromones() {
-    return Salesman.PHEROMONE_DEPOSIT_COEFFICIENT / getDistance();
+    return Salesman.getPheromoneDepositCoefficient() / getDistance();
   }
 
   public Node getCurrentNode() {
@@ -61,7 +61,7 @@ public static class Ant implements Comparable<Ant> {
    * @return The weight of the edge to be chosen
    */
   private int calculateWeight(Node node) { 
-    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.PHEROMONE_INFLUENCE_COEFFICIENT) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.DISTANCE_INFLUENCE_COEFFICIENT) * WEIGHT_CONSTANT);
+    int weight = (int) (Math.pow(Salesman.getPheromone(node, getCurrentNode()), Salesman.getPheromoneInfluenceCoefficient()) * Math.pow(1 / node.distance(getCurrentNode()), Salesman.getDistanceInfluenceCoefficient()) * WEIGHT_CONSTANT);
     return Math.max(1, weight);
   }
 
