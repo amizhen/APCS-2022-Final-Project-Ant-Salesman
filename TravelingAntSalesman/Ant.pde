@@ -1,4 +1,4 @@
-import java.util.ArrayList; //<>// //<>//
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -149,14 +149,22 @@ public static class Ant implements Comparable<Ant> {
     return path;
   }
 
-  //Comparable
+  /**
+   * Overrided compare method that ranks ants based on the distance of their path
+   * 
+   * @return if positive, the this ant is greater; if zero, the ants are equal; if negative, this ant is less
+   */
   @Override
-    public int compareTo(Ant other) { //MAY CHANGE
+    public int compareTo(Ant other) { 
     return (int) (getDistance() - other.getDistance());
   }
 
   // processing code
-
+  /**
+   * A method that returns the nodes traveled as an unmodifiable list
+   * 
+   * @return the nodes the ant has travelled
+   */
   public List<DrawableNode> getVisitedList() {
     return Collections.unmodifiableList(visitedNodes);
   }
