@@ -87,3 +87,4 @@ will be visualized through Processing.
 | Jeffrey | 06/08/22     | Began working on the feature to change coefficients at runtime                                                                      |
 | Aiden   | 06/10/22     | Added delete functionality to be able to remove individual nodes.                                                                   |
 | Jeffrey | 06/10/22     | Continue working on the feature to be able to adjust the coefficients of the algorithm in Processing                                |
+| Jeffrey | 06/11/22     | Finalized the project by adding a help menu and cleaning up code                                                                    |
