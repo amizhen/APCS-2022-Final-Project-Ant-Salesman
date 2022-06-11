@@ -16,20 +16,30 @@ will be visualized through Processing.
 
 ## **Compile/Run Instructions**
 
-### *Non-Visual Algorithm With Standard Input*
+[//]: # (### *Non-Visual Algorithm With Standard Input*)
 
-* Compile Salesman.java.
-* Run without arguments.
-* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the
-  start node.
-* Result will be printed to terminal.
+[//]: # ()
+[//]: # (* Compile Salesman.java.)
 
-### *Non-Visual Algorithm With File Input*
+[//]: # (* Run without arguments.)
 
-* Compile Salesman.java.
-* Run with the filename of the input file as the argument.
-* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per
-  line.
+[//]: # (* Use standard input to populate the nodes. Write one coordinate per line and format as x,y. The first coordinate is the)
+
+[//]: # (  start node.)
+
+[//]: # (* Result will be printed to terminal.)
+
+[//]: # ()
+[//]: # (### *Non-Visual Algorithm With File Input*)
+
+[//]: # ()
+[//]: # (* Compile Salesman.java.)
+
+[//]: # (* Run with the filename of the input file as the argument.)
+
+[//]: # (* The file should be in the same directory as Salesman.java, and should be formatted with one coordinate as x,y per)
+
+[//]: # (  line.)
 
 ### *Processing Visualization*
 
@@ -47,22 +57,33 @@ will be visualized through Processing.
 
 ## **Development Logs**
 
-| Name    | Date     | Summary                                                                                                              |
-| ------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
-| Aiden   | 05/23/22 | Started work on Ant class but realised it would make more sense to have the constants in the main written first.     |
-| Jeffrey | 05/23/22 | Started work on Salesman and Node class with instance variables + methods.                                           |
-| Jeffrey | 05/24/22 | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.               |
-| Aiden   | 05/24/22 | Resolved merge conflicts, added several utility functions to the ant class.                                          |
-| Aiden   | 05/25/22 | Resolved merge conflicts, added several utility functions to the ant class.                                          |
-| Jeffrey | 05/25/22 | Finished Ant::pickNextNode method                                                                                    |
-| Jeffrey | 05/26/22 | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                    |
-| Aiden   | 05/26/22 | Wrote Run, tick, reformatted pickNextNode                                                                            |
-| Aiden   | 05/27/22 | Added input function for Salesman, uses Standard input to create nodes to be traversed                               |
-| Jeffrey | 05/27/22 | Created Processing project and tested the completed ACO algorithm more                                               |
-| Jeffrey | 05/28/22 | Begun working on the Processing aspect of the project                                                                |
-| Aiden   | 05/29/22 | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                    |
-| Jeffrey | 05/29/22 | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO           |
-| Jeffrey | 05/30/22 | Fixed bug with program + modified constants to produce consistent solutions                                          |
-| Jeffrey | 05/31/22 | Completed pheromone map display                                                                                      |
-| Jeffrey | 06/01/22 | Began working on the step by step display of the ACO algorithm                                                       |
-| Jeffrey | 06/02/22 | Completed per generation display of the ACO algorithm, fixed some bugs, and moved code around for better readability |
+| Name    | Date         | Summary                                                                                                                             |
+| ------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Aiden   | 05/23/22     | Started work on Ant class but realised it would make more sense to have the constants in the main written first.                    |
+| Jeffrey | 05/23/22     | Started work on Salesman and Node class with instance variables + methods.                                                          |
+| Jeffrey | 05/24/22     | Mostly completed Node class and moved some methods to Salesman. Also continued work on Salesman class.                              |
+| Aiden   | 05/24/22     | Resolved merge conflicts, added several utility functions to the ant class.                                                         |
+| Aiden   | 05/25/22     | Resolved merge conflicts, added several utility functions to the ant class.                                                         |
+| Jeffrey | 05/25/22     | Finished Ant::pickNextNode method                                                                                                   |
+| Jeffrey | 05/26/22     | Finished Salesman::findShortestPath method + begun testing the complete algorithm                                                   |
+| Aiden   | 05/26/22     | Wrote Run, tick, reformatted pickNextNode                                                                                           |
+| Aiden   | 05/27/22     | Added input function for Salesman, uses Standard input to create nodes to be traversed                                              |
+| Jeffrey | 05/27/22     | Created Processing project and tested the completed ACO algorithm more                                                              |
+| Jeffrey | 05/28/22     | Begun working on the Processing aspect of the project                                                                               |
+| Aiden   | 05/29/22     | Wrote compile instructions and created the fileInput method for creating nodes from a given file.                                   |
+| Jeffrey | 05/29/22     | Accomplished adding and moving Nodes in processing. Processing can now display the shortest path using ACO                          |
+| Jeffrey | 05/30/22     | Fixed bug with program + modified constants to produce consistent solutions                                                         |
+| Jeffrey | 05/31/22     | Completed pheromone map display                                                                                                     |
+| Aiden   | 05/32/22     | Began work on Drawable Ant                                                                                                          |
+| Jeffrey | 06/01/22     | Began working on the step by step display of the ACO algorithm                                                                      |
+| Aiden   | 06/01/22     | Wrote Display for Drawable Ant.                                                                                                     |
+| Jeffrey | 06/02/22     | Completed per generation display of the ACO algorithm, fixed some bugs, and moved code around for better readability                |
+| Jeffrey | 06/03/22     | Added quality of life features + started on GenerateTick method                                                                     |
+| Aiden   | 06/04, 06/05 | Restructured display and animate functions back into Drawable ant, now need to turn all ants in processing into drawable ants       |
+| Jeffrey | 06/06/22     | Made generation number dependent on number of nodes + continued to test constants                                                   |
+| Aiden   | 06/06/22     | Got ant animation working on a basic level, still needs resetting working and has some bugs. Also need to encapsulate Drawable ant. |
+| Aiden   | 06/07/22     | Continued ant animation, it should be working reliably, I plan to change their positions and color.                                 |
+| Aiden   | 06/08/22     | Did some debugging, de-cluttering, and formatting                                                                                   |
+| Jeffrey | 06/08/22     | Began working on the feature to change coefficients at runtime                                                                      |
+| Aiden   | 06/10/22     | Added delete functionality to be able to remove individual nodes.                                                                   |
+| Jeffrey | 06/10/22     | Continue working on the feature to be able to adjust the coefficients of the algorithm in Processing                                |

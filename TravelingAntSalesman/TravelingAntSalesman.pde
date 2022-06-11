@@ -7,30 +7,53 @@ import java.util.Set;
 
 public static DrawableNode previousSelect = null;
 public static Ant pathAnt = null;
-public static boolean drawing = false;
+public static final int ANTIMATE = 120;
+
 
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
+public static final int ERASE = 2;
 
 public int MODE = SOLUTION;
 
+public static final int P_INFLUENCE_COEFF = 0;
+public static final int D_INFLUENCE_COEFF = 1;
+public static final int P_EVAPORATION_COEFF = 2;
+public static final int P_DEPOSIT_COEFF = 3;
+public static int CONSTANT_SELECTED = P_INFLUENCE_COEFF;
+
 void setup() {
-  size(1000, 1000);
+  size(1000, 800);
   Salesman.start = new StartNode(width / 2, height / 2);
   Salesman.nodes = new ArrayList<DrawableNode>();
   Salesman.pheromoneMap = new HashMap<Set<DrawableNode>, Float>();
   noStroke();
   textSize(40);
-
-  // test code
-  // Salesman.addNodes(new TravelNode(45, 80));
 }
 
 void mouseClicked() {
-  DrawableNode n = new TravelNode(mouseX, mouseY);
-  if (!Salesman.nodes.contains(n)) {
-    Salesman.addNode(n);
-    Salesman.resetAlgorithm();
+  if (MODE == ERASE) {
+    for (DrawableNode n : Salesman.nodes) {
+      if (dist(n.getX(), n.getY(), mouseX, mouseY) < n.getDiameter()) {
+        Salesman.removeNode(n);
+        Salesman.resetAlgorithm();
+        break;
+      }
+    }
+  } else {
+    DrawableNode newNode = new TravelNode(mouseX, mouseY);
+    boolean valid = true;
+    for (DrawableNode n : Salesman.nodes) {
+      if (n.distance(newNode) < newNode.getDiameter()) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) {
+      Salesman.addNode(newNode);
+      Salesman.resetAlgorithm();
+      DrawableAnt.resetDraw();
+    }
   }
 }
 
@@ -69,25 +92,88 @@ void keyPressed() {
       Salesman.resetAlgorithm();
     }
     pathAnt = Salesman.findShortestPath();
+    DrawableAnt.resetDraw();
     break;
   case 8: // DELETE
     Salesman.nodes.clear();
     Salesman.pheromoneMap.clear();
+    Salesman.GENERATIONS = Salesman.nodes.size() * 5;
     Salesman.resetAlgorithm();
+    DrawableAnt.resetDraw();
     break;
   case 32: // SPACE
-    MODE = (MODE + 1) % 2; 
+    MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if (Salesman.generationCounter >= Salesman.GENERATIONS) {
-      Salesman.resetAlgorithm();
+    if (MODE!=ERASE) {
+      if (Salesman.generationCounter >= Salesman.GENERATIONS) {
+        Salesman.resetAlgorithm();
+      } else {
+        pathAnt = Salesman.executeGeneration();
+      }
+      DrawableAnt.resetDraw();
+      if (Salesman.nodes.size() > 0) {
+        DrawableAnt.startDraw();
+      }
     }
-    pathAnt = Salesman.executeGeneration();
     break;
-  case 16: // SHIFT KEY
+  case 87: // W key
+    CONSTANT_SELECTED = --CONSTANT_SELECTED < 0 ? 3 : CONSTANT_SELECTED;
+    break;
+  case 83: // S key
+    CONSTANT_SELECTED = (CONSTANT_SELECTED + 1) % 4;
+    break;
+  case 68: // D key
+    modifyConstant(1);
+    break;
+  case 65: // A key
+    modifyConstant(-1);
     break;
   }
 }
+
+void modifyConstant(int modifier) {
+  switch (CONSTANT_SELECTED) {
+    case P_INFLUENCE_COEFF:
+      Salesman.setPheromoneInfluenceCoefficient(Salesman.PHEROMONE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      break;
+    case D_INFLUENCE_COEFF:
+      Salesman.setDistanceInfluenceCoefficient(Salesman.DISTANCE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      break;
+    case P_EVAPORATION_COEFF:
+      Salesman.setPheromoneEvaporationCoefficient(Salesman.PHEROMONE_EVAPORATION_COEFFICIENT + 0.01 * modifier);
+      break;
+    case P_DEPOSIT_COEFF:
+      Salesman.setPheromoneDepositCoefficient(Salesman.PHEROMONE_DEPOSIT_COEFFICIENT + 100 * modifier);
+      break;
+  }
+}
+
+void displayAnts() {
+  noStroke();
+  if (DrawableAnt.getPos() == ANTIMATE) {
+    DrawableAnt.incrementStep();
+  }
+  if (DrawableAnt.getStep()>=Salesman.nodes.size()) {
+    DrawableAnt.resetDraw();
+  }
+  for (int i = Salesman.ants.length-1; i >=0; i--) {
+    if (i == 0) {
+      fill(0, 0, 255);
+    } else {
+      fill(255, 0, 0);
+    }
+    DrawableAnt a = Salesman.ants[i];
+    Node current = a.getNodeAt(DrawableAnt.getStep()+1);
+    Node prev = a.getNodeAt(DrawableAnt.getStep());
+    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
+    int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.getPos()+prev.getY());
+
+    ellipse(x, y, 10, 10);
+  }
+  DrawableAnt.incrementPos();
+}
+
 
 void displayAntPath(Ant ant) {
   strokeWeight(4);
@@ -97,6 +183,18 @@ void displayAntPath(Ant ant) {
     DrawableNode end = path.get(i + 1);
     line(start.getX(), start.getY(), end.getX(), end.getY());
   }
+}
+
+void displayConstants() {
+  fill(0);
+  textSize(20);
+  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.PHEROMONE_INFLUENCE_COEFFICIENT), width - 400, 20);
+  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.DISTANCE_INFLUENCE_COEFFICIENT), width - 400, 40);
+  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.PHEROMONE_EVAPORATION_COEFFICIENT), width - 400, 60);
+  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.PHEROMONE_DEPOSIT_COEFFICIENT), width - 400, 80);
+  fill(#00FF00);
+  rect(width - 407, CONSTANT_SELECTED * 20, 5, 23);
+  textSize(40);
 }
 
 void displayPheromoneMap() {
@@ -123,16 +221,6 @@ void displayGenerationData() {
   text(String.format("Generation %d / %d", Salesman.generationCounter, Salesman.GENERATIONS), 20, height - 20);
 }
 
-
-void animate(){
-  
-}
-
-void genAnimate(){
-  
-}
-
-
 void draw() {
   background(255);
 
@@ -140,7 +228,13 @@ void draw() {
     if (MODE == SOLUTION) {
       stroke(0);
       displayAntPath(pathAnt);
+      if (DrawableAnt.isDrawing()) {
+        displayAnts();
+      }
     } else if (MODE == PHEROMONE) {
+      if (DrawableAnt.isDrawing()) {
+        displayAnts();
+      }
       displayPheromoneMap();
     }
     noStroke();
@@ -152,9 +246,17 @@ void draw() {
   }
   //Loop for ant display
 
+
   if (pathAnt != null) {
     fill(0);
     text("Distance - " + pathAnt.getDistance(), 40, 40);
     displayGenerationData();
   }
+  
+  displayConstants();
+  
+  String modeDisp = "Mode: " + (MODE == SOLUTION ? "Solution" : MODE == ERASE ? "Delete" : "Pheromones");
+
+  fill(0);
+  text(modeDisp, 40, 80);
 }

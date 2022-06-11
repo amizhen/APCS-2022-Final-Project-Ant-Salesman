@@ -4,24 +4,48 @@ public static class Salesman {
   public static Map<Set<DrawableNode>, Float> pheromoneMap;
 
   /** Determines the effect of pheromones in the chance of the Node to be selected by the Ant */
-  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.25;
+  public static float PHEROMONE_INFLUENCE_COEFFICIENT = 1.4;
   /** Determines the effect of the distance in the chance of the Node to be selected by the Ant */
-  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.4;
+  public static float DISTANCE_INFLUENCE_COEFFICIENT = 1.6;
   /** Percentage of pheromones that remain after evaporation */
   public static float PHEROMONE_EVAPORATION_COEFFICIENT = 0.95;
   /** Determines the amount of pheromones to be dropped by an Ant */
-  public static float PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
+  public static int PHEROMONE_DEPOSIT_COEFFICIENT = 1000;
 
 
   // Perhaps this can be dynamically determined. Look into this later
   public static final int ANTS_PER_GENERATION = 20;
-  public static final int GENERATIONS = 50;
+  public static int GENERATIONS = 50;
   public static final int TOP_ANT_SELECT_NUMBER = 5; // invariant - less than ANTS_PER_GENERATION
 
   public static int antCounter = 0;
   public static int generationCounter = 0;
-  public static Ant[] ants = new Ant[ANTS_PER_GENERATION];
+  public static DrawableAnt[] ants = new DrawableAnt[ANTS_PER_GENERATION];
 
+  public static void setPheromoneInfluenceCoefficient(float newVal) {
+    if (newVal > 0) {
+      PHEROMONE_INFLUENCE_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setDistanceInfluenceCoefficient(float newVal){
+    if (newVal > 0) {
+      DISTANCE_INFLUENCE_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setPheromoneEvaporationCoefficient(float newVal) {
+    if (newVal > 0 && newVal <= 1) {
+      PHEROMONE_EVAPORATION_COEFFICIENT = newVal;
+    }
+  }
+  
+  public static void setPheromoneDepositCoefficient(int newVal) {
+    if (newVal > 0) {
+      PHEROMONE_DEPOSIT_COEFFICIENT = newVal;
+    }
+  }
+  
   /**
    * A method to add an individual Node to the system. Updates nodes and the pheromone map.
    * 
@@ -34,6 +58,8 @@ public static class Salesman {
       }
       pheromoneMap.put(setOf(n, start), 1.0);
       nodes.add(n);
+      
+      GENERATIONS = nodes.size() * 5;
     }
   }
 
@@ -43,7 +69,14 @@ public static class Salesman {
     }
     // println(pheromoneMap);
   }
-  
+
+  public static void removeNode(Node n) {
+    nodes.remove(n);
+    for (Node k : nodes) {
+      pheromoneMap.remove(setOf(n, k));
+    }
+  }
+
   public static void clearPheromoneMap() {
     pheromoneMap.clear();
   }
@@ -97,13 +130,13 @@ public static class Salesman {
     Set<DrawableNode> key = setOf(n1, n2);
     pheromoneMap.replace(key, newVal);
   }
-  
+
   public static void resetAlgorithm() {
     resetPheromoneMap();
     pathAnt = null;
     antCounter = 0;
     generationCounter = 0;
-    Salesman.ants = new Ant[Salesman.ANTS_PER_GENERATION];
+    Salesman.ants = new DrawableAnt[Salesman.ANTS_PER_GENERATION];
   }
 
   /**
@@ -114,7 +147,7 @@ public static class Salesman {
   public static Ant findShortestPath() {
     for (; generationCounter < GENERATIONS; generationCounter++) {
       for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-        ants[antCounter] = new Ant(start);
+        ants[antCounter] = new DrawableAnt(start);
         ants[antCounter].run(); // have ants traverse through the map of nodes
       }
       antCounter = 0;
@@ -130,12 +163,12 @@ public static class Salesman {
 
   public static Ant executeGeneration() {
     for (; antCounter < ANTS_PER_GENERATION; antCounter++) {
-      ants[antCounter] = new Ant(start);
+      ants[antCounter] = new DrawableAnt(start);
       ants[antCounter].run();
     }
     antCounter = 0;
     generationCounter++;
-    
+
     Arrays.sort(ants);
     decayPheromones();
     for (int i = 0; i < TOP_ANT_SELECT_NUMBER; i++) { // have the top selected ants deposit pheromones aka smallest distance travelled
@@ -143,5 +176,4 @@ public static class Salesman {
     }
     return ants[0];
   }
-  
 }

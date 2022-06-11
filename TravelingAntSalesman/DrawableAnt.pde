@@ -1,25 +1,34 @@
-public class DrawableAnt extends Ant{  
-  private int pos = 1;
-  private Node prev, current;
-  
-  public DrawableAnt(){
-    super(Salesman.start);
+public static class DrawableAnt extends Ant {  
+  private static int pos = 0;
+  private static int step = 0;
+  private static boolean drawing = false;
+
+
+  public static boolean isDrawing() {
+    return drawing;
   }
-  
-  public void startAnimate(){
-    current = super.getCurrentNode();
-    prev = super.getPrevNode();
+  public static void startDraw() {
+    drawing = true;
   }
-  
-  
-  public void tick() {
-    
+  public static int getPos() {
+    return pos;
   }
-  
-  
-  public void displayTick(){
-    fill(0);
-    ellipse((current.getX()+prev.getX())/10*pos, (current.getY()+prev.getY())/10*pos, 10, 10);
+  public static void incrementPos() {
     pos++;
+  }
+  public static int getStep() {
+    return step;
+  }
+  public static void incrementStep() {
+    pos = 0;
+    step++;
+  }
+  public static void resetDraw() {
+    step = 0;
+    pos = 0;
+    drawing = false;
+  }
+  public DrawableAnt(DrawableNode start) {
+    super(start);
   }
 }
