@@ -22,6 +22,8 @@ public static final int P_EVAPORATION_COEFF = 2;
 public static final int P_DEPOSIT_COEFF = 3;
 public static int CONSTANT_SELECTED = P_INFLUENCE_COEFF;
 
+public static boolean isHelpMenuOpen = false;
+
 void setup() {
   size(1000, 800);
   Salesman.start = new StartNode(width / 2, height / 2);
@@ -105,7 +107,7 @@ void keyPressed() {
     MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if (MODE!=ERASE) {
+    // if (MODE!=ERASE) {
       if (Salesman.generationCounter >= Salesman.GENERATIONS) {
         Salesman.resetAlgorithm();
       } else {
@@ -115,7 +117,7 @@ void keyPressed() {
       if (Salesman.nodes.size() > 0) {
         DrawableAnt.startDraw();
       }
-    }
+    // }
     break;
   case 87: // W key
     CONSTANT_SELECTED = --CONSTANT_SELECTED < 0 ? 3 : CONSTANT_SELECTED;
@@ -129,22 +131,25 @@ void keyPressed() {
   case 65: // A key
     modifyConstant(-1);
     break;
+  case 72: // H key
+    isHelpMenuOpen = !isHelpMenuOpen;
+    break;
   }
 }
 
 void modifyConstant(int modifier) {
   switch (CONSTANT_SELECTED) {
     case P_INFLUENCE_COEFF:
-      Salesman.setPheromoneInfluenceCoefficient(Salesman.PHEROMONE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      Salesman.setPheromoneInfluenceCoefficient(Salesman.getPheromoneInfluenceCoefficient() + 0.05 * modifier);
       break;
     case D_INFLUENCE_COEFF:
-      Salesman.setDistanceInfluenceCoefficient(Salesman.DISTANCE_INFLUENCE_COEFFICIENT + 0.05 * modifier);
+      Salesman.setDistanceInfluenceCoefficient(Salesman.getDistanceInfluenceCoefficient() + 0.05 * modifier);
       break;
     case P_EVAPORATION_COEFF:
-      Salesman.setPheromoneEvaporationCoefficient(Salesman.PHEROMONE_EVAPORATION_COEFFICIENT + 0.01 * modifier);
+      Salesman.setPheromoneEvaporationCoefficient(Salesman.getPheromoneEvaporationCoefficient() + 0.01 * modifier);
       break;
     case P_DEPOSIT_COEFF:
-      Salesman.setPheromoneDepositCoefficient(Salesman.PHEROMONE_DEPOSIT_COEFFICIENT + 100 * modifier);
+      Salesman.setPheromoneDepositCoefficient(Salesman.getPheromoneDepositCoefficient() + 100 * modifier);
       break;
   }
 }
@@ -166,14 +171,13 @@ void displayAnts() {
     DrawableAnt a = Salesman.ants[i];
     Node current = a.getNodeAt(DrawableAnt.getStep()+1);
     Node prev = a.getNodeAt(DrawableAnt.getStep());
-    int x = (int)((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
+    int x = (int) ((current.getX()-prev.getX())/ANTIMATE*DrawableAnt.getPos()+prev.getX());
     int y = (int) ((current.getY()-prev.getY())/ANTIMATE*DrawableAnt.getPos()+prev.getY());
 
     ellipse(x, y, 10, 10);
   }
   DrawableAnt.incrementPos();
 }
-
 
 void displayAntPath(Ant ant) {
   strokeWeight(4);
@@ -188,10 +192,10 @@ void displayAntPath(Ant ant) {
 void displayConstants() {
   fill(0);
   textSize(20);
-  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.PHEROMONE_INFLUENCE_COEFFICIENT), width - 400, 20);
-  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.DISTANCE_INFLUENCE_COEFFICIENT), width - 400, 40);
-  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.PHEROMONE_EVAPORATION_COEFFICIENT), width - 400, 60);
-  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.PHEROMONE_DEPOSIT_COEFFICIENT), width - 400, 80);
+  text(String.format("PHEROMONE_INFLUENCE = %f", Salesman.getPheromoneInfluenceCoefficient()), width - 400, 20);
+  text(String.format("DISTANCE_INFLUENCE = %f", Salesman.getDistanceInfluenceCoefficient()), width - 400, 40);
+  text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.getPheromoneEvaporationCoefficient()), width - 400, 60);
+  text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.getPheromoneDepositCoefficient()), width - 400, 80);
   fill(#00FF00);
   rect(width - 407, CONSTANT_SELECTED * 20, 5, 23);
   textSize(40);
@@ -205,10 +209,6 @@ void displayPheromoneMap() {
   }
 
   for (Set<DrawableNode> key : Salesman.pheromoneMap.keySet()) {
-    // opacity of the edge is determined by comparing it to the largest edge pheromone level
-    // use squares as it will lead to lower pheromone levels being displayed less
-    // stroke(255, 0, 255, (float) (Math.pow(Salesman.pheromoneMap.get(key), 0.12 * Salesman.nodes.size()) / Math.pow(max, 0.12 * Salesman.nodes.size()) * 150));
-
     stroke(255, 0, 255, Salesman.pheromoneMap.get(key) / max * 150);
     DrawableNode[] nodes = key.toArray(new DrawableNode[2]);
     line(nodes[0].getX(), nodes[0].getY(), nodes[1].getX(), nodes[1].getY());
@@ -221,21 +221,49 @@ void displayGenerationData() {
   text(String.format("Generation %d / %d", Salesman.generationCounter, Salesman.GENERATIONS), 20, height - 20);
 }
 
+void displayHelpMenu() {
+  fill(#d3d3d3);
+  int yBase = 100;
+  rect(50, yBase, width - 100, yBase+544);
+  fill(0);
+  textSize(24);
+  text("Press space to alternate between modes Solution, Pheromones, and Delete.", 55, yBase + 36); // + 36
+  text("Click on screen in 'Pheromones' or 'Solution' mode to add nodes.", 55, yBase + 72);
+  text("Click and drag a node in 'Pheromones' or 'Solution' to move it.", 55, yBase + 108);
+  text("Click on a node in 'Delete' mode to remove it.", 55, yBase + 144);
+  text("Click the 'Enter' key to run the algorithm.", 55, yBase + 180);
+  text("Click the right arrow key to step through each generation of ants.", 55, yBase + 216);
+  text("Change the coefficients of the algorithms with the keys below.", 55, yBase + 252);
+  text("The coefficient selected to be change is shown by the green box.", 55, yBase + 288);
+  text("Use the W and S key to cycle through the coefficient to change.", 55, yBase + 324);
+  text("Use the D key to increase the coefficient selected.", 55, yBase + 360);
+  text("Use the A key to decrease the coefficient selected.", 55, yBase + 396);
+  text("Press the H key to toggle the help menu.", 55, yBase + 432);
+  
+  text("In Pheromone mode, the greater opacity paths have a greater amount of", 55, yBase + 508);
+  text("pheromones.", 55, yBase + 544);
+  text("In the animations, the dots represent ants traveling their path.", 55, yBase + 580);
+  text("The blue dot represents the ant with the best path.", 55, yBase + 616);
+}
+
 void draw() {
   background(255);
 
   if (pathAnt != null) {
-    if (MODE == SOLUTION) {
-      stroke(0);
-      displayAntPath(pathAnt);
-      if (DrawableAnt.isDrawing()) {
-        displayAnts();
-      }
-    } else if (MODE == PHEROMONE) {
-      if (DrawableAnt.isDrawing()) {
-        displayAnts();
-      }
-      displayPheromoneMap();
+    switch (MODE) {
+      case SOLUTION:
+      case ERASE:
+        stroke(0);
+        displayAntPath(pathAnt);
+          if (DrawableAnt.isDrawing()) {
+            displayAnts();
+        }
+        break;
+      case PHEROMONE:
+        if (DrawableAnt.isDrawing()) { // order changed to create cool effect
+          displayAnts();
+        }
+        displayPheromoneMap();
     }
     noStroke();
   }
@@ -244,19 +272,21 @@ void draw() {
   for (DrawableNode n : Salesman.nodes) {
     n.display();
   }
-  //Loop for ant display
-
-
+  
+  // text display start
+  
+  textSize(40);
   if (pathAnt != null) {
     fill(0);
-    text("Distance - " + pathAnt.getDistance(), 40, 40);
+    text("Distance - " + pathAnt.getDistance(), 40, 80);
     displayGenerationData();
   }
   
   displayConstants();
   
   String modeDisp = "Mode: " + (MODE == SOLUTION ? "Solution" : MODE == ERASE ? "Delete" : "Pheromones");
-
   fill(0);
-  text(modeDisp, 40, 80);
+  text(modeDisp, 40, 40);
+  
+  if (isHelpMenuOpen) displayHelpMenu();
 }
