@@ -48,12 +48,22 @@ will be visualized through Processing.
 * Open the *TravelingAntSalesman.pde* file in Processing in TravelingAntSalesman directory
 * Run TravelingAntSalesman.pde
 
+*Note*: There is apparantly a bug with processing in Windows 10 where the processing window is not "focused". This means that the `keyPressed` events will not trigger unless the window is focused. To focus the window, just click on the window. 
+
 **Features**:
 
-* Click to place nodes.
-* Click and drag existing nodes to move them. This includes the start node in blue.
+* Click to place nodes in the Solution and Pheromones mode.
+* Click and drag existing nodes in the Slution and Pheromones mode to move them. This includes the start node in blue.
 * Use the Delete key to clear all existing green nodes.
+* Click on a node in Delete mode to remove the node.
 * Use the Enter key to run the algorithm and draws lines to show the "optimal" path. 
+* Use the right arrow key to run through each generation and animate the ants' chosen path.
+  * The blue dot is the ant with the smallest path.
+  * The red dot are the other ants.
+* Change the coefficients of the algorithm
+  * Use the W and S key to cycle through the selected coefficient that will be changed.
+  * Use the A and D key to increase and decrease the coefficient selected.
+* The H key can open the help menu.
 
 ## **Development Logs**
 
