@@ -107,7 +107,7 @@ void keyPressed() {
     MODE = (MODE + 1) % 3; 
     break;
   case 39: // RIGHT ARROW KEY
-    if (MODE!=ERASE) {
+    // if (MODE!=ERASE) {
       if (Salesman.generationCounter >= Salesman.GENERATIONS) {
         Salesman.resetAlgorithm();
       } else {
@@ -117,7 +117,7 @@ void keyPressed() {
       if (Salesman.nodes.size() > 0) {
         DrawableAnt.startDraw();
       }
-    }
+    // }
     break;
   case 87: // W key
     CONSTANT_SELECTED = --CONSTANT_SELECTED < 0 ? 3 : CONSTANT_SELECTED;
@@ -224,7 +224,7 @@ void displayGenerationData() {
 void displayHelpMenu() {
   fill(#d3d3d3);
   int yBase = 100;
-  rect(50, yBase, width - 100, yBase+360);
+  rect(50, yBase, width - 100, yBase+544);
   fill(0);
   textSize(24);
   text("Press space to alternate between modes Solution, Pheromones, and Delete.", 55, yBase + 36); // + 36
@@ -239,23 +239,31 @@ void displayHelpMenu() {
   text("Use the D key to increase the coefficient selected.", 55, yBase + 360);
   text("Use the A key to decrease the coefficient selected.", 55, yBase + 396);
   text("Press the H key to toggle the help menu.", 55, yBase + 432);
+  
+  text("In Pheromone mode, the greater opacity paths have a greater amount of", 55, yBase + 508);
+  text("pheromones.", 55, yBase + 544);
+  text("In the animations, the dots represent ants traveling their path.", 55, yBase + 580);
+  text("The blue dot represents the ant with the best path.", 55, yBase + 616);
 }
 
 void draw() {
   background(255);
 
   if (pathAnt != null) {
-    if (MODE == SOLUTION) {
-      stroke(0);
-      displayAntPath(pathAnt);
-      if (DrawableAnt.isDrawing()) {
-        displayAnts();
-      }
-    } else if (MODE == PHEROMONE) {
-      if (DrawableAnt.isDrawing()) {
-        displayAnts();
-      }
-      displayPheromoneMap();
+    switch (MODE) {
+      case SOLUTION:
+      case ERASE:
+        stroke(0);
+        displayAntPath(pathAnt);
+          if (DrawableAnt.isDrawing()) {
+            displayAnts();
+        }
+        break;
+      case PHEROMONE:
+        if (DrawableAnt.isDrawing()) { // order changed to create cool effect
+          displayAnts();
+        }
+        displayPheromoneMap();
     }
     noStroke();
   }

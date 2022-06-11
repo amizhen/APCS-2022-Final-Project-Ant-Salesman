@@ -75,7 +75,7 @@ public static class Salesman {
       pheromoneMap.put(setOf(n, start), 1.0);
       nodes.add(n);
       
-      GENERATIONS = nodes.size() * 5;
+      GENERATIONS = Math.min(nodes.size() * 5, 100);
     }
   }
 
