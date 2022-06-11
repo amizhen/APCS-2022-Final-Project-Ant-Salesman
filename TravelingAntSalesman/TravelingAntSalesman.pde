@@ -13,8 +13,13 @@ public static boolean drawing = false;
 public static final int SOLUTION = 0;
 public static final int PHEROMONE = 1;
 
-
 public int MODE = SOLUTION;
+
+public static final int P_INFLUENCE_COEFF = 0;
+public static final int D_INFLUENCE_COEFF = 1;
+public static final int P_EVAPORATION_COEFF = 2;
+public static final int P_DEPOSIT_COEFF = 3;
+public static final int CONSTANT_SELECTED = P_INFLUENCE_COEFF;
 
 void setup() {
   size(1000, 800);
@@ -138,6 +143,8 @@ void displayConstants() {
   text(String.format("DISTANCE_INFLUENCE = %f", Salesman.DISTANCE_INFLUENCE_COEFFICIENT), width - 400, 40);
   text(String.format("PHEROMONE_EVAPORATION = %f", Salesman.PHEROMONE_EVAPORATION_COEFFICIENT), width - 400, 60);
   text(String.format("PHEROMONE_DEPOSIT = %d", Salesman.PHEROMONE_DEPOSIT_COEFFICIENT), width - 400, 80);
+  fill(#00FF00);
+  rect(width - 407, CONSTANT_SELECTED * 20, 5, 23);
   textSize(40);
 }
 
